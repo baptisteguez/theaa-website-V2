@@ -1,0 +1,2967 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theaa - Assistant IA pour Closers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #fdab6f;
+            --primary-dark: #e89a5e;
+            --primary-light: #fec891;
+            --bg-light: #ffffff;
+            --bg-light-secondary: #f8f9fa;
+            --bg-beige: #f5f1ed;
+            --text-light: #2c3e50;
+            --text-light-secondary: #6c757d;
+            --bg-dark: #1a1a1a;
+            --bg-dark-secondary: #2d2d2d;
+            --text-dark: #ffffff;
+            --text-dark-secondary: #b0b0b0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.light-mode {
+            background-color: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        body.dark-mode {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        /* Navigation */
+        nav {
+            position: relative;
+            width: 100%;
+            z-index: 1000;
+            padding: 0.5rem 5%;
+            transition: background-color 0.3s ease;
+        }
+
+        body.light-mode nav {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode nav {
+            background-color: rgba(26, 26, 26, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 110px;
+            height: 110px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-text {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        body.light-mode .nav-links a {
+            color: var(--text-light);
+        }
+
+        body.dark-mode .nav-links a {
+            color: var(--text-dark);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        body.light-mode .theme-toggle {
+            color: var(--text-light);
+        }
+
+        body.dark-mode .theme-toggle {
+            color: var(--text-dark);
+        }
+
+        .theme-toggle:hover {
+            background-color: rgba(253, 171, 111, 0.2);
+        }
+
+        .cta-button {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary);
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(253, 171, 111, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 20px 5% 80px;
+            text-align: center;
+            min-height: 95vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        body.light-mode .hero {
+            background: linear-gradient(135deg, #fef5ee 0%, #fde4d0 60%, #feddc4 100%);
+        }
+
+        body.dark-mode .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 60%, #2d2520 100%);
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        body.light-mode .hero h1 {
+            color: var(--text-light);
+        }
+
+        body.dark-mode .hero h1 {
+            color: var(--text-dark);
+        }
+
+        .hero .highlight {
+            color: var(--primary);
+        }
+
+        body.dark-mode .hero .highlight {
+            color: var(--primary-light);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .secondary-button {
+            background-color: transparent;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            display: inline-block;
+        }
+
+        body.dark-mode .secondary-button {
+            border-color: var(--primary-light);
+            color: var(--primary-light);
+        }
+
+        .secondary-button:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Social Proof Hero */
+        .hero-social-proof {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            margin-top: 1rem;
+        }
+
+        body.light-mode .hero-social-proof {
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .hero-social-proof {
+            background-color: rgba(45, 45, 45, 0.9);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+        }
+
+        .hero-avatars {
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: 3px solid white;
+            margin-left: -12px;
+            object-fit: cover;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            animation: avatarFloat 3s ease-in-out infinite;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-avatar:first-child {
+            margin-left: 0;
+        }
+
+        .hero-avatar:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .hero-avatar:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        .hero-avatar:hover {
+            transform: scale(1.15) translateY(-5px);
+            z-index: 10;
+        }
+
+        .hero-social-text {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .hero-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stars {
+            color: #fbbf24;
+            font-size: 1.2rem;
+        }
+
+        .rating-text {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Three Pillars Section */
+        .three-pillars {
+            padding: 100px 5%;
+        }
+
+        body.light-mode .three-pillars {
+            background-color: var(--bg-light);
+        }
+
+        body.dark-mode .three-pillars {
+            background-color: var(--bg-dark);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 4rem;
+            opacity: 0.8;
+        }
+
+        .pillars-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            position: relative;
+        }
+
+        .pillar-card {
+            padding: 3rem 2rem;
+            border-radius: 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-height: 700px;
+        }
+
+        body.light-mode .pillar-card {
+            background-color: var(--bg-beige);
+            box-shadow: 0 8px 30px rgba(253, 171, 111, 0.15);
+        }
+
+        body.dark-mode .pillar-card {
+            background-color: var(--bg-dark-secondary);
+            box-shadow: 0 8px 30px rgba(253, 171, 111, 0.1);
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(253, 171, 111, 0.3);
+        }
+
+        .pillar-badge {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* PRE-CALL Graphic */
+        .precall-graphic {
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 2rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .central-circle {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            position: absolute;
+            box-shadow: 0 10px 30px rgba(253, 171, 111, 0.4);
+            z-index: 10;
+        }
+
+        .scan-ring {
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            border: 3px solid transparent;
+            border-top-color: var(--primary);
+            border-right-color: var(--primary);
+            border-radius: 50%;
+            animation: rotateScan 2s linear infinite;
+            z-index: 9;
+        }
+
+        @keyframes rotateScan {
+            0% { transform: rotate(0deg); opacity: 0.8; }
+            100% { transform: rotate(360deg); opacity: 0.8; }
+        }
+
+        .document-node {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            position: absolute;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        body.dark-mode .document-node {
+            background: var(--bg-dark-secondary);
+        }
+
+        .document-node:hover {
+            transform: scale(1.1);
+        }
+
+        .doc-top {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .doc-left {
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .doc-right {
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Animated connecting lines */
+        .connection-line {
+            position: absolute;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            opacity: 0.6;
+            z-index: 1;
+        }
+
+        .line-top {
+            width: 80px;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%) rotate(90deg);
+            animation: flowPulse 2s ease-in-out infinite;
+        }
+
+        .line-left {
+            width: 80px;
+            left: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: flowPulse 2s ease-in-out infinite 0.7s;
+        }
+
+        .line-right {
+            width: 80px;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: flowPulse 2s ease-in-out infinite 1.4s;
+        }
+
+        /* Animated arrows pointing to center */
+        .arrow-to-center {
+            position: absolute;
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: bold;
+            z-index: 5;
+            animation: arrowPulse 2s ease-in-out infinite;
+        }
+
+        .arrow-from-top {
+            top: 105px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation-delay: 0s;
+        }
+
+        .arrow-from-left {
+            left: 95px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation-delay: 0.7s;
+        }
+
+        .arrow-from-right {
+            right: 95px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation-delay: 1.4s;
+        }
+
+        @keyframes flowPulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translateX(-50%) rotate(90deg) scaleX(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateX(-50%) rotate(90deg) scaleX(1.1);
+            }
+        }
+
+        .line-left {
+            animation-name: flowPulseHorizontal;
+        }
+
+        .line-right {
+            animation-name: flowPulseHorizontal;
+        }
+
+        @keyframes flowPulseHorizontal {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translateY(-50%) scaleX(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateY(-50%) scaleX(1.1);
+            }
+        }
+
+        @keyframes arrowPulse {
+            0%, 100% {
+                opacity: 0.4;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* DURING CALL Graphic */
+        .duringcall-graphic {
+            width: 100%;
+            max-width: 280px;
+            height: 280px;
+            margin: 0 auto 2rem;
+            padding: 0;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.light-mode .duringcall-graphic {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 2px solid #bae6fd;
+        }
+
+        body.dark-mode .duringcall-graphic {
+            background: linear-gradient(135deg, #1e3a5f, #1e293b);
+            border: 2px solid #334155;
+        }
+
+        .chat-scroll-container {
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .chat-scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .chat-bubble-left {
+            display: flex;
+            gap: 0.4rem;
+            align-items: flex-start;
+            opacity: 0;
+            animation: fadeInLeft 0.5s ease-out 0.5s forwards;
+        }
+
+        .avatar-theaa {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .message-left {
+            max-width: 70%;
+            padding: 0.6rem;
+            border-radius: 12px 12px 12px 4px;
+            font-size: 0.7rem;
+            line-height: 1.3;
+            position: relative;
+        }
+
+        body.light-mode .message-left {
+            background-color: #f1f5f9;
+            color: var(--text-light);
+        }
+
+        body.dark-mode .message-left {
+            background-color: #334155;
+            color: var(--text-dark);
+        }
+
+        .voice-wave {
+            display: flex;
+            gap: 0.12rem;
+            align-items: center;
+            justify-content: center;
+            padding: 0.3rem 0;
+        }
+
+        .wave-bar {
+            width: 2.5px;
+            background: var(--primary);
+            border-radius: 2px;
+            animation: waveAnimation 1s ease-in-out infinite;
+        }
+
+        .wave-bar:nth-child(1) { height: 6px; animation-delay: 0s; }
+        .wave-bar:nth-child(2) { height: 12px; animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { height: 8px; animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { height: 14px; animation-delay: 0.3s; }
+        .wave-bar:nth-child(5) { height: 10px; animation-delay: 0.4s; }
+        .wave-bar:nth-child(6) { height: 13px; animation-delay: 0.5s; }
+        .wave-bar:nth-child(7) { height: 7px; animation-delay: 0.6s; }
+
+        @keyframes waveAnimation {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(1.5); }
+        }
+
+        .chat-bubble-right {
+            display: flex;
+            gap: 0.4rem;
+            align-items: flex-start;
+            justify-content: flex-end;
+            position: relative;
+            opacity: 0;
+            animation: fadeInRight 0.5s ease-out 2s forwards;
+        }
+
+        .avatar-client {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .message-right {
+            max-width: 70%;
+            padding: 0.6rem;
+            border-radius: 12px 12px 4px 12px;
+            font-size: 0.7rem;
+            line-height: 1.3;
+            position: relative;
+            min-height: 40px;
+        }
+
+        body.light-mode .message-right {
+            background-color: #dbeafe;
+            color: var(--text-light);
+        }
+
+        body.dark-mode .message-right {
+            background-color: #1e40af;
+            color: var(--text-dark);
+        }
+
+        .scan-line-horizontal {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            animation: scanHorizontal 0.6s ease-in-out 2s 1;
+            z-index: 10;
+        }
+
+        @keyframes scanHorizontal {
+            0% { top: 0%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        .what-to-say-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.8rem;
+            background-color: #1f2937;
+            color: white;
+            border-radius: 18px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin: 0 auto;
+            cursor: pointer;
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 0.3s ease-out 3.5s forwards;
+        }
+
+        body.dark-mode .what-to-say-btn {
+            background-color: var(--primary);
+        }
+
+        .mouse-cursor {
+            position: absolute;
+            top: -30px;
+            right: 50%;
+            transform: translateX(50%);
+            font-size: 2rem;
+            opacity: 0;
+            animation: mouseMoveAndClick 1s ease-in-out 3.5s forwards;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        @keyframes mouseMoveAndClick {
+            0% {
+                opacity: 0;
+                top: -50px;
+                transform: translateX(50%) scale(1);
+            }
+            20% {
+                opacity: 1;
+                top: -30px;
+            }
+            50% {
+                top: -15px;
+                transform: translateX(50%) scale(1);
+            }
+            60% {
+                transform: translateX(50%) scale(0.9);
+            }
+            70% {
+                transform: translateX(50%) scale(1);
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                top: -15px;
+            }
+        }
+
+        .cursor-pointer {
+            display: none;
+        }
+
+        .ai-generated-message {
+            padding: 0.6rem;
+            border-radius: 10px;
+            font-size: 0.65rem;
+            line-height: 1.3;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            min-height: 50px;
+            animation: fadeInUp 0.3s ease-out 4.5s forwards;
+        }
+
+        body.light-mode .ai-generated-message {
+            background: linear-gradient(135deg, rgba(253, 171, 111, 0.2), rgba(253, 171, 111, 0.1));
+            border: 2px solid var(--primary);
+        }
+
+        body.dark-mode .ai-generated-message {
+            background: linear-gradient(135deg, rgba(253, 171, 111, 0.3), rgba(253, 171, 111, 0.15));
+            border: 2px solid var(--primary);
+        }
+
+        .ai-badge-inline {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.12rem 0.4rem;
+            border-radius: 8px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            margin-right: 0.2rem;
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* POST-CALL Graphic */
+        .postcall-graphic {
+            width: 100%;
+            max-width: 280px;
+            height: 280px;
+            margin: 0 auto 2rem;
+            padding: 1.5rem;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        body.light-mode .postcall-graphic {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border: 2px solid #bbf7d0;
+        }
+
+        body.dark-mode .postcall-graphic {
+            background: linear-gradient(135deg, #14532d, #166534);
+            border: 2px solid #15803d;
+        }
+
+        .radar-chart {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .radar-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .radar-bg {
+            fill: none;
+            opacity: 0.2;
+        }
+
+        body.light-mode .radar-bg {
+            stroke: #94a3b8;
+        }
+
+        body.dark-mode .radar-bg {
+            stroke: #cbd5e1;
+        }
+
+        .radar-grid {
+            fill: none;
+            stroke-width: 1.5;
+            opacity: 0.6;
+        }
+
+        body.light-mode .radar-grid {
+            stroke: #94a3b8;
+        }
+
+        body.dark-mode .radar-grid {
+            stroke: #64748b;
+        }
+
+        .radar-data {
+            fill: rgba(253, 171, 111, 0.3);
+            stroke: var(--primary);
+            stroke-width: 3;
+        }
+
+        .radar-point {
+            fill: var(--primary);
+            r: 5;
+        }
+
+        .radar-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .radar-label:nth-child(3) {
+            text-anchor: start;
+        }
+
+        .radar-label:not(:nth-child(3)) {
+            text-anchor: middle;
+        }
+
+        body.light-mode .radar-label {
+            fill: var(--text-light);
+        }
+
+        body.dark-mode .radar-label {
+            fill: var(--text-dark);
+        }
+
+        .score-global-box {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 0.75rem 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 12px rgba(253, 171, 111, 0.4);
+        }
+
+        .pillar-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        body.dark-mode .pillar-card h3 {
+            color: var(--primary-light);
+        }
+
+        .pillar-card p {
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        /* Animated Arrows Between Pillars */
+        .pillar-arrow {
+            position: absolute;
+            top: -40px;
+            width: 200px;
+            height: 80px;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .arrow-1 {
+            left: calc(33.33% + 50px);
+        }
+
+        .arrow-2 {
+            left: calc(66.66% + 50px);
+        }
+
+        .arrow-path {
+            fill: none;
+            stroke: var(--primary);
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-dasharray: 300;
+            stroke-dashoffset: 300;
+            animation: drawArrow 2s ease-in-out infinite;
+        }
+
+        .arrow-2 .arrow-path {
+            animation-delay: 1s;
+        }
+
+        .arrow-head {
+            fill: var(--primary);
+        }
+
+        @keyframes drawArrow {
+            0% {
+                stroke-dashoffset: 300;
+                opacity: 0.3;
+            }
+            50% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 0.3;
+            }
+        }
+
+        /* Detailed Features Section */
+        .detailed-features {
+            padding: 100px 5%;
+        }
+
+        body.light-mode .detailed-features {
+            background-color: var(--bg-light-secondary);
+        }
+
+        body.dark-mode .detailed-features {
+            background-color: var(--bg-dark-secondary);
+        }
+
+        .detailed-features-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .feature-detail-card {
+            padding: 2.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .feature-detail-card {
+            background-color: var(--bg-light);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        body.dark-mode .feature-detail-card {
+            background-color: var(--bg-dark);
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.05);
+        }
+
+        .feature-detail-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(253, 171, 111, 0.2);
+        }
+
+        .feature-detail-visual {
+            height: 220px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        body.light-mode .feature-detail-visual {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+
+        body.dark-mode .feature-detail-visual {
+            background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+        }
+
+        /* Upload Visual */
+        .upload-visual {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .progress-circle {
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+        .progress-circle svg {
+            transform: rotate(-90deg);
+        }
+
+        .progress-check {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: #22c55e;
+        }
+
+        .progress-text {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #22c55e;
+            white-space: nowrap;
+        }
+
+        .file-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+        }
+
+        body.light-mode .file-indicator {
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .file-indicator {
+            background-color: var(--bg-dark-secondary);
+            box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
+        }
+
+        .file-icon {
+            font-size: 1.2rem;
+        }
+
+        .file-name {
+            font-weight: 500;
+        }
+
+        .upload-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background-color: #1a1a1a;
+            color: white;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .upload-button:hover {
+            transform: scale(1.05);
+        }
+
+        body.dark-mode .upload-button {
+            background-color: var(--primary);
+        }
+
+        .upload-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Notes Visual */
+        .notes-visual {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+        }
+
+        .notes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .note-item {
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .note-item {
+            background-color: white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark-mode .note-item {
+            background-color: var(--bg-dark-secondary);
+            box-shadow: 0 2px 6px rgba(255, 255, 255, 0.05);
+        }
+
+        .note-item.highlighted {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-weight: 600;
+        }
+
+        .note-item.faded {
+            opacity: 0.4;
+        }
+
+        .taking-notes-badge {
+            position: absolute;
+            bottom: 0.5rem;
+            right: 0.5rem;
+            padding: 0.4rem 1rem;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Feedback Visual */
+        .feedback-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            padding: 0.5rem;
+        }
+
+        .feedback-box {
+            padding: 1rem;
+            border-radius: 12px;
+        }
+
+        body.light-mode .feedback-box {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .feedback-box {
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feedback-title {
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .feedback-text {
+            font-size: 0.65rem;
+            line-height: 1.4;
+            opacity: 0.9;
+        }
+
+        .feedback-text p {
+            margin: 0;
+        }
+
+        /* Platforms Visual */
+        .platforms-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .platform-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        body.light-mode .platform-icon {
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .platform-icon {
+            background-color: var(--bg-dark-secondary);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+        }
+
+        .platform-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .platform-icon.main-icon {
+            width: 80px;
+            height: 80px;
+            background: white;
+            font-size: 2.5rem;
+        }
+
+        .theaa-logo {
+            color: white;
+            font-weight: 700;
+        }
+
+        .feature-detail-badge {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .feature-detail-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        body.light-mode .feature-detail-title {
+            color: var(--text-light);
+        }
+
+        body.dark-mode .feature-detail-title {
+            color: var(--text-dark);
+        }
+
+        .feature-detail-description {
+            line-height: 1.7;
+            opacity: 0.85;
+        }
+
+        /* Simulator Section */
+        .simulator {
+            padding: 100px 5%;
+        }
+
+        body.light-mode .simulator {
+            background: linear-gradient(135deg, #fef5ee 0%, #fde4d0 100%);
+        }
+
+        body.dark-mode .simulator {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+        }
+
+        .simulator-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem;
+            border-radius: 30px;
+        }
+
+        body.light-mode .simulator-container {
+            background-color: white;
+            box-shadow: 0 15px 40px rgba(253, 171, 111, 0.2);
+        }
+
+        body.dark-mode .simulator-container {
+            background-color: var(--bg-dark-secondary);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .simulator h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .simulator-intro {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .input-group {
+            margin-bottom: 2rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .slider-container {
+            flex: 1;
+            position: relative;
+        }
+
+        .input-wrapper input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 10px;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        body.light-mode .input-wrapper input[type="range"] {
+            background: #e5e7eb;
+        }
+
+        body.dark-mode .input-wrapper input[type="range"] {
+            background: #374151;
+        }
+
+        .slider-fill {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            height: 8px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            pointer-events: none;
+            transition: width 0.1s ease;
+        }
+
+        .input-wrapper input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            border: 3px solid var(--primary);
+            position: relative;
+            z-index: 10;
+        }
+
+        .input-wrapper input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            border: 3px solid var(--primary);
+        }
+
+        .input-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 100px;
+            text-align: right;
+        }
+
+        .results {
+            margin-top: 3rem;
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        body.light-mode .results {
+            background: linear-gradient(135deg, #fef5ee 0%, #fde4d0 100%);
+        }
+
+        body.dark-mode .results {
+            background: linear-gradient(135deg, #3d2a1f 0%, #2d2d2d 100%);
+        }
+
+        .results h3 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .result-item {
+            padding: 2rem 1.5rem;
+            border-radius: 15px;
+        }
+
+        body.light-mode .result-item {
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        body.dark-mode .result-item {
+            background-color: var(--bg-dark-secondary);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        body.dark-mode .result-value {
+            color: var(--primary-light);
+        }
+
+        .result-increase {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .extra-earnings-box {
+            padding: 2rem;
+            border-radius: 15px;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(22, 163, 74, 0.1));
+            border: 2px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .extra-earnings-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .extra-earnings-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #22c55e;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 100px 5% 80px;
+        }
+
+        body.light-mode .testimonials {
+            background-color: var(--bg-light);
+        }
+
+        body.dark-mode .testimonials {
+            background-color: var(--bg-dark);
+        }
+
+        .testimonials-subtitle {
+            text-align: center;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            opacity: 0.7;
+        }
+
+        .social-proof {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            border-radius: 20px;
+        }
+
+        body.light-mode .social-proof {
+            background-color: var(--bg-light-secondary);
+        }
+
+        body.dark-mode .social-proof {
+            background-color: var(--bg-dark-secondary);
+        }
+
+        .avatars-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .avatar-circle {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: 3px solid white;
+            margin: 0.25rem -12px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease;
+            object-fit: cover;
+            animation: avatarFloat 3s ease-in-out infinite;
+        }
+
+        .avatar-circle:first-child {
+            margin-left: 0;
+        }
+
+        .avatar-circle:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .avatar-circle:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        .avatar-circle:hover {
+            transform: scale(1.15) translateY(-5px);
+            z-index: 10;
+        }
+
+        @keyframes avatarFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .avatar-gradient {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+
+        .social-proof-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .social-proof-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+        }
+
+        /* Testimonials Cards - Horizontal Scrollable */
+        .testimonials-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .testimonials-scroll-container {
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 2rem 0;
+        }
+
+        .testimonials-scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .testimonials-track {
+            display: flex;
+            gap: 2rem;
+            min-width: min-content;
+        }
+
+        .testimonial-card {
+            min-width: 400px;
+            max-width: 400px;
+            padding: 2rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        body.light-mode .testimonial-card {
+            background-color: var(--bg-light-secondary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        body.dark-mode .testimonial-card {
+            background-color: var(--bg-dark-secondary);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.05);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(253, 171, 111, 0.2);
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-initials {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .author-initials img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p {
+            opacity: 0.7;
+            font-size: 0.85rem;
+        }
+
+        .testimonials-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .testimonials-nav-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            background-color: transparent;
+            color: var(--primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .testimonials-nav-btn:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 5%;
+        }
+
+        .pricing-toggle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .pricing-toggle-label {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .pricing-toggle-label.active {
+            color: var(--primary);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background-color: #cbd5e1;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background-color: var(--primary);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(30px);
+        }
+
+        .annual-discount {
+            display: block;
+            color: #22c55e;
+            font-weight: 700;
+            font-size: 2.5rem;
+        }
+
+        .annual-total {
+            display: block;
+            font-size: 1rem;
+            color: var(--text-light);
+            opacity: 0.7;
+            margin-top: 0.5rem;
+        }
+
+        body.dark-mode .annual-total {
+            color: var(--text-dark);
+        }
+
+        .price-strike {
+            text-decoration: line-through;
+            opacity: 0.5;
+            font-size: 1.8rem;
+        }
+
+        body.light-mode .pricing {
+            background-color: var(--bg-light-secondary);
+        }
+
+        body.dark-mode .pricing {
+            background-color: var(--bg-dark-secondary);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .pricing-card:last-child {
+            grid-column: 1 / -1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        body.light-mode .pricing-card {
+            background-color: var(--bg-light);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        body.dark-mode .pricing-card {
+            background-color: var(--bg-dark);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.05);
+        }
+
+        .pricing-card.featured {
+            border: 3px solid var(--primary);
+            transform: scale(1.05);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .price-period {
+            opacity: 0.7;
+            margin-bottom: 2rem;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .features-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(253, 171, 111, 0.2);
+        }
+
+        .features-list li:before {
+            content: "✓ ";
+            color: var(--primary);
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 5%;
+            text-align: center;
+        }
+
+        body.light-mode .cta-section {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+
+        body.dark-mode .cta-section {
+            background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+            border-top: 2px solid var(--primary);
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: white;
+            opacity: 0.9;
+        }
+
+        .cta-section .cta-button {
+            background-color: white;
+            color: var(--primary);
+            border-color: white;
+        }
+
+        .cta-section .cta-button:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-5px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        body.light-mode .mobile-menu-toggle {
+            color: var(--text-light);
+        }
+
+        body.dark-mode .mobile-menu-toggle {
+            color: var(--text-dark);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .pillars-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .detailed-features-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0.3rem 5%;
+            }
+
+            .nav-container {
+                justify-content: center;
+                position: relative;
+            }
+
+            .logo {
+                margin: 0 auto;
+            }
+
+            .logo-icon {
+                width: 90px;
+                height: 90px;
+            }
+
+            .mobile-menu-toggle {
+                position: absolute;
+                right: 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
+            }
+
+            body.light-mode .nav-links {
+                background-color: var(--bg-light);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            body.dark-mode .nav-links {
+                background-color: var(--bg-dark);
+                box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card:last-child {
+                grid-column: 1;
+                max-width: 100%;
+            }
+
+            .simulator-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .simulator h2 {
+                font-size: 1.8rem;
+            }
+
+            .input-value {
+                font-size: 1.2rem;
+                min-width: 80px;
+            }
+
+            .result-value {
+                font-size: 2rem;
+            }
+
+            .result-increase {
+                font-size: 2.5rem;
+            }
+
+            .extra-earnings-value {
+                font-size: 2.5rem;
+            }
+
+            .hero-social-proof {
+                flex-direction: column;
+                gap: 0.75rem;
+                padding: 1rem 1.5rem;
+            }
+
+            .testimonial-card {
+                min-width: 320px;
+                max-width: 320px;
+            }
+
+            .testimonials-nav-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <img src="theaa-logo2.png" alt="Theaa" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+                <li><a href="#simulateur">Simulateur</a></li>
+                <li><a href="#temoignages">Témoignages</a></li>
+                <li><a href="#tarifs">Tarifs</a></li>
+                <li><button class="theme-toggle" id="themeToggle">🌙</button></li>
+                <li><a href="#" class="cta-button">Commencer</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content animate-fade-in">
+            <h1>Passe de closer moyen à <span class="highlight">TOP performer</span> en 7 jours : <span class="highlight">+47% de closing</span> garanti avec l'IA Theaa</h1>
+            <p>Plus de stress face aux objections : l'IA te guide mot pour mot vers le closing parfait</p>
+            <div class="hero-buttons">
+                <a href="#" class="cta-button">Essayer gratuitement</a>
+                <a href="#fonctionnalites" class="secondary-button">Découvrir comment ça marche</a>
+            </div>
+
+            <div class="hero-social-proof">
+                <div class="hero-social-text">Utilisé par les closers de</div>
+                <div class="hero-avatars">
+                    <img src="avatar1.jpg" alt="Closer" class="hero-avatar">
+                    <img src="avatar2.jpg" alt="Closer" class="hero-avatar">
+                    <img src="avatar3.jpg" alt="Closer" class="hero-avatar">
+                </div>
+                <div class="hero-social-text"><strong>+200 closers</strong> au total</div>
+                <div class="hero-rating">
+                    <span class="stars">⭐⭐⭐⭐⭐</span>
+                    <span class="rating-text">4.8</span>
+                    <span style="opacity: 0.7;">/ 156 notes</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Three Pillars Section -->
+    <section class="three-pillars" id="fonctionnalites">
+        <h2 class="section-title">Les 3 Piliers de <span style="color: var(--primary);">Theaa</span></h2>
+        <p class="section-subtitle">Une assistance IA complète pour transformer chaque appel en succès</p>
+
+        <div class="pillars-container">
+            <div class="pillar-card">
+                <span class="pillar-badge">Pré-Call</span>
+                <div class="precall-graphic">
+                    <div class="scan-ring"></div>
+                    <div class="central-circle">
+                        <img src="theaa-logo2.png" alt="Theaa" style="width: 85%; height: 85%; object-fit: contain;">
+                    </div>
+                    <div class="document-node doc-top">📄</div>
+                    <div class="document-node doc-left">📋</div>
+                    <div class="document-node doc-right">📑</div>
+                    <div class="connection-line line-top"></div>
+                    <div class="connection-line line-left"></div>
+                    <div class="connection-line line-right"></div>
+                    <div class="arrow-to-center arrow-from-top">↓</div>
+                    <div class="arrow-to-center arrow-from-left">→</div>
+                    <div class="arrow-to-center arrow-from-right">←</div>
+                </div>
+                <h3>Préparation Sans Effort</h3>
+                <p>Theaa centralise toutes tes connaissances produits, scripts de vente et objections courantes dans une base IA. Rejoins tes calls préparé avec toutes les réponses déjà à portée de main.</p>
+            </div>
+
+            <div class="pillar-card">
+                <span class="pillar-badge">During Call</span>
+                <div class="duringcall-graphic">
+                    <!-- Container qui scroll -->
+                    <div class="chat-scroll-container" id="chatScrollContainer">
+                        <!-- Message vocal de Theaa -->
+                        <div class="chat-bubble-left">
+                            <div class="avatar-theaa">t</div>
+                            <div class="message-left">
+                                <div class="voice-wave">
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Message du client avec typing effect -->
+                        <div class="chat-bubble-right">
+                            <div class="message-right">
+                                <span id="clientMessage"></span>
+                                <div class="scan-line-horizontal"></div>
+                            </div>
+                            <div class="avatar-client">🤵</div>
+                        </div>
+
+                        <!-- Bouton What to say avec flèche qui clique -->
+                        <div class="what-to-say-btn">
+                            <div class="mouse-cursor">👆</div>
+                            <span>💬 What to say?</span>
+                        </div>
+
+                        <!-- Message IA avec typing effect -->
+                        <div class="ai-generated-message">
+                            <span class="ai-badge-inline">IA</span>
+                            <span id="aiMessage"></span>
+                        </div>
+                    </div>
+                </div>
+                <h3>Intelligence en Temps Réel</h3>
+                <p>L'IA écoute ta conversation et te suggère instantanément les meilleures réponses aux objections. Tu reçois les bons arguments au bon moment, sans briser le flow de la discussion.</p>
+            </div>
+
+            <div class="pillar-card">
+                <span class="pillar-badge">Post-Call</span>
+                <div class="postcall-graphic">
+                    <div class="radar-chart">
+                        <svg class="radar-svg" viewBox="0 0 200 200">
+                            <!-- Grid background - triangle seulement -->
+                            <polygon class="radar-grid" points="100,30 170,130 30,130" stroke-width="1"/>
+                            <polygon class="radar-grid" points="100,50 150,120 50,120" stroke-width="1"/>
+                            <polygon class="radar-grid" points="100,70 130,110 70,110" stroke-width="1"/>
+
+                            <!-- Data polygon - triangle orange rempli -->
+                            <polygon class="radar-data" points="100,35 165,125 40,120"/>
+
+                            <!-- Axis lines from center -->
+                            <line x1="100" y1="100" x2="100" y2="30" class="radar-grid" stroke-width="1"/>
+                            <line x1="100" y1="100" x2="170" y2="130" class="radar-grid" stroke-width="1"/>
+                            <line x1="100" y1="100" x2="30" y2="130" class="radar-grid" stroke-width="1"/>
+
+                            <!-- Data points -->
+                            <circle class="radar-point" cx="100" cy="35"/>
+                            <circle class="radar-point" cx="165" cy="125"/>
+                            <circle class="radar-point" cx="40" cy="120"/>
+
+                            <!-- Labels -->
+                            <text class="radar-label" x="100" y="20">Découverte</text>
+                            <text class="radar-label" x="180" y="140">Pitch</text>
+                            <text class="radar-label" x="30" y="145">Objection</text>
+                        </svg>
+                    </div>
+
+                    <div class="score-global-box" style="font-size: 1.5rem; padding: 0.6rem 2rem;">15.3/20</div>
+                </div>
+                <h3>Analyse & Suivi Automatisé</h3>
+                <p>Après chaque call, l'IA analyse ta performance sur 20, identifie tes axes d'amélioration et génère automatiquement les résumés, emails de follow-up et met à jour ton CRM.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Features Section -->
+    <section class="detailed-features">
+        <h2 class="section-title">Comment Theaa fonctionne</h2>
+        <p class="section-subtitle">Découvre les fonctionnalités qui transforment chaque appel en succès</p>
+
+        <div class="detailed-features-container">
+            <div class="feature-detail-card">
+                <div class="feature-detail-visual">
+                    <div class="upload-visual">
+                        <div class="progress-circle">
+                            <svg width="80" height="80" viewBox="0 0 80 80">
+                                <circle cx="40" cy="40" r="36" fill="none" stroke="#22c55e" stroke-width="6" stroke-dasharray="226" stroke-dashoffset="56.5"/>
+                            </svg>
+                            <div class="progress-check">✓</div>
+                            <div class="progress-text">On track!</div>
+                        </div>
+                        <div class="file-indicator">
+                            <span class="file-icon">📄</span>
+                            <span class="file-name">myscript.pdf</span>
+                        </div>
+                        <div class="upload-button">
+                            <span class="upload-icon">☁️</span>
+                            <span>Upload script</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-detail-badge">CALL FRAMEWORK</div>
+                <h3 class="feature-detail-title">Base de connaissances personnalisée</h3>
+                <p class="feature-detail-description">Upload tes scripts de vente et toutes tes connaissances produit. L'IA Theaa te guidera en temps réel pendant tes calls, en restant toujours alignée avec ton framework et ta stratégie de closing.</p>
+            </div>
+
+            <div class="feature-detail-card">
+                <div class="feature-detail-visual">
+                    <div class="feedback-visual">
+                        <div class="feedback-box">
+                            <div class="feedback-title">Feedback global :</div>
+                            <div class="feedback-text">
+                                <p>Le closer a bien présenté le cadre de l'accompagnement en renforçant la clarté et la structure obtenues durant tout l'appel.</p>
+                                <p style="margin-top: 0.5rem;">Cependant, l'annonce du prix a été mal gérée, ce qui a empêché de surmonter l'objection financière efficacement et rapidement.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-detail-badge">ANALYSE INTELLIGENTE</div>
+                <h3 class="feature-detail-title">Décortiquage d'appels illimité</h3>
+                <p class="feature-detail-description">Theaa analyse chacun de tes appels en profondeur et te donne un feedback personnalisé illimité. Identifie tes points forts, tes axes d'amélioration et reçois des conseils actionnables après chaque call.</p>
+            </div>
+
+            <div class="feature-detail-card">
+                <div class="feature-detail-visual">
+                    <div class="platforms-visual">
+                        <div class="platform-icon main-icon">
+                            <img src="theaa-logo2.png" alt="Theaa" style="width: 75%; height: 75%; object-fit: contain;">
+                        </div>
+                        <div class="platform-icon" title="Zoom">
+                            <img src="zoom.png" alt="Zoom" style="width: 35px; height: 35px; object-fit: contain;">
+                        </div>
+                        <div class="platform-icon" title="Google Meet">
+                            <img src="google meet.png" alt="Google Meet" style="width: 35px; height: 35px; object-fit: contain;">
+                        </div>
+                        <div class="platform-icon" title="Microsoft Teams">
+                            <img src="teams.png" alt="Microsoft Teams" style="width: 35px; height: 35px; object-fit: contain;">
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-detail-badge">ALL PLATFORMS</div>
+                <h3 class="feature-detail-title">Compatible avec toutes les plateformes</h3>
+                <p class="feature-detail-description">Theaa fonctionne avec n'importe quelle plateforme de visioconférence : Zoom, Google Meet, Microsoft Teams, et bien plus. Intégration transparente sans friction.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simulator Section -->
+    <section class="simulator" id="simulateur">
+        <div class="simulator-container">
+            <h2>Calcule ton potentiel avec Theaa</h2>
+            <p class="simulator-intro">Découvre combien tu pourrais gagner en plus chaque mois</p>
+
+            <div class="input-group">
+                <label for="closingRate">Ton taux de closing actuel</label>
+                <div class="input-wrapper">
+                    <div class="slider-container">
+                        <div class="slider-fill" id="closingRateFill"></div>
+                        <input type="range" id="closingRate" min="5" max="80" value="20" step="5">
+                    </div>
+                    <span class="input-value"><span id="closingRateValue">20</span>%</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="showUpRate">Taux de show-up rate</label>
+                <div class="input-wrapper">
+                    <div class="slider-container">
+                        <div class="slider-fill" id="showUpRateFill"></div>
+                        <input type="range" id="showUpRate" min="0" max="100" value="65" step="5">
+                    </div>
+                    <span class="input-value"><span id="showUpRateValue">65</span>%</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="callsPerDay">Nombre d'appels par jour (hors weekend)</label>
+                <div class="input-wrapper">
+                    <div class="slider-container">
+                        <div class="slider-fill" id="callsPerDayFill"></div>
+                        <input type="range" id="callsPerDay" min="1" max="50" value="3" step="1">
+                    </div>
+                    <span class="input-value"><span id="callsPerDayValue">3</span></span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="offerPrice">Prix de l'offre que tu closes</label>
+                <div class="input-wrapper">
+                    <div class="slider-container">
+                        <div class="slider-fill" id="offerPriceFill"></div>
+                        <input type="range" id="offerPrice" min="1000" max="10000" value="2000" step="500">
+                    </div>
+                    <span class="input-value"><span id="offerPriceValue">2000</span>€</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="commission">Ta commission par vente</label>
+                <div class="input-wrapper">
+                    <div class="slider-container">
+                        <div class="slider-fill" id="commissionFill"></div>
+                        <input type="range" id="commission" min="0" max="100" value="10" step="5">
+                    </div>
+                    <span class="input-value"><span id="commissionValue">10</span>%</span>
+                </div>
+            </div>
+
+            <div class="results">
+                <h3>Tes revenus mensuels</h3>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <div class="result-label">Actuellement</div>
+                        <div class="result-value"><span id="currentEarnings">5 400</span>€</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">Avec Theaa (+47%)</div>
+                        <div class="result-increase"><span id="newEarnings">7 938</span>€</div>
+                    </div>
+                </div>
+                <div class="extra-earnings-box">
+                    <div class="extra-earnings-label">💰 Revenus supplémentaires par mois</div>
+                    <div class="extra-earnings-value">+<span id="extraEarnings">2 538</span>€</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="temoignages">
+        <h2 class="section-title">Ils ont transformé leur closing</h2>
+
+        <div class="social-proof">
+            <div class="avatars-row">
+                <img src="avatar1.jpg" alt="Closer" class="avatar-circle">
+                <img src="avatar2.jpg" alt="Closer" class="avatar-circle">
+                <img src="avatar3.jpg" alt="Closer" class="avatar-circle">
+            </div>
+            <p class="social-proof-text">Déjà adopté par les plus grands, pourquoi pas vous ?</p>
+            <p class="social-proof-subtitle">+200 closers utilisent Theaa quotidiennement</p>
+        </div>
+
+        <div class="testimonials-wrapper">
+            <div class="testimonials-scroll-container" id="testimonialsScrollContainer">
+                <div class="testimonials-track">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"Avant Theaa, je bloquais sur les objections prix. Maintenant, l'IA me donne les arguments parfaits en temps réel. Mon taux de closing est passé de 25% à 38% en 2 semaines."</p>
+                        <div class="testimonial-author">
+                            <div class="author-initials">
+                                <img src="anais.png" alt="Anais Siccard">
+                            </div>
+                            <div class="author-info">
+                                <h4>Anais Siccard</h4>
+                                <p>Closer High-Ticket</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"J'étais sceptique au début, mais les résultats parlent d'eux-mêmes. Theaa m'a aidé à structurer mes appels et à gérer les objections difficiles. +52% de deals signés le premier mois !"</p>
+                        <div class="testimonial-author">
+                            <div class="author-initials">
+                                <img src="maxime.png" alt="Maxime Bolgari">
+                            </div>
+                            <div class="author-info">
+                                <h4>Maxime Bolgari</h4>
+                                <p>Closer High-Ticket</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"L'assistance en temps réel est juste incroyable. Je ne perds plus mon temps à répéter les mêmes chose en coaching avec mes équipes sales, ils suivent Theaa et le taux de conversion à augmenté de +43% ! Theaa donne exactement ce qu'il faut dire au bon moment."</p>
+                        <div class="testimonial-author">
+                            <div class="author-initials">
+                                <img src="enzo.jpg" alt="Enzo D'amico">
+                            </div>
+                            <div class="author-info">
+                                <h4>Enzo D'amico</h4>
+                                <p>Sales Manager</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"Le ROI est fou. J'ai investi dans Theaa et en 3 jours, j'avais déjà remboursé l'abonnement avec les deals supplémentaires. Maintenant c'est juste du profit pur."</p>
+                        <div class="testimonial-author">
+                            <div class="author-initials">
+                                <img src="Nicolas.png" alt="Nicolas Gouzon">
+                            </div>
+                            <div class="author-info">
+                                <h4>Nicolas Gouzon</h4>
+                                <p>Closer High Ticket</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"Theaa m'a transformé en machine à closer. Les suggestions de l'IA sont toujours pertinentes et m'aident à rebondir sur chaque objection. Je ne pourrais plus m'en passer."</p>
+                        <div class="testimonial-author">
+                            <div class="author-initials">
+                                <img src="vincent.jpg" alt="Vincent Kowalkowski">
+                            </div>
+                            <div class="author-info">
+                                <h4>Vincent Kowalkowski</h4>
+                                <p>Closer High Ticket & Sales Manager</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonials-nav">
+                <button class="testimonials-nav-btn" id="testimonialsPrev">←</button>
+                <button class="testimonials-nav-btn" id="testimonialsNext">→</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="tarifs">
+        <h2 class="section-title">Choisis ton plan</h2>
+        <p class="section-subtitle">Commence gratuitement, upgrade quand tu es prêt</p>
+
+        <!-- Toggle Annual/Monthly -->
+        <div class="pricing-toggle-container">
+            <span class="pricing-toggle-label" id="monthlyLabel">Mensuel</span>
+            <div class="toggle-switch" id="pricingToggle">
+                <div class="toggle-slider"></div>
+            </div>
+            <span class="pricing-toggle-label" id="annualLabel">Annuel</span>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Starter</h3>
+                <div class="price">0€</div>
+                <p class="price-period">Pour toujours</p>
+                <ul class="features-list">
+                    <li>3 calls assistés par mois</li>
+                    <li>3 décorticages d'appel personnalisé</li>
+                    <li>1 training sales avec un prospect fictif</li>
+                    <li>Résumés d'appel</li>
+                    <li>Support email</li>
+                </ul>
+                <a href="#" class="cta-button">Commencer gratuitement</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <div class="featured-badge">Le plus populaire</div>
+                <h3>Closer Performance</h3>
+                <div class="price">
+                    <span class="monthly-price">39€</span>
+                    <span class="annual-price" style="display: none;">
+                        <span class="price-strike">39€</span>
+                        <span class="annual-discount">24€</span>
+                    </span>
+                </div>
+                <p class="price-period">
+                    par mois
+                    <span class="annual-total" style="display: none;">(299€/an)</span>
+                </p>
+                <ul class="features-list">
+                    <li>25 calls assistés par mois</li>
+                    <li>25 décorticages d'appel personnalisé</li>
+                    <li>3 training sales avec un prospect fictif</li>
+                    <li>Résumés d'appel</li>
+                    <li>1 Base de connaissances personnalisée</li>
+                    <li>Infos CRM</li>
+                    <li>Analytics détaillées</li>
+                    <li>Support email</li>
+                </ul>
+                <a href="#" class="cta-button">Devenir un Closer Performance</a>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Closer Advanced</h3>
+                <div class="price">
+                    <span class="monthly-price">69€</span>
+                    <span class="annual-price" style="display: none;">
+                        <span class="price-strike">69€</span>
+                        <span class="annual-discount">45€</span>
+                    </span>
+                </div>
+                <p class="price-period">
+                    par mois
+                    <span class="annual-total" style="display: none;">(549€/an)</span>
+                </p>
+                <ul class="features-list">
+                    <li>Calls illimités</li>
+                    <li>Décorticages d'appels illimités</li>
+                    <li>IA en temps réel avancée</li>
+                    <li>Base de connaissances personnalisée illimités</li>
+                    <li>Infos CRM</li>
+                    <li>Analytics détaillées</li>
+                    <li>Support prioritaire</li>
+                </ul>
+                <a href="#" class="cta-button">Devenir un Closer Advanced</a>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Équipe de closers</h3>
+                <div class="price">Contactez-nous</div>
+                <p class="price-period">Prendre rendez-vous</p>
+                <ul class="features-list">
+                    <li>Tout du plan Closer Advanced</li>
+                    <li>Multi-utilisateurs</li>
+                    <li>Leaderboard équipe</li>
+                    <li>Onboarding personnalisée</li>
+                    <li>Support 24/7</li>
+                    <li>Account Manager dédié</li>
+                </ul>
+                <a href="#" class="cta-button">Prendre rendez-vous</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Prêt à multiplier ton taux de closing ?</h2>
+        <p>Rejoins les 200+ closers qui utilisent Theaa pour performer</p>
+        <a href="#" class="cta-button">Commencer gratuitement</a>
+    </section>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        const currentTheme = localStorage.getItem('theme') || 'light-mode';
+        body.classList.add(currentTheme);
+        updateThemeIcon(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            if (body.classList.contains('light-mode')) {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark-mode');
+                updateThemeIcon('dark-mode');
+            } else {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                localStorage.setItem('theme', 'light-mode');
+                updateThemeIcon('light-mode');
+            }
+        });
+
+        function updateThemeIcon(theme) {
+            themeToggle.textContent = theme === 'dark-mode' ? '☀️' : '🌙';
+        }
+
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuToggle.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuToggle.textContent = '☰';
+            });
+        });
+
+        // Simulator with dynamic slider fill
+        const closingRateSlider = document.getElementById('closingRate');
+        const showUpRateSlider = document.getElementById('showUpRate');
+        const callsPerDaySlider = document.getElementById('callsPerDay');
+        const offerPriceSlider = document.getElementById('offerPrice');
+        const commissionSlider = document.getElementById('commission');
+
+        const closingRateValue = document.getElementById('closingRateValue');
+        const showUpRateValue = document.getElementById('showUpRateValue');
+        const callsPerDayValue = document.getElementById('callsPerDayValue');
+        const offerPriceValue = document.getElementById('offerPriceValue');
+        const commissionValue = document.getElementById('commissionValue');
+
+        const closingRateFill = document.getElementById('closingRateFill');
+        const showUpRateFill = document.getElementById('showUpRateFill');
+        const callsPerDayFill = document.getElementById('callsPerDayFill');
+        const offerPriceFill = document.getElementById('offerPriceFill');
+        const commissionFill = document.getElementById('commissionFill');
+
+        const currentEarningsEl = document.getElementById('currentEarnings');
+        const newEarningsEl = document.getElementById('newEarnings');
+        const extraEarningsEl = document.getElementById('extraEarnings');
+
+        function updateSliderFill(slider, fill) {
+            const percent = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+            fill.style.width = percent + '%';
+        }
+
+        function calculateEarnings() {
+            const closingRate = parseInt(closingRateSlider.value);
+            const showUpRate = parseInt(showUpRateSlider.value);
+            const callsPerDay = parseInt(callsPerDaySlider.value);
+            const offerPrice = parseInt(offerPriceSlider.value);
+            const commission = parseInt(commissionSlider.value);
+
+            closingRateValue.textContent = closingRate;
+            showUpRateValue.textContent = showUpRate;
+            callsPerDayValue.textContent = callsPerDay;
+            offerPriceValue.textContent = offerPrice.toLocaleString('fr-FR');
+            commissionValue.textContent = commission;
+
+            updateSliderFill(closingRateSlider, closingRateFill);
+            updateSliderFill(showUpRateSlider, showUpRateFill);
+            updateSliderFill(callsPerDaySlider, callsPerDayFill);
+            updateSliderFill(offerPriceSlider, offerPriceFill);
+            updateSliderFill(commissionSlider, commissionFill);
+
+            // Calculate earnings with show-up rate (22 jours ouvrables par mois)
+            const actualCalls = (callsPerDay * 22 * showUpRate) / 100;
+            const monthlyDeals = (actualCalls * closingRate) / 100;
+            const commissionPerDeal = (offerPrice * commission) / 100;
+            const currentEarnings = Math.round(monthlyDeals * commissionPerDeal);
+            const newEarnings = Math.round(currentEarnings * 1.47);
+            const extraEarnings = newEarnings - currentEarnings;
+
+            currentEarningsEl.textContent = currentEarnings.toLocaleString('fr-FR');
+            newEarningsEl.textContent = newEarnings.toLocaleString('fr-FR');
+            extraEarningsEl.textContent = extraEarnings.toLocaleString('fr-FR');
+        }
+
+        closingRateSlider.addEventListener('input', calculateEarnings);
+        showUpRateSlider.addEventListener('input', calculateEarnings);
+        callsPerDaySlider.addEventListener('input', calculateEarnings);
+        offerPriceSlider.addEventListener('input', calculateEarnings);
+        commissionSlider.addEventListener('input', calculateEarnings);
+
+        calculateEarnings();
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.pillar-card, .testimonial-card, .pricing-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // DURING CALL - Typing Animation with Loop (Faster)
+        const clientText = "Je dois en parler avec ma femme avant de prendre une décision.";
+        const aiText = "Bien sûr, c'est totalement normal. Quand ça touche à des décisions importantes, c'est sain d'en parler avec sa femme. Juste pour comprendre...";
+
+        let clientIndex = 0;
+        let aiIndex = 0;
+        let animationComplete = false;
+
+        function typeClientMessage() {
+            const clientMessageEl = document.getElementById('clientMessage');
+            const chatContainer = document.getElementById('chatScrollContainer');
+
+            if (clientIndex < clientText.length) {
+                clientMessageEl.textContent += clientText.charAt(clientIndex);
+                clientIndex++;
+
+                // Auto scroll as text appears
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                setTimeout(typeClientMessage, 25); // 25ms per letter (slightly faster than original)
+            } else {
+                // Client message complete, wait briefly then start AI
+                setTimeout(typeAIMessage, 1500); // Wait 1.5 seconds (faster)
+            }
+        }
+
+        function typeAIMessage() {
+            const aiMessageEl = document.getElementById('aiMessage');
+            const chatContainer = document.getElementById('chatScrollContainer');
+
+            if (aiIndex < aiText.length) {
+                aiMessageEl.textContent += aiText.charAt(aiIndex);
+                aiIndex++;
+
+                // Auto scroll as text appears
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                setTimeout(typeAIMessage, 45); // 45ms per letter (slightly faster than original)
+            } else {
+                // Animation complete, restart after delay
+                animationComplete = true;
+                setTimeout(restartAnimation, 2000); // Faster restart
+            }
+        }
+
+        function restartAnimation() {
+            const clientMessageEl = document.getElementById('clientMessage');
+            const aiMessageEl = document.getElementById('aiMessage');
+            const chatContainer = document.getElementById('chatScrollContainer');
+
+            // Reset
+            clientMessageEl.textContent = '';
+            aiMessageEl.textContent = '';
+            clientIndex = 0;
+            aiIndex = 0;
+
+            // Smooth scroll to top
+            chatContainer.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Restart typing sequence
+            setTimeout(typeClientMessage, 1000);
+        }
+
+        // Start the animation after initial delay
+        setTimeout(typeClientMessage, 1000);
+
+        // Testimonials horizontal scroll
+        const testimonialsContainer = document.getElementById('testimonialsScrollContainer');
+        const testimonialsPrev = document.getElementById('testimonialsPrev');
+        const testimonialsNext = document.getElementById('testimonialsNext');
+
+        const scrollAmount = 420; // card width + gap
+
+        testimonialsNext.addEventListener('click', () => {
+            testimonialsContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        });
+
+        testimonialsPrev.addEventListener('click', () => {
+            testimonialsContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        });
+
+        // Pricing Toggle (Annual/Monthly)
+        const pricingToggle = document.getElementById('pricingToggle');
+        const monthlyLabel = document.getElementById('monthlyLabel');
+        const annualLabel = document.getElementById('annualLabel');
+        const monthlyPrices = document.querySelectorAll('.monthly-price');
+        const annualPrices = document.querySelectorAll('.annual-price');
+        const annualTotals = document.querySelectorAll('.annual-total');
+
+        pricingToggle.addEventListener('click', () => {
+            pricingToggle.classList.toggle('active');
+
+            if (pricingToggle.classList.contains('active')) {
+                // Annual mode
+                monthlyLabel.classList.remove('active');
+                annualLabel.classList.add('active');
+                monthlyPrices.forEach(el => el.style.display = 'none');
+                annualPrices.forEach(el => el.style.display = 'inline');
+                annualTotals.forEach(el => el.style.display = 'block');
+            } else {
+                // Monthly mode
+                monthlyLabel.classList.add('active');
+                annualLabel.classList.remove('active');
+                monthlyPrices.forEach(el => el.style.display = 'inline');
+                annualPrices.forEach(el => el.style.display = 'none');
+                annualTotals.forEach(el => el.style.display = 'none');
+            }
+        });
+
+        // Set monthly as default active
+        monthlyLabel.classList.add('active');
+    </script>
+</body>
+</html>
