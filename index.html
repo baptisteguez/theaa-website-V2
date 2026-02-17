@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Theaa - Assistant IA pour Closers</title>
+    <title>Theaa - Assistant IA pour Équipes Commerciales</title>
     <style>
         * {
             margin: 0;
@@ -44,21 +44,40 @@
 
         /* Navigation */
         nav {
-            position: relative;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             z-index: 1000;
             padding: 0.5rem 5%;
-            transition: background-color 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease, box-shadow 0.3s ease;
+            transform: translateY(0);
+        }
+
+        nav.nav-hidden {
+            transform: translateY(-100%);
+        }
+
+        nav.nav-scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         body.light-mode nav {
             background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         body.dark-mode nav {
             background-color: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode nav.nav-scrolled {
+            box-shadow: 0 4px 20px rgba(253, 171, 111, 0.2);
         }
 
         .nav-container {
@@ -158,7 +177,7 @@
 
         /* Hero Section */
         .hero {
-            padding: 20px 5% 80px;
+            padding: 100px 5% 80px;
             text-align: center;
             min-height: 95vh;
             display: flex;
@@ -317,6 +336,111 @@
             color: var(--primary);
         }
 
+        /* Situations Section */
+        .situations-section {
+            padding: 80px 5%;
+        }
+
+        body.light-mode .situations-section {
+            background-color: var(--bg-light-secondary);
+        }
+
+        body.dark-mode .situations-section {
+            background-color: var(--bg-dark-secondary);
+        }
+
+        .situations-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+        }
+
+        body.light-mode .situations-title {
+            color: var(--text-light);
+        }
+
+        body.dark-mode .situations-title {
+            color: var(--text-dark);
+        }
+
+        .situations-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .situation-card {
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid;
+        }
+
+        body.light-mode .situation-card {
+            background-color: white;
+            border-color: #e5e7eb;
+        }
+
+        body.dark-mode .situation-card {
+            background-color: #2d2d2d;
+            border-color: #404040;
+        }
+
+        .situation-card:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+
+        body.light-mode .situation-card:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .situation-card:hover {
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2);
+        }
+
+        .situation-header {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        body.light-mode .situation-header {
+            color: var(--text-light);
+        }
+
+        body.dark-mode .situation-header {
+            color: var(--text-dark);
+        }
+
+        .situation-point {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .situation-point::before {
+            content: "→";
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        body.light-mode .situation-point {
+            color: var(--text-light);
+        }
+
+        body.dark-mode .situation-point {
+            color: var(--text-dark);
+        }
+
         /* Three Pillars Section */
         .three-pillars {
             padding: 100px 5%;
@@ -339,7 +463,7 @@
 
         .section-subtitle {
             text-align: center;
-            font-size: 1.2rem;
+            font-size: 1rem;
             margin-bottom: 4rem;
             opacity: 0.8;
         }
@@ -1994,11 +2118,11 @@
         }
 
         body.light-mode .cta-section {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: linear-gradient(135deg, #fef5ee 0%, #fde4d0 60%, #feddc4 100%);
         }
 
         body.dark-mode .cta-section {
-            background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 60%, #2d2520 100%);
             border-top: 2px solid var(--primary);
             border-bottom: 2px solid var(--primary);
         }
@@ -2006,7 +2130,24 @@
         .cta-section h2 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            color: white;
+        }
+
+        body.light-mode .cta-section h2,
+        body.light-mode .cta-section p {
+            color: var(--text-light);
+        }
+
+        body.dark-mode .cta-section h2,
+        body.dark-mode .cta-section p {
+            color: var(--text-dark);
+        }
+
+        .cta-section .highlight {
+            color: var(--primary);
+        }
+
+        body.dark-mode .cta-section .highlight {
+            color: var(--primary-light);
         }
 
         .cta-section p {
@@ -2063,7 +2204,7 @@
 
         @media (max-width: 768px) {
             nav {
-                padding: 0.3rem 5%;
+                padding: 0.2rem 5%;
             }
 
             .nav-container {
@@ -2076,8 +2217,8 @@
             }
 
             .logo-icon {
-                width: 90px;
-                height: 90px;
+                width: 55px;
+                height: 55px;
             }
 
             .mobile-menu-toggle {
@@ -2180,6 +2321,289 @@
                 height: 45px;
                 font-size: 1.2rem;
             }
+
+            /* Situations Section Mobile */
+            .situations-section {
+                padding: 60px 5%;
+            }
+
+            .situations-title {
+                font-size: 1.6rem;
+                margin-bottom: 2rem;
+            }
+
+            .situations-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .situation-card {
+                padding: 1.5rem;
+            }
+
+            .situation-header {
+                font-size: 1.1rem;
+                margin-bottom: 1rem;
+            }
+
+            .situation-point {
+                font-size: 0.95rem;
+                margin-bottom: 0.8rem;
+            }
+
+            /* Hero Section Mobile */
+            .hero {
+                padding: 80px 5% 40px 5%;
+                min-height: auto;
+            }
+
+            .hero-content {
+                text-align: center;
+                padding: 0 0.5rem;
+                margin-top: 0;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem !important;
+                margin-top: 0.5rem !important;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .cta-button, .secondary-button {
+                width: 100%;
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+
+            /* CTA Section Mobile */
+            .cta-section {
+                padding: 60px 5%;
+            }
+
+            .cta-section h2 {
+                font-size: 1.6rem;
+            }
+
+            .cta-section p {
+                font-size: 0.95rem;
+                margin-bottom: 1rem;
+            }
+
+            /* Three Pillars Mobile */
+            .three-pillars {
+                padding: 60px 5%;
+            }
+
+            .pillar-title {
+                font-size: 1.6rem;
+            }
+
+            .pillar-card h3 {
+                font-size: 1.2rem;
+            }
+
+            .pillar-card p {
+                font-size: 0.95rem;
+            }
+
+            /* Feature Details Mobile */
+            .detailed-features {
+                padding: 60px 5%;
+            }
+
+            .feature-detail-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .feature-detail-title {
+                font-size: 1.3rem;
+            }
+
+            .feature-detail-description {
+                font-size: 0.95rem;
+            }
+
+            /* Hero Badge Mobile */
+            .hero-badge {
+                font-size: 0.85rem !important;
+                padding: 0.5rem 1rem !important;
+                margin-bottom: 1.2rem !important;
+                display: block !important;
+                text-align: center;
+                max-width: 90%;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+            /* Pricing Section Mobile */
+            .pricing {
+                padding: 60px 5%;
+            }
+
+            /* Testimonials Mobile */
+            .testimonials {
+                padding: 60px 5%;
+            }
+
+            /* Case Study Mobile */
+            .case-study {
+                padding: 60px 5%;
+            }
+
+            /* Simulator Mobile Adjustments */
+            .simulator-intro {
+                font-size: 0.95rem;
+            }
+
+            .input-group label {
+                font-size: 0.95rem;
+            }
+
+            .slider {
+                margin: 1rem 0;
+            }
+
+            /* General Text Size Adjustments */
+            body {
+                font-size: 16px;
+            }
+
+            h2 {
+                line-height: 1.3;
+            }
+
+            h3 {
+                line-height: 1.4;
+            }
+
+            /* Ensure all images are responsive */
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            /* Prevent horizontal scroll */
+            body, html {
+                overflow-x: hidden;
+            }
+
+            /* Stack buttons vertically on very small screens */
+            .hero-buttons a {
+                text-align: center;
+            }
+
+            /* Pillar Intro Mobile */
+            .pillar-intro {
+                font-size: 0.95rem !important;
+                padding: 0 1rem;
+                margin: 0 auto 2rem auto !important;
+            }
+
+            .pillar-intro p {
+                font-size: 1rem !important;
+            }
+
+            /* Situations subtitle mobile */
+            .situations-section > p {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+        }
+
+        /* Extra Small Screens (Mobile Portrait) */
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.15rem 5%;
+            }
+
+            .logo-icon {
+                width: 50px !important;
+                height: 50px !important;
+            }
+
+            .hero {
+                padding: 70px 5% 30px 5% !important;
+            }
+
+            .hero-content {
+                padding: 0 0.5rem;
+            }
+
+            .hero h1 {
+                font-size: 1.3rem !important;
+                line-height: 1.4 !important;
+                margin-top: 0.5rem !important;
+            }
+
+            .hero-badge {
+                font-size: 0.75rem !important;
+                padding: 0.4rem 0.8rem !important;
+                display: block !important;
+                text-align: center;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                margin-bottom: 0.8rem !important;
+            }
+
+            .section-title {
+                font-size: 1.5rem !important;
+                line-height: 1.3;
+            }
+
+            .situations-title {
+                font-size: 1.4rem !important;
+            }
+
+            .situation-header {
+                font-size: 1rem !important;
+            }
+
+            .situation-point {
+                font-size: 0.9rem !important;
+            }
+
+            .cta-button, .secondary-button {
+                font-size: 0.95rem;
+                padding: 0.9rem 1.5rem;
+            }
+
+            .pillar-title {
+                font-size: 1.4rem !important;
+            }
+
+            .simulator-container {
+                padding: 1.5rem 1rem;
+            }
+
+            .input-value {
+                font-size: 1rem !important;
+            }
+
+            .result-value {
+                font-size: 1.8rem !important;
+            }
+
+            .hero {
+                padding: 40px 5% 30px 5%;
+            }
+
+            .situations-section,
+            .three-pillars,
+            .cta-section,
+            .detailed-features,
+            .pricing,
+            .testimonials,
+            .case-study {
+                padding: 40px 5%;
+            }
         }
 
         /* Animations */
@@ -2197,6 +2621,575 @@
         .animate-fade-in {
             animation: fadeInUp 0.8s ease-out;
         }
+        /* Pillar Main Structure */
+        .pillar-main {
+            margin-bottom: 5rem;
+        }
+
+        .pillar-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 3rem 0 1rem;
+            color: var(--primary);
+        }
+
+        .pillar-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.8;
+        }
+
+        /* New Pillar 2 & 3 Visuals */
+        .scoring-graphic,
+        .reporting-graphic,
+        .leaderboard-graphic,
+        .avatar-graphic,
+        .angles-graphic,
+        .leads-graphic {
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 2rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Scoring Graphic (Circular Score) */
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 8px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            box-shadow: 0 10px 30px rgba(253, 171, 111, 0.3);
+            animation: scorePulse 2s ease-in-out infinite;
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            margin-top: -0.5rem;
+            opacity: 0.8;
+        }
+
+        @keyframes scorePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Reporting Graphic (Dashboard Icons) */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            width: 200px;
+        }
+
+        .dashboard-item {
+            width: 90px;
+            height: 90px;
+            background: white;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            animation: dashboardFloat 3s ease-in-out infinite;
+        }
+
+        body.dark-mode .dashboard-item {
+            background: var(--bg-dark-secondary);
+        }
+
+        .dashboard-item:nth-child(1) { animation-delay: 0s; }
+        .dashboard-item:nth-child(2) { animation-delay: 0.5s; }
+        .dashboard-item:nth-child(3) { animation-delay: 1s; }
+        .dashboard-item:nth-child(4) { animation-delay: 1.5s; }
+
+        @keyframes dashboardFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .dashboard-icon {
+            font-size: 2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .dashboard-label {
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        /* Leaderboard Graphic (Podium) */
+        .podium {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 1rem;
+            height: 200px;
+        }
+
+        .podium-place {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .podium-bar {
+            width: 60px;
+            background: var(--primary);
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(253, 171, 111, 0.4);
+            animation: podiumRise 1s ease-out forwards;
+        }
+
+        .podium-bar.first { height: 140px; background: linear-gradient(135deg, #FFD700, #FFA500); animation-delay: 0.2s; }
+        .podium-bar.second { height: 110px; background: linear-gradient(135deg, #C0C0C0, #808080); animation-delay: 0s; }
+        .podium-bar.third { height: 90px; background: linear-gradient(135deg, #CD7F32, #8B4513); animation-delay: 0.1s; }
+
+        @keyframes podiumRise {
+            from { transform: scaleY(0); transform-origin: bottom; }
+            to { transform: scaleY(1); transform-origin: bottom; }
+        }
+
+        /* Avatar Graphic (Evolving Profile) */
+        .avatar-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            box-shadow: 0 10px 30px rgba(253, 171, 111, 0.3);
+            position: relative;
+        }
+
+        body.dark-mode .avatar-circle {
+            background: var(--bg-dark-secondary);
+        }
+
+        .avatar-data-point {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            animation: orbitRotate 4s linear infinite;
+        }
+
+        .avatar-data-point:nth-child(2) { animation-delay: -1s; }
+        .avatar-data-point:nth-child(3) { animation-delay: -2s; }
+        .avatar-data-point:nth-child(4) { animation-delay: -3s; }
+
+        @keyframes orbitRotate {
+            from { transform: rotate(0deg) translateX(90px) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(90px) rotate(-360deg); }
+        }
+
+        /* Angles Graphic (Lightbulb Ideas) */
+        .ideas-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .idea-bulb {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            animation: ideaPop 2s ease-in-out infinite;
+        }
+
+        body.dark-mode .idea-bulb {
+            background: var(--bg-dark-secondary);
+        }
+
+        .idea-bulb:nth-child(1) { animation-delay: 0s; }
+        .idea-bulb:nth-child(2) { animation-delay: 0.7s; }
+        .idea-bulb:nth-child(3) { animation-delay: 1.4s; }
+
+        @keyframes ideaPop {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* Leads Quality Graphic (Line Chart) */
+        .leads-chart {
+            width: 250px;
+            height: 150px;
+            position: relative;
+            border-left: 2px solid var(--primary);
+            border-bottom: 2px solid var(--primary);
+            padding: 10px;
+        }
+
+        .chart-line {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            width: 230px;
+            height: 2px;
+            background: transparent;
+        }
+
+        .chart-line svg {
+            width: 100%;
+            height: 130px;
+        }
+
+        .chart-dot {
+            fill: var(--primary);
+            animation: dotPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes dotPulse {
+            0%, 100% { r: 4; }
+            50% { r: 6; }
+        }
+
+        /* NEW PILLAR 2 VISUALS - Updated */
+        /* Closers Ranking (Scoring) */
+        .closers-ranking {
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .closer-row {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .closer-row {
+            background: var(--bg-dark-secondary);
+        }
+
+        .closer-row:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(253, 171, 111, 0.2);
+        }
+
+        .closer-name {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .closer-scores {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .score-item {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .score-item strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Email Report (Reporting) */
+        .email-report {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            font-size: 0.75rem;
+        }
+
+        body.dark-mode .email-report {
+            background: var(--bg-dark-secondary);
+        }
+
+        .email-header {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .email-section {
+            margin-bottom: 0.8rem;
+        }
+
+        .email-section-title {
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .alert-item {
+            padding: 0.4rem;
+            margin-bottom: 0.3rem;
+            background: rgba(255, 165, 0, 0.1);
+            border-left: 3px solid orange;
+            border-radius: 4px;
+            line-height: 1.3;
+        }
+
+        .stat-line {
+            padding: 0.3rem 0;
+            line-height: 1.4;
+        }
+
+        /* Leaderboard Score (hover) */
+        .podium-score {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .podium-place:hover .podium-score {
+            opacity: 1;
+        }
+
+        /* Marketing Ideas (Angles) */
+        .marketing-ideas {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        .idea-card {
+            background: white;
+            padding: 0.8rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            text-align: left;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+            animation: ideaSlideIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        body.dark-mode .idea-card {
+            background: var(--bg-dark-secondary);
+        }
+
+        .idea-card:nth-child(1) { animation-delay: 0.2s; }
+        .idea-card:nth-child(2) { animation-delay: 0.4s; }
+        .idea-card:nth-child(3) { animation-delay: 0.6s; }
+
+        .idea-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(253, 171, 111, 0.3);
+        }
+
+        .idea-type {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.5px;
+        }
+
+        .idea-text {
+            font-size: 0.85rem;
+            line-height: 1.3;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        @keyframes ideaSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Case Study Section */
+        .case-study {
+            padding: 100px 5%;
+            text-align: center;
+        }
+
+        body.light-mode .case-study {
+            background: linear-gradient(135deg, #fef5ee 0%, #fde4d0 100%);
+        }
+
+        body.dark-mode .case-study {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2520 100%);
+        }
+
+        .case-study-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .case-study-video {
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 16/9;
+            margin: 2rem auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(253, 171, 111, 0.3);
+        }
+
+        .case-study-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .case-study-stat {
+            padding: 2rem;
+            border-radius: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        body.light-mode .case-study-stat {
+            background: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .case-study-stat {
+            background: var(--bg-dark-secondary);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+        }
+
+        .case-study-stat:hover {
+            transform: translateY(-10px);
+        }
+
+        .case-study-stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .case-study-stat-label {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        /* Affiliate Section */
+        .affiliate-section {
+            padding: 80px 5%;
+            text-align: center;
+        }
+
+        body.light-mode .affiliate-section {
+            background: linear-gradient(135deg, #fef5ee 0%, #fde4d0 60%, #feddc4 100%);
+        }
+
+        body.dark-mode .affiliate-section {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 60%, #2d2520 100%);
+            border-top: 2px solid var(--primary);
+        }
+
+        .affiliate-section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        body.light-mode .affiliate-section h2 {
+            color: var(--text-light);
+        }
+
+        body.dark-mode .affiliate-section h2 {
+            color: var(--text-dark);
+        }
+
+        .affiliate-section .highlight {
+            color: var(--primary);
+        }
+
+        body.dark-mode .affiliate-section .highlight {
+            color: var(--primary-light);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 30px 5%;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        body.light-mode .footer {
+            background-color: var(--bg-light-secondary);
+            color: var(--text-light-secondary);
+            border-top: 1px solid #e0e0e0;
+        }
+
+        body.dark-mode .footer {
+            background-color: var(--bg-dark);
+            color: var(--text-dark-secondary);
+            border-top: 1px solid #333;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            margin: 0 15px;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer a:hover {
+            opacity: 0.7;
+        }
+
     </style>
 </head>
 <body class="light-mode">
@@ -2214,7 +3207,7 @@
                 <li><a href="#temoignages">Témoignages</a></li>
                 <li><a href="#tarifs">Tarifs</a></li>
                 <li><button class="theme-toggle" id="themeToggle">🌙</button></li>
-                <li><a href="#" class="cta-button">Commencer</a></li>
+                <li><a href="https://www.theaa.ai/call" class="cta-button" target="_blank" href="https://www.theaa.ai/call" target="_blank">Réserver une démo</a></li>
             </ul>
             <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
         </div>
@@ -2223,15 +3216,21 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content animate-fade-in">
-            <h1>Passe de closer moyen à <span class="highlight">TOP performer</span> en 7 jours : <span class="highlight">+47% de closing</span> garanti avec l'IA Theaa</h1>
-            <p>Plus de stress face aux objections : l'IA te guide mot pour mot vers le closing parfait</p>
+            <div class="hero-badge" style="display: inline-block; border: 2px solid var(--primary); padding: 0.4rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; margin-bottom: 1.5rem; background: rgba(255, 107, 53, 0.1);">
+                Pour les Business High Ticket :
+            </div>
+            <h1 style="margin-top: 0.5rem; line-height: 1.3; font-size: 2.2rem;">
+                Tes closers convertissent à 15-25% au lieu de 40%+ ?<br>
+                Theaa les guide en temps réel pour <span class="highlight">doubler leur taux de conversion.</span>
+            </h1>
+            <p>Découvre l'outil qui a généré <a href="#etude-de-cas" class="highlight" style="font-weight: bold; text-decoration: underline; cursor: pointer;">+2,1M€ de CA</a> pour l'un de nos clients en 7 jours</p>
             <div class="hero-buttons">
-                <a href="#" class="cta-button">Essayer gratuitement</a>
+                <a href="https://www.theaa.ai/call" class="cta-button" target="_blank" href="https://www.theaa.ai/call" target="_blank">Réserver une démo</a>
                 <a href="#fonctionnalites" class="secondary-button">Découvrir comment ça marche</a>
             </div>
 
             <div class="hero-social-proof">
-                <div class="hero-social-text">Utilisé par les closers de</div>
+                <div class="hero-social-text">Utilisé au quotidien par les closers de</div>
                 <div class="hero-avatars">
                     <img src="avatar1.jpg" alt="Closer" class="hero-avatar">
                     <img src="avatar2.jpg" alt="Closer" class="hero-avatar">
@@ -2247,122 +3246,150 @@
         </div>
     </section>
 
-    <!-- Three Pillars Section -->
-    <section class="three-pillars" id="fonctionnalites">
-        <h2 class="section-title">Les 3 Piliers de <span style="color: var(--primary);">Theaa</span></h2>
-        <p class="section-subtitle">Une assistance IA complète pour transformer chaque appel en succès</p>
+    <!-- Situations Section -->
+    <section class="situations-section">
+        <h2 class="situations-title">Tu te retrouves dans cette situation ?</h2>
 
-        <div class="pillars-container">
-            <div class="pillar-card">
-                <span class="pillar-badge">Pré-Call</span>
-                <div class="precall-graphic">
-                    <div class="scan-ring"></div>
-                    <div class="central-circle">
-                        <img src="theaa-logo2.png" alt="Theaa" style="width: 85%; height: 85%; object-fit: contain;">
-                    </div>
-                    <div class="document-node doc-top">📄</div>
-                    <div class="document-node doc-left">📋</div>
-                    <div class="document-node doc-right">📑</div>
-                    <div class="connection-line line-top"></div>
-                    <div class="connection-line line-left"></div>
-                    <div class="connection-line line-right"></div>
-                    <div class="arrow-to-center arrow-from-top">↓</div>
-                    <div class="arrow-to-center arrow-from-left">→</div>
-                    <div class="arrow-to-center arrow-from-right">←</div>
-                </div>
-                <h3>Préparation Sans Effort</h3>
-                <p>Theaa centralise toutes tes connaissances produits, scripts de vente et objections courantes dans une base IA. Rejoins tes calls préparé avec toutes les réponses déjà à portée de main.</p>
+        <div class="situations-container">
+            <div class="situation-card">
+                <div class="situation-header">Situation 1 : Tu as une équipe</div>
+                <div class="situation-point">Tes closers ratent les objections et perdent des ventes bêtement</div>
+                <div class="situation-point">Ils ne respectent pas le script et le pitch de vente</div>
+                <div class="situation-point">Ils closent à 15-25% de conversion au lieu de 40%+</div>
+                <div class="situation-point">Chaque deal raté = 2 à 5k€ de CA en moins</div>
             </div>
 
-            <div class="pillar-card">
-                <span class="pillar-badge">During Call</span>
-                <div class="duringcall-graphic">
-                    <!-- Container qui scroll -->
-                    <div class="chat-scroll-container" id="chatScrollContainer">
-                        <!-- Message vocal de Theaa -->
-                        <div class="chat-bubble-left">
-                            <div class="avatar-theaa">t</div>
-                            <div class="message-left">
-                                <div class="voice-wave">
-                                    <div class="wave-bar"></div>
-                                    <div class="wave-bar"></div>
-                                    <div class="wave-bar"></div>
-                                    <div class="wave-bar"></div>
-                                    <div class="wave-bar"></div>
-                                    <div class="wave-bar"></div>
-                                    <div class="wave-bar"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Message du client avec typing effect -->
-                        <div class="chat-bubble-right">
-                            <div class="message-right">
-                                <span id="clientMessage"></span>
-                                <div class="scan-line-horizontal"></div>
-                            </div>
-                            <div class="avatar-client">🤵</div>
-                        </div>
-
-                        <!-- Bouton What to say avec flèche qui clique -->
-                        <div class="what-to-say-btn">
-                            <div class="mouse-cursor">👆</div>
-                            <span>💬 What to say?</span>
-                        </div>
-
-                        <!-- Message IA avec typing effect -->
-                        <div class="ai-generated-message">
-                            <span class="ai-badge-inline">IA</span>
-                            <span id="aiMessage"></span>
-                        </div>
-                    </div>
-                </div>
-                <h3>Intelligence en Temps Réel</h3>
-                <p>L'IA écoute ta conversation et te suggère instantanément les meilleures réponses aux objections. Tu reçois les bons arguments au bon moment, sans briser le flow de la discussion.</p>
+            <div class="situation-card">
+                <div class="situation-header">Situation 2 : Tu closes toi-même</div>
+                <div class="situation-point">Tu t'épuises en passant 15-20h/semaine en calls</div>
+                <div class="situation-point">Impossible de scaler et tu ne sais pas comment bien recruter et former de bons closers</div>
+                <div class="situation-point">Tu sais que c'est la pièce manquante pour que ton business décolle</div>
             </div>
 
-            <div class="pillar-card">
-                <span class="pillar-badge">Post-Call</span>
-                <div class="postcall-graphic">
-                    <div class="radar-chart">
-                        <svg class="radar-svg" viewBox="0 0 200 200">
-                            <!-- Grid background - triangle seulement -->
-                            <polygon class="radar-grid" points="100,30 170,130 30,130" stroke-width="1"/>
-                            <polygon class="radar-grid" points="100,50 150,120 50,120" stroke-width="1"/>
-                            <polygon class="radar-grid" points="100,70 130,110 70,110" stroke-width="1"/>
-
-                            <!-- Data polygon - triangle orange rempli -->
-                            <polygon class="radar-data" points="100,35 165,125 40,120"/>
-
-                            <!-- Axis lines from center -->
-                            <line x1="100" y1="100" x2="100" y2="30" class="radar-grid" stroke-width="1"/>
-                            <line x1="100" y1="100" x2="170" y2="130" class="radar-grid" stroke-width="1"/>
-                            <line x1="100" y1="100" x2="30" y2="130" class="radar-grid" stroke-width="1"/>
-
-                            <!-- Data points -->
-                            <circle class="radar-point" cx="100" cy="35"/>
-                            <circle class="radar-point" cx="165" cy="125"/>
-                            <circle class="radar-point" cx="40" cy="120"/>
-
-                            <!-- Labels -->
-                            <text class="radar-label" x="100" y="20">Découverte</text>
-                            <text class="radar-label" x="180" y="140">Pitch</text>
-                            <text class="radar-label" x="30" y="145">Objection</text>
-                        </svg>
-                    </div>
-
-                    <div class="score-global-box" style="font-size: 1.5rem; padding: 0.6rem 2rem;">15.3/20</div>
-                </div>
-                <h3>Analyse & Suivi Automatisé</h3>
-                <p>Après chaque call, l'IA analyse ta performance sur 20, identifie tes axes d'amélioration et génère automatiquement les résumés, emails de follow-up et met à jour ton CRM.</p>
+            <div class="situation-card">
+                <div class="situation-header">Situation 3 : Tu as délégué à une agence de closing</div>
+                <div class="situation-point">Ils prennent 20-30% sur ton CA chaque mois et ça détruit ta profitabilité</div>
+                <div class="situation-point">Tu n'as aucun contrôle et tu es piégé avec cette agence de closing</div>
+                <div class="situation-point">Les closers survendent parfois le produit et tu te retrouves avec des refunds ou à sur-délivrer</div>
             </div>
         </div>
+
+        <h2 class="situations-title" style="margin-top: 4rem;">Si c'est le cas, alors Theaa est parfaitement adapté à ton business</h2>
+        <p style="text-align: center; font-size: 1.2rem; margin-top: 1rem; font-weight: 500;">Theaa c'est ton Head of sales qui guide et forme tes closers en temps réel</p>
+    </section>
+
+    <!-- Three Pillars Section -->
+    <section class="three-pillars" id="fonctionnalites">
+        <!-- PILIER 1: L'IA guide toute ton équipe -->
+        <div class="pillar-main">
+            <h3 class="pillar-title">L'IA guide toute ton équipe en temps réel</h3>
+
+            <div class="pillar-intro" style="max-width: 800px; margin: 0 auto 3rem auto; text-align: center; line-height: 1.8; font-size: 1.1rem;">
+                <p style="margin-bottom: 1rem; font-weight: 600;">Comment ça marche ?</p>
+            </div>
+
+            <div class="pillars-container">
+                <div class="pillar-card">
+                    <span class="pillar-badge">Pré-Call</span>
+                    <div class="precall-graphic">
+                        <div class="scan-ring"></div>
+                        <div class="central-circle">
+                            <img src="theaa-logo2.png" alt="Theaa" style="width: 85%; height: 85%; object-fit: contain;">
+                        </div>
+                        <div class="document-node doc-top">📄</div>
+                        <div class="document-node doc-left">📋</div>
+                        <div class="document-node doc-right">📑</div>
+                        <div class="connection-line line-top"></div>
+                        <div class="connection-line line-left"></div>
+                        <div class="connection-line line-right"></div>
+                        <div class="arrow-to-center arrow-from-top">↓</div>
+                        <div class="arrow-to-center arrow-from-left">→</div>
+                        <div class="arrow-to-center arrow-from-right">←</div>
+                    </div>
+                    <h3>Préparation Sans Effort</h3>
+                    <p>Theaa centralise toutes les connaissances produits, scripts de vente et objections courantes de ton entreprise dans une base IA. Tes closers rejoignent leurs calls préparés avec toutes les réponses déjà à portée de main.</p>
+                </div>
+
+                <div class="pillar-card">
+                    <span class="pillar-badge">During Call</span>
+                    <div class="duringcall-graphic">
+                        <div class="chat-scroll-container" id="chatScrollContainer">
+                            <div class="chat-bubble-left">
+                                <div class="avatar-theaa">t</div>
+                                <div class="message-left">
+                                    <div class="voice-wave">
+                                        <div class="wave-bar"></div>
+                                        <div class="wave-bar"></div>
+                                        <div class="wave-bar"></div>
+                                        <div class="wave-bar"></div>
+                                        <div class="wave-bar"></div>
+                                        <div class="wave-bar"></div>
+                                        <div class="wave-bar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat-bubble-right">
+                                <div class="message-right">
+                                    <span id="clientMessage"></span>
+                                    <div class="scan-line-horizontal"></div>
+                                </div>
+                                <div class="avatar-client">🤵</div>
+                            </div>
+                            <div class="what-to-say-btn">
+                                <div class="mouse-cursor">👆</div>
+                                <span>💬 What to say?</span>
+                            </div>
+                            <div class="ai-generated-message">
+                                <span class="ai-badge-inline">IA</span>
+                                <span id="aiMessage"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3>Intelligence en Temps Réel</h3>
+                    <p>L'IA écoute les conversations de tes closers et leur suggère instantanément les meilleures réponses aux objections. Ils reçoivent les bons arguments au bon moment, sans briser le flow de la discussion.</p>
+                </div>
+
+                <div class="pillar-card">
+                    <span class="pillar-badge">Post-Call</span>
+                    <div class="postcall-graphic">
+                        <div class="radar-chart">
+                            <svg class="radar-svg" viewBox="0 0 200 200">
+                                <polygon class="radar-grid" points="100,30 170,130 30,130" stroke-width="1"/>
+                                <polygon class="radar-grid" points="100,50 150,120 50,120" stroke-width="1"/>
+                                <polygon class="radar-grid" points="100,70 130,110 70,110" stroke-width="1"/>
+                                <polygon class="radar-data" points="100,35 165,125 40,120"/>
+                                <line x1="100" y1="100" x2="100" y2="30" class="radar-grid" stroke-width="1"/>
+                                <line x1="100" y1="100" x2="170" y2="130" class="radar-grid" stroke-width="1"/>
+                                <line x1="100" y1="100" x2="30" y2="130" class="radar-grid" stroke-width="1"/>
+                                <circle class="radar-point" cx="100" cy="35"/>
+                                <circle class="radar-point" cx="165" cy="125"/>
+                                <circle class="radar-point" cx="40" cy="120"/>
+                                <text class="radar-label" x="100" y="20">Découverte</text>
+                                <text class="radar-label" x="180" y="140">Pitch</text>
+                                <text class="radar-label" x="30" y="145">Objection</text>
+                            </svg>
+                        </div>
+                        <div class="score-global-box" style="font-size: 1.5rem; padding: 0.6rem 2rem;">15.3/20</div>
+                    </div>
+                    <h3>Analyse & Suivi Automatisé</h3>
+                    <p>Après chaque call, l'IA analyse la performance de chaque closer sur 20, identifie les axes d'amélioration et génère automatiquement les résumés, emails de follow-up pour un suivi optimal.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2 class="section-title">Découvre comment Theaa <span class="highlight">transforme chaque appel</span> en une réelle opportunité de vente ?</h2>
+        <p>Ne laisse plus des closers moyens <span class="highlight" style="font-weight: bold; text-decoration: underline;">saboter ton C.A</span></p>
+        <p style="margin-top: 1.5rem; margin-bottom: 2rem; font-size: 1rem; opacity: 0.9;">Theaa transforme tes closers moyens en top performers en les formant et coachant automatiquement sur chaque appel.</p>
+        <a href="https://www.theaa.ai/call" class="cta-button" target="_blank" href="https://www.theaa.ai/call" target="_blank">Réserver une démo</a>
     </section>
 
     <!-- Detailed Features Section -->
     <section class="detailed-features">
         <h2 class="section-title">Comment Theaa fonctionne</h2>
-        <p class="section-subtitle">Découvre les fonctionnalités qui transforment chaque appel en succès</p>
+        <p class="section-subtitle">Un système sur-mesure pour ton entreprise</p>
 
         <div class="detailed-features-container">
             <div class="feature-detail-card">
@@ -2373,60 +3400,45 @@
                                 <circle cx="40" cy="40" r="36" fill="none" stroke="#22c55e" stroke-width="6" stroke-dasharray="226" stroke-dashoffset="56.5"/>
                             </svg>
                             <div class="progress-check">✓</div>
-                            <div class="progress-text">On track!</div>
+                            <div class="progress-text">Configuré!</div>
                         </div>
                         <div class="file-indicator">
                             <span class="file-icon">📄</span>
-                            <span class="file-name">myscript.pdf</span>
+                            <span class="file-name">votre_script.pdf</span>
                         </div>
                         <div class="upload-button">
                             <span class="upload-icon">☁️</span>
-                            <span>Upload script</span>
+                            <span>Upload documents</span>
                         </div>
                     </div>
                 </div>
-                <div class="feature-detail-badge">CALL FRAMEWORK</div>
-                <h3 class="feature-detail-title">Base de connaissances personnalisée</h3>
-                <p class="feature-detail-description">Upload tes scripts de vente et toutes tes connaissances produit. L'IA Theaa te guidera en temps réel pendant tes calls, en restant toujours alignée avec ton framework et ta stratégie de closing.</p>
+                <div class="feature-detail-badge">PERSONNALISATION</div>
+                <h3 class="feature-detail-title">Configuration sur-mesure de Theaa pour ton entreprise</h3>
+                <p class="feature-detail-description">Tous les appels sont analysés en fonction du script de ton entreprise, du pitch, des règles, de l'offre. Theaa reçoit tous les documents nécessaires pour guider au mieux tes closers et apporter une notation vraiment personnalisée à ton activité.</p>
             </div>
 
             <div class="feature-detail-card">
                 <div class="feature-detail-visual">
-                    <div class="feedback-visual">
-                        <div class="feedback-box">
-                            <div class="feedback-title">Feedback global :</div>
-                            <div class="feedback-text">
-                                <p>Le closer a bien présenté le cadre de l'accompagnement en renforçant la clarté et la structure obtenues durant tout l'appel.</p>
-                                <p style="margin-top: 0.5rem;">Cependant, l'annonce du prix a été mal gérée, ce qui a empêché de surmonter l'objection financière efficacement et rapidement.</p>
-                            </div>
-                        </div>
+                    <div style="width: 100%; max-width: 350px; margin: 0 auto; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);">
+                        <img src="gmeet - karen - website.png" alt="Interface Google Meet avec Theaa" style="width: 100%; height: auto; display: block;">
                     </div>
                 </div>
-                <div class="feature-detail-badge">ANALYSE INTELLIGENTE</div>
-                <h3 class="feature-detail-title">Décortiquage d'appels illimité</h3>
-                <p class="feature-detail-description">Theaa analyse chacun de tes appels en profondeur et te donne un feedback personnalisé illimité. Identifie tes points forts, tes axes d'amélioration et reçois des conseils actionnables après chaque call.</p>
+                <div class="feature-detail-badge">TRAINING IA</div>
+                <h3 class="feature-detail-title">Onboarding express et montée en compétence</h3>
+                <p class="feature-detail-description">Sessions d'entraînement avec des prospects fictifs IA avant l'onboarding officiel. Theaa s'assure que les nouveaux closers aient une note de +15/20 avant qu'ils prennent des appels en temps réel. Aucune perte d'argent sur des nouveaux profils mal formés. Formation 100% automatisée et asynchrone.</p>
             </div>
 
             <div class="feature-detail-card">
                 <div class="feature-detail-visual">
                     <div class="platforms-visual">
-                        <div class="platform-icon main-icon">
-                            <img src="theaa-logo2.png" alt="Theaa" style="width: 75%; height: 75%; object-fit: contain;">
-                        </div>
-                        <div class="platform-icon" title="Zoom">
-                            <img src="zoom.png" alt="Zoom" style="width: 35px; height: 35px; object-fit: contain;">
-                        </div>
-                        <div class="platform-icon" title="Google Meet">
-                            <img src="google meet.png" alt="Google Meet" style="width: 35px; height: 35px; object-fit: contain;">
-                        </div>
-                        <div class="platform-icon" title="Microsoft Teams">
-                            <img src="teams.png" alt="Microsoft Teams" style="width: 35px; height: 35px; object-fit: contain;">
+                        <div class="platform-icon main-icon" style="font-size: 4rem; background: linear-gradient(135deg, #fdab6f, #e89a5e); color: white; width: 100px; height: 100px; border-radius: 50%; box-shadow: 0 10px 30px rgba(253, 171, 111, 0.4);">
+                            🛡️
                         </div>
                     </div>
                 </div>
-                <div class="feature-detail-badge">ALL PLATFORMS</div>
-                <h3 class="feature-detail-title">Compatible avec toutes les plateformes</h3>
-                <p class="feature-detail-description">Theaa fonctionne avec n'importe quelle plateforme de visioconférence : Zoom, Google Meet, Microsoft Teams, et bien plus. Intégration transparente sans friction.</p>
+                <div class="feature-detail-badge">PROTECTION</div>
+                <h3 class="feature-detail-title">Mise en place de Theaa Compliance</h3>
+                <p class="feature-detail-description">Dès qu'un closer émet une promesse mensongère, survend, ou parle de manière inappropriée, tu reçois une alerte compliance par email en instantané pour ne pas endommager ton image de marque. Chaque rapport inclut également le niveau de compliance de tous les closers.</p>
             </div>
         </div>
     </section>
@@ -2434,8 +3446,8 @@
     <!-- Simulator Section -->
     <section class="simulator" id="simulateur">
         <div class="simulator-container">
-            <h2>Calcule ton potentiel avec Theaa</h2>
-            <p class="simulator-intro">Découvre combien tu pourrais gagner en plus chaque mois</p>
+            <h2 class="section-title">Calcule ton potentiel avec Theaa</h2>
+            <p class="simulator-intro">Découvre combien tu pourrais gagner en plus chaque mois (+47% de conversion garanti)</p>
 
             <div class="input-group">
                 <label for="closingRate">Ton taux de closing actuel</label>
@@ -2460,7 +3472,7 @@
             </div>
 
             <div class="input-group">
-                <label for="callsPerDay">Nombre d'appels par jour (hors weekend)</label>
+                <label for="callsPerDay">Nombre d'appels par jour</label>
                 <div class="input-wrapper">
                     <div class="slider-container">
                         <div class="slider-fill" id="callsPerDayFill"></div>
@@ -2471,7 +3483,7 @@
             </div>
 
             <div class="input-group">
-                <label for="offerPrice">Prix de l'offre que tu closes</label>
+                <label for="offerPrice">Prix de ton offre</label>
                 <div class="input-wrapper">
                     <div class="slider-container">
                         <div class="slider-fill" id="offerPriceFill"></div>
@@ -2481,32 +3493,21 @@
                 </div>
             </div>
 
-            <div class="input-group">
-                <label for="commission">Ta commission par vente</label>
-                <div class="input-wrapper">
-                    <div class="slider-container">
-                        <div class="slider-fill" id="commissionFill"></div>
-                        <input type="range" id="commission" min="0" max="100" value="10" step="5">
-                    </div>
-                    <span class="input-value"><span id="commissionValue">10</span>%</span>
-                </div>
-            </div>
-
             <div class="results">
-                <h3>Tes revenus mensuels</h3>
+                <h3>Chiffre d'affaires mensuel généré</h3>
                 <div class="results-grid">
                     <div class="result-item">
                         <div class="result-label">Actuellement</div>
-                        <div class="result-value"><span id="currentEarnings">5 400</span>€</div>
+                        <div class="result-value"><span id="currentEarnings">54 000</span>€</div>
                     </div>
                     <div class="result-item">
                         <div class="result-label">Avec Theaa (+47%)</div>
-                        <div class="result-increase"><span id="newEarnings">7 938</span>€</div>
+                        <div class="result-increase"><span id="newEarnings">79 380</span>€</div>
                     </div>
                 </div>
                 <div class="extra-earnings-box">
-                    <div class="extra-earnings-label">💰 Revenus supplémentaires par mois</div>
-                    <div class="extra-earnings-value">+<span id="extraEarnings">2 538</span>€</div>
+                    <div class="extra-earnings-label">💰 CA supplémentaire par mois</div>
+                    <div class="extra-earnings-value">+<span id="extraEarnings">25 380</span>€</div>
                 </div>
             </div>
         </div>
@@ -2514,7 +3515,7 @@
 
     <!-- Testimonials Section -->
     <section class="testimonials" id="temoignages">
-        <h2 class="section-title">Ils ont transformé leur closing</h2>
+        <h2 class="section-title">Utilisé au quotidien par les closers de</h2>
 
         <div class="social-proof">
             <div class="avatars-row">
@@ -2522,8 +3523,7 @@
                 <img src="avatar2.jpg" alt="Closer" class="avatar-circle">
                 <img src="avatar3.jpg" alt="Closer" class="avatar-circle">
             </div>
-            <p class="social-proof-text">Déjà adopté par les plus grands, pourquoi pas vous ?</p>
-            <p class="social-proof-subtitle">+200 closers utilisent Theaa quotidiennement</p>
+            <p class="social-proof-subtitle">Les équipes commerciales des plus grandes entreprises utilisent Theaa quotidiennement</p>
         </div>
 
         <div class="testimonials-wrapper">
@@ -2603,110 +3603,76 @@
         </div>
     </section>
 
+    <!-- Case Study Section -->
+    <section class="case-study" id="etude-de-cas">
+        <div class="case-study-container">
+            <h2 class="section-title">Étude de cas : Comment Theaa a transformé une équipe de closing</h2>
+            <p class="section-subtitle">Challenge : 80+ closers recrutés, 23 jours de formation économisés, résultat : TOP 1</p>
+
+            <div class="case-study-video" style="background: var(--bg-dark-secondary); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
+                <!-- Placeholder pour la vidéo YouTube -->
+                <!-- Remplacer par: <iframe width="100%" height="100%" src="URL_YOUTUBE" frameborder="0" allowfullscreen></iframe> -->
+                📺 Vidéo YouTube à intégrer
+            </div>
+
+            <div class="case-study-stats">
+                <div class="case-study-stat">
+                    <div class="case-study-stat-number">80+</div>
+                    <div class="case-study-stat-label">Closers formés</div>
+                </div>
+                <div class="case-study-stat">
+                    <div class="case-study-stat-number">23 jours</div>
+                    <div class="case-study-stat-label">Économisés en formation</div>
+                </div>
+                <div class="case-study-stat">
+                    <div class="case-study-stat-number">#1</div>
+                    <div class="case-study-stat-label">Classement final</div>
+                </div>
+            </div>
+
+            <div style="text-align: center; padding: 60px 0 20px 0;">
+                <a href="https://www.theaa.ai/call" class="cta-button" target="_blank" style="font-size: 1.2rem; padding: 1rem 3rem;">Réserver une démo</a>
+            </div>
+        </div>
+    </section>
+
     <!-- Pricing Section -->
+    <!-- Book a Call Section -->
     <section class="pricing" id="tarifs">
-        <h2 class="section-title">Choisis ton plan</h2>
-        <p class="section-subtitle">Commence gratuitement, upgrade quand tu es prêt</p>
+        <div style="max-width: 800px; margin: 0 auto; text-align: center; padding: 2rem;">
+            <h2 class="section-title">Prêt à transformer chaque appel en une réelle opportunité de vente ?</h2>
+            <p class="section-subtitle">Réserve une démo personnalisée pour découvrir comment Theaa peut transformer tes équipes commerciales en machine de guerre</p>
 
-        <!-- Toggle Annual/Monthly -->
-        <div class="pricing-toggle-container">
-            <span class="pricing-toggle-label" id="monthlyLabel">Mensuel</span>
-            <div class="toggle-switch" id="pricingToggle">
-                <div class="toggle-slider"></div>
-            </div>
-            <span class="pricing-toggle-label" id="annualLabel">Annuel</span>
-        </div>
-
-        <div class="pricing-grid">
-            <div class="pricing-card">
-                <h3>Starter</h3>
-                <div class="price">0€</div>
-                <p class="price-period">Pour toujours</p>
-                <ul class="features-list">
-                    <li>3 calls assistés par mois</li>
-                    <li>3 décorticages d'appel personnalisé</li>
-                    <li>1 training sales avec un prospect fictif</li>
-                    <li>Résumés d'appel</li>
-                    <li>Support email</li>
-                </ul>
-                <a href="#" class="cta-button">Commencer gratuitement</a>
-            </div>
-
-            <div class="pricing-card featured">
-                <div class="featured-badge">Le plus populaire</div>
-                <h3>Closer Performance</h3>
-                <div class="price">
-                    <span class="monthly-price">39€</span>
-                    <span class="annual-price" style="display: none;">
-                        <span class="price-strike">39€</span>
-                        <span class="annual-discount">24€</span>
-                    </span>
+            <div style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); padding: 3rem; border-radius: 30px; margin: 3rem auto; box-shadow: 0 20px 60px rgba(253, 171, 111, 0.4);">
+                <div style="color: white; margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">Réserver une démo exclusive</h3>
+                    <p style="font-size: 1.1rem; opacity: 0.9;">Découvre comment implémenter Theaa dans ton entreprise</p>
                 </div>
-                <p class="price-period">
-                    par mois
-                    <span class="annual-total" style="display: none;">(299€/an)</span>
-                </p>
-                <ul class="features-list">
-                    <li>25 calls assistés par mois</li>
-                    <li>25 décorticages d'appel personnalisé</li>
-                    <li>3 training sales avec un prospect fictif</li>
-                    <li>Résumés d'appel</li>
-                    <li>1 Base de connaissances personnalisée</li>
-                    <li>Infos CRM</li>
-                    <li>Analytics détaillées</li>
-                    <li>Support email</li>
-                </ul>
-                <a href="#" class="cta-button">Devenir un Closer Performance</a>
-            </div>
 
-            <div class="pricing-card">
-                <h3>Closer Advanced</h3>
-                <div class="price">
-                    <span class="monthly-price">69€</span>
-                    <span class="annual-price" style="display: none;">
-                        <span class="price-strike">69€</span>
-                        <span class="annual-discount">45€</span>
-                    </span>
-                </div>
-                <p class="price-period">
-                    par mois
-                    <span class="annual-total" style="display: none;">(549€/an)</span>
-                </p>
-                <ul class="features-list">
-                    <li>Calls illimités</li>
-                    <li>Décorticages d'appels illimités</li>
-                    <li>IA en temps réel avancée</li>
-                    <li>Base de connaissances personnalisée illimités</li>
-                    <li>Infos CRM</li>
-                    <li>Analytics détaillées</li>
-                    <li>Support prioritaire</li>
+                <ul style="list-style: none; padding: 0; margin: 2rem 0; color: white; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto;">
+                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.2); font-size: 1.05rem;">✓ Configuration personnalisée pour ton entreprise</li>
+                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.2); font-size: 1.05rem;">✓ Démonstration en direct de toutes les fonctionnalités</li>
+                    <li style="padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.2); font-size: 1.05rem;">✓ Analyse de tes besoins spécifiques</li>
+                    <li style="padding: 0.8rem 0; font-size: 1.05rem;">✓ Plan d'implémentation sur-mesure</li>
                 </ul>
-                <a href="#" class="cta-button">Devenir un Closer Advanced</a>
-            </div>
 
-            <div class="pricing-card">
-                <h3>Équipe de closers</h3>
-                <div class="price">Contactez-nous</div>
-                <p class="price-period">Prendre rendez-vous</p>
-                <ul class="features-list">
-                    <li>Tout du plan Closer Advanced</li>
-                    <li>Multi-utilisateurs</li>
-                    <li>Leaderboard équipe</li>
-                    <li>Onboarding personnalisée</li>
-                    <li>Support 24/7</li>
-                    <li>Account Manager dédié</li>
-                </ul>
-                <a href="#" class="cta-button">Prendre rendez-vous</a>
+                <a href="https://www.theaa.ai/call" class="cta-button" target="_blank" style="background-color: white; color: var(--primary); font-size: 1.2rem; padding: 1rem 3rem; margin-top: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">Réserver une démo</a>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <h2>Prêt à multiplier ton taux de closing ?</h2>
-        <p>Rejoins les 200+ closers qui utilisent Theaa pour performer</p>
-        <a href="#" class="cta-button">Commencer gratuitement</a>
+    <!-- Affiliate Section -->
+    <section class="affiliate-section">
+        <h2>Tu es un closer ? Gagne entre <span class="highlight">600€ et 6'000€</span> de commission en partageant Theaa avec ton entourage</h2>
+        <a href="https://www.theaa.ai/affiliate" class="cta-button" target="_blank">Deviens un affilié</a>
     </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <a href="https://www.theaa.ai/legal" target="_blank">Mentions légales</a>
+        <span>•</span>
+        <a href="https://www.theaa.ai/legal" target="_blank">Privacy Policy</a>
+    </footer>
 
     <script>
         // Theme Toggle
@@ -2735,6 +3701,38 @@
             themeToggle.textContent = theme === 'dark-mode' ? '☀️' : '🌙';
         }
 
+        // Smart Navigation - Hide on scroll down, show on scroll up
+        let lastScrollTop = 0;
+        let scrollThreshold = 100;
+        const nav = document.querySelector('nav');
+
+        window.addEventListener('scroll', () => {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            // Add shadow when scrolled
+            if (scrollTop > 50) {
+                nav.classList.add('nav-scrolled');
+            } else {
+                nav.classList.remove('nav-scrolled');
+            }
+
+            // Hide/show navbar based on scroll direction
+            if (scrollTop > scrollThreshold) {
+                if (scrollTop > lastScrollTop) {
+                    // Scrolling down - hide navbar
+                    nav.classList.add('nav-hidden');
+                } else {
+                    // Scrolling up - show navbar
+                    nav.classList.remove('nav-hidden');
+                }
+            } else {
+                // Always show navbar at the top
+                nav.classList.remove('nav-hidden');
+            }
+
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        }, { passive: true });
+
         // Mobile Menu Toggle
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const navLinks = document.getElementById('navLinks');
@@ -2756,19 +3754,16 @@
         const showUpRateSlider = document.getElementById('showUpRate');
         const callsPerDaySlider = document.getElementById('callsPerDay');
         const offerPriceSlider = document.getElementById('offerPrice');
-        const commissionSlider = document.getElementById('commission');
 
         const closingRateValue = document.getElementById('closingRateValue');
         const showUpRateValue = document.getElementById('showUpRateValue');
         const callsPerDayValue = document.getElementById('callsPerDayValue');
         const offerPriceValue = document.getElementById('offerPriceValue');
-        const commissionValue = document.getElementById('commissionValue');
 
         const closingRateFill = document.getElementById('closingRateFill');
         const showUpRateFill = document.getElementById('showUpRateFill');
         const callsPerDayFill = document.getElementById('callsPerDayFill');
         const offerPriceFill = document.getElementById('offerPriceFill');
-        const commissionFill = document.getElementById('commissionFill');
 
         const currentEarningsEl = document.getElementById('currentEarnings');
         const newEarningsEl = document.getElementById('newEarnings');
@@ -2784,25 +3779,22 @@
             const showUpRate = parseInt(showUpRateSlider.value);
             const callsPerDay = parseInt(callsPerDaySlider.value);
             const offerPrice = parseInt(offerPriceSlider.value);
-            const commission = parseInt(commissionSlider.value);
 
             closingRateValue.textContent = closingRate;
             showUpRateValue.textContent = showUpRate;
             callsPerDayValue.textContent = callsPerDay;
             offerPriceValue.textContent = offerPrice.toLocaleString('fr-FR');
-            commissionValue.textContent = commission;
 
             updateSliderFill(closingRateSlider, closingRateFill);
             updateSliderFill(showUpRateSlider, showUpRateFill);
             updateSliderFill(callsPerDaySlider, callsPerDayFill);
             updateSliderFill(offerPriceSlider, offerPriceFill);
-            updateSliderFill(commissionSlider, commissionFill);
 
-            // Calculate earnings with show-up rate (22 jours ouvrables par mois)
-            const actualCalls = (callsPerDay * 22 * showUpRate) / 100;
+            // Calculate earnings with show-up rate (30 jours par mois, weekends inclus)
+            // Commission = 100% for businesses (calculating total revenue, not commission)
+            const actualCalls = (callsPerDay * 30 * showUpRate) / 100;
             const monthlyDeals = (actualCalls * closingRate) / 100;
-            const commissionPerDeal = (offerPrice * commission) / 100;
-            const currentEarnings = Math.round(monthlyDeals * commissionPerDeal);
+            const currentEarnings = Math.round(monthlyDeals * offerPrice);
             const newEarnings = Math.round(currentEarnings * 1.47);
             const extraEarnings = newEarnings - currentEarnings;
 
@@ -2815,7 +3807,6 @@
         showUpRateSlider.addEventListener('input', calculateEarnings);
         callsPerDaySlider.addEventListener('input', calculateEarnings);
         offerPriceSlider.addEventListener('input', calculateEarnings);
-        commissionSlider.addEventListener('input', calculateEarnings);
 
         calculateEarnings();
 
