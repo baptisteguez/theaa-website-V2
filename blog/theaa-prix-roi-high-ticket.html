@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prix Theaa et ROI : le calcul honnête pour le high ticket | Blog Theaa</title>
+    <meta name="description" content="Theaa coûte 99€/mois en Early Bird. Mais quel est le vrai ROI sur une offre à 2000€ ? Calcul détaillé, comparaison sales coach humain et garantie 30 jours.">
+    <meta name="keywords" content="Theaa prix, Theaa tarif, ROI IA closing, coût coaching closer, rentabilité outil closing IA">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Prix Theaa et ROI : le calcul honnête pour le high ticket">
+    <meta property="og:description" content="Theaa coûte 99€/mois en Early Bird. Calcul détaillé du ROI sur une offre high ticket, comparaison sales coach humain et garantie 30 jours.">
+    <meta property="og:type" content="article">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #fdab6f; --primary-dark: #e89a5e; --primary-light: #fec891;
+            --bg-light: #ffffff; --bg-light-secondary: #f8f9fa;
+            --text-light: #2c3e50; --text-light-secondary: #6c757d;
+            --bg-dark: #1a1a1a; --bg-dark-secondary: #2d2d2d;
+            --text-dark: #ffffff; --text-dark-secondary: #b0b0b0;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; transition: background-color 0.3s ease, color 0.3s ease; }
+        body.light-mode { background-color: var(--bg-light); color: var(--text-light); }
+        body.dark-mode { background-color: var(--bg-dark); color: var(--text-dark); }
+
+        nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 0.5rem 5%; transition: background-color 0.3s ease; }
+        body.light-mode nav { background-color: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.1); }
+        body.dark-mode nav { background-color: rgba(26,26,26,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .logo-icon { width: 80px; height: 80px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; }
+        .nav-links a { text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+        body.light-mode .nav-links a { color: var(--text-light); }
+        body.dark-mode .nav-links a { color: var(--text-dark); }
+        .nav-links a:hover, .nav-active { color: var(--primary) !important; font-weight: 700 !important; }
+        .theme-toggle { background: none; border: none; cursor: pointer; font-size: 1.5rem; padding: 0.5rem; border-radius: 50%; }
+        body.light-mode .theme-toggle { color: var(--text-light); }
+        body.dark-mode .theme-toggle { color: var(--text-dark); }
+        .cta-button { background-color: var(--primary); color: white; padding: 0.75rem 1.5rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; border: 2px solid var(--primary); display: inline-block; }
+        .cta-button:hover { background-color: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(253,171,111,0.3); }
+        .mobile-menu-toggle { display: none; background: none; border: none; font-size: 1.8rem; cursor: pointer; }
+        body.light-mode .mobile-menu-toggle { color: var(--text-light); }
+        body.dark-mode .mobile-menu-toggle { color: var(--text-dark); }
+
+        .breadcrumb { padding: 100px 5% 0; max-width: 800px; margin: 0 auto; font-size: 0.9rem; opacity: 0.6; }
+        .breadcrumb a { color: inherit; text-decoration: none; }
+        .breadcrumb a:hover { color: var(--primary); }
+
+        .article-hero { padding: 140px 5% 60px; text-align: center; }
+        body.light-mode .article-hero { background: linear-gradient(135deg, #fef5ee 0%, #fde4d0 100%); }
+        body.dark-mode .article-hero { background: linear-gradient(135deg, #1a1a1a 0%, #2d2520 100%); }
+        .article-tag { display: inline-block; background: rgba(253,171,111,0.15); color: var(--primary); font-size: 0.85rem; font-weight: 700; padding: 0.4rem 1rem; border-radius: 20px; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .article-hero h1 { font-size: 2.6rem; font-weight: 800; max-width: 800px; margin: 0 auto 1.5rem; line-height: 1.3; }
+        .article-meta { font-size: 0.95rem; opacity: 0.6; }
+        .highlight { color: var(--primary); }
+
+        .article-body { max-width: 800px; margin: 0 auto; padding: 60px 5%; }
+        .article-body h2 { font-size: 1.9rem; font-weight: 700; margin: 3rem 0 1rem; color: var(--primary); }
+        .article-body h3 { font-size: 1.4rem; font-weight: 700; margin: 2rem 0 0.8rem; }
+        .article-body p { font-size: 1.05rem; margin-bottom: 1.2rem; opacity: 0.9; line-height: 1.8; }
+        .article-body ul, .article-body ol { margin: 1rem 0 1.5rem 1.5rem; }
+        .article-body li { font-size: 1.05rem; margin-bottom: 0.6rem; opacity: 0.9; line-height: 1.7; }
+        .article-body strong { font-weight: 700; }
+
+        .callout { border-left: 4px solid var(--primary); padding: 1.2rem 1.5rem; border-radius: 0 12px 12px 0; margin: 2rem 0; font-style: italic; }
+        body.light-mode .callout { background: rgba(253,171,111,0.1); }
+        body.dark-mode .callout { background: rgba(253,171,111,0.08); }
+
+        .stat-box { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .stat-item { padding: 1.5rem; border-radius: 16px; text-align: center; }
+        body.light-mode .stat-item { background: var(--bg-light-secondary); box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+        body.dark-mode .stat-item { background: var(--bg-dark-secondary); }
+        .stat-number { font-size: 2.2rem; font-weight: 800; color: var(--primary); }
+        .stat-label { font-size: 0.9rem; opacity: 0.7; margin-top: 0.3rem; }
+
+        .tldr-box { border-radius: 20px; padding: 2rem 2.5rem; margin: 2rem 0 3rem; }
+        body.light-mode .tldr-box { background: var(--bg-light-secondary); border: 2px solid rgba(253,171,111,0.3); }
+        body.dark-mode .tldr-box { background: var(--bg-dark-secondary); border: 2px solid rgba(253,171,111,0.2); }
+        .tldr-box h3 { font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .tldr-box ul { margin: 0 0 1.5rem 1.2rem; }
+        .tldr-box li { font-size: 1rem; margin-bottom: 0.4rem; opacity: 0.9; }
+
+        .article-cta { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); padding: 3rem; border-radius: 24px; text-align: center; margin: 4rem 0; color: white; }
+        .article-cta h3 { font-size: 1.8rem; margin-bottom: 1rem; }
+        .article-cta p { opacity: 0.9; margin-bottom: 1.5rem; font-size: 1.05rem; }
+        .cta-button-white { background: white; color: var(--primary); padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 700; transition: all 0.3s ease; display: inline-block; font-size: 1.05rem; }
+        .cta-button-white:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+        .cta-sub { font-size: 0.85rem; opacity: 0.8; margin-top: 1rem; margin-bottom: 0; }
+
+        .faq-section { max-width: 800px; margin: 0 auto; padding: 0 5% 60px; }
+        .faq-section h2 { font-size: 1.9rem; font-weight: 700; margin-bottom: 2rem; color: var(--primary); }
+        .faq-item { border-radius: 16px; margin-bottom: 1rem; overflow: hidden; }
+        body.light-mode .faq-item { background: var(--bg-light-secondary); }
+        body.dark-mode .faq-item { background: var(--bg-dark-secondary); }
+        .faq-question { padding: 1.2rem 1.5rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.05rem; }
+        .faq-answer { padding: 0 1.5rem 1.2rem; font-size: 1rem; opacity: 0.85; line-height: 1.7; }
+        .faq-icon { color: var(--primary); font-size: 1.3rem; flex-shrink: 0; }
+
+        .related-section { max-width: 800px; margin: 0 auto; padding: 0 5% 80px; }
+        .related-section h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; opacity: 0.7; border-top: 1px solid rgba(128,128,128,0.2); padding-top: 2rem; }
+        .related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+        .related-card { border-radius: 16px; padding: 1.5rem; text-decoration: none; transition: transform 0.3s ease; display: block; }
+        body.light-mode .related-card { background: var(--bg-light-secondary); box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+        body.dark-mode .related-card { background: var(--bg-dark-secondary); }
+        .related-card:hover { transform: translateY(-4px); }
+        .related-card-tag { font-size: 0.75rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+        .related-card-title { font-size: 0.95rem; font-weight: 600; line-height: 1.4; }
+        body.light-mode .related-card-title { color: var(--text-light); }
+        body.dark-mode .related-card-title { color: var(--text-dark); }
+
+        .roi-table { width: 100%; border-collapse: collapse; margin: 2rem 0; border-radius: 16px; overflow: hidden; }
+        .roi-table th { padding: 1rem 1.2rem; text-align: left; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+        .roi-table td { padding: 1rem 1.2rem; font-size: 1rem; }
+        body.light-mode .roi-table th { background: var(--primary); color: white; }
+        body.dark-mode .roi-table th { background: var(--primary-dark); color: white; }
+        body.light-mode .roi-table tr:nth-child(even) td { background: var(--bg-light-secondary); }
+        body.dark-mode .roi-table tr:nth-child(even) td { background: rgba(255,255,255,0.04); }
+        body.light-mode .roi-table tr:nth-child(odd) td { background: white; }
+        body.dark-mode .roi-table tr:nth-child(odd) td { background: var(--bg-dark-secondary); }
+        .roi-table .highlight-row td { color: var(--primary); font-weight: 700; }
+
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .feature-card { border-radius: 16px; padding: 1.8rem; }
+        body.light-mode .feature-card { background: var(--bg-light-secondary); box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+        body.dark-mode .feature-card { background: var(--bg-dark-secondary); }
+        .feature-icon { font-size: 2rem; margin-bottom: 1rem; }
+        .feature-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; }
+        .feature-card p { font-size: 0.95rem; opacity: 0.8; margin: 0; }
+
+        .footer { padding: 2rem 5%; text-align: center; font-size: 0.9rem; opacity: 0.7; border-top: 1px solid rgba(128,128,128,0.2); display: flex; justify-content: center; gap: 1rem; align-items: center; flex-wrap: wrap; }
+        .footer a { color: inherit; text-decoration: none; }
+        .footer a:hover { color: var(--primary); }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle { display: block; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; padding: 1rem 5%; gap: 1rem; }
+            body.light-mode .nav-links { background-color: rgba(255,255,255,0.98); }
+            body.dark-mode .nav-links { background-color: rgba(26,26,26,0.98); }
+            .nav-links.open { display: flex; }
+            .article-hero h1 { font-size: 1.9rem; }
+            .article-body h2 { font-size: 1.5rem; }
+            .stat-box { grid-template-columns: 1fr; }
+            .roi-table { font-size: 0.9rem; }
+            .roi-table th, .roi-table td { padding: 0.7rem 0.8rem; }
+        }
+    </style>
+</head>
+<body class="light-mode">
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="../theaa-logo2.png" alt="Theaa" style="width:100%;height:100%;object-fit:contain;">
+                </div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html#fonctionnalites">Fonctionnalités</a></li>
+                <li><a href="../index.html#simulateur">Simulateur</a></li>
+                <li><a href="../index.html#temoignages">Témoignages</a></li>
+                <li><a href="index.html" class="nav-active">Blog</a></li>
+                <li><button class="theme-toggle" id="themeToggle">🌙</button></li>
+                <li><a href="https://www.theaa.ai/presentation-merci" class="cta-button" target="_blank">Voir la démo</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+        <a href="../index.html">Accueil</a> › <a href="index.html">Blog</a> › Prix et ROI Theaa
+    </div>
+
+    <!-- ARTICLE HERO -->
+    <div class="article-hero">
+        <span class="article-tag">Theaa</span>
+        <h1>Combien coûte Theaa ? <span class="highlight">Le vrai ROI sur une offre high ticket</span></h1>
+        <p class="article-meta">Par l'équipe Theaa · 7 min de lecture · Mis à jour en avril 2026</p>
+    </div>
+
+    <!-- ARTICLE BODY -->
+    <div class="article-body">
+
+        <p>La vraie question, c'est pas "est-ce que Theaa coûte cher". C'est "combien ça te coûte de ne PAS l'avoir".</p>
+
+        <p>Si tu as un closer qui tourne à 20% de taux de closing sur 20 appels par mois avec une offre à 2 000€, il génère 8 000€ de chiffre d'affaires. Si Theaa lui permet de passer à 30% — ce qui est un objectif conservateur sur 3 à 4 semaines d'utilisation — il génère 12 000€. La différence, c'est 4 000€ de chiffre d'affaires supplémentaire par mois. Pour un abonnement à 99€.</p>
+
+        <p>Dans cet article, je te donne la grille tarifaire complète, le calcul ROI détaillé pour différents scénarios, et la comparaison avec ce que coûte un sales coach humain. Sans fioritures.</p>
+
+        <!-- TL;DR BOX -->
+        <div class="tldr-box">
+            <h3>TL;DR — Ce qu'il faut retenir</h3>
+            <ul>
+                <li><strong>Early Bird : 99€/mois/user</strong> — 100 premières places disponibles</li>
+                <li><strong>Prix normal : 199€/mois/user</strong> après la phase Early Bird</li>
+                <li><strong>1 vente supplémentaire sur une offre à 2000€ = ROI x20</strong> sur le mois</li>
+                <li>Un sales coach humain de qualité coûte 3 000 à 8 000€/mois — pour 2h de coaching par semaine max</li>
+                <li>Theaa est présent sur 100% des appels, 24h/24 — pas seulement les 2 que le manager a le temps d'écouter</li>
+                <li><strong>Garantie 30 jours</strong> : si pas de résultats, tu es remboursé</li>
+                <li>Setup 5 minutes — aucune compétence tech requise</li>
+            </ul>
+            <a href="https://www.theaa.ai/presentation-merci" class="cta-button" target="_blank" style="margin-top:1rem;">Voir la démo complète →</a>
+        </div>
+
+        <h2>La grille tarifaire complète</h2>
+
+        <p>Theaa fonctionne sur un modèle d'abonnement mensuel par utilisateur. Voici ce que tu dois savoir :</p>
+
+        <table class="roi-table">
+            <tr>
+                <th>Formule</th>
+                <th>Prix</th>
+                <th>Conditions</th>
+            </tr>
+            <tr>
+                <td><strong>Early Bird</strong></td>
+                <td><strong>99€/mois/user</strong></td>
+                <td>100 premières places — premier arrivé, premier servi</td>
+            </tr>
+            <tr>
+                <td>Prix normal</td>
+                <td>199€/mois/user</td>
+                <td>Après la fin de la phase Early Bird</td>
+            </tr>
+            <tr>
+                <td>Engagement</td>
+                <td>Aucun</td>
+                <td>Mensuel, résiliable à tout moment</td>
+            </tr>
+            <tr>
+                <td>Garantie</td>
+                <td>30 jours</td>
+                <td>Remboursement sans condition si pas de résultats</td>
+            </tr>
+            <tr>
+                <td>Setup</td>
+                <td>Inclus</td>
+                <td>5 minutes, aucune compétence tech requise</td>
+            </tr>
+        </table>
+
+        <p>Il n'y a pas de frais cachés, pas de frais d'installation, pas de formation obligatoire facturée en supplément. Le prix affiché est le prix que tu paies.</p>
+
+        <h2>Le calcul ROI — concret, chiffré, honnête</h2>
+
+        <p>Voici le calcul que je te conseille de faire avec tes propres chiffres. Prends ton closer le plus représentatif de ton équipe.</p>
+
+        <h3>Scénario 1 — Offre à 2 000€, closer junior</h3>
+        <ul>
+            <li>Volume d'appels : 20/mois</li>
+            <li>Taux de closing actuel : 20% → 4 ventes/mois → <strong>8 000€ CA</strong></li>
+            <li>Taux de closing avec Theaa (estimation conservatrice sur 4 semaines) : 30% → 6 ventes/mois → <strong>12 000€ CA</strong></li>
+            <li>Gain mensuel : <strong>4 000€</strong></li>
+            <li>Coût Theaa : <strong>99€/mois</strong></li>
+            <li><strong>ROI : x40 sur le mois</strong></li>
+        </ul>
+
+        <h3>Scénario 2 — Offre à 5 000€, équipe de 3 closers</h3>
+        <ul>
+            <li>Volume d'appels : 60/mois (20 par closer)</li>
+            <li>Taux de closing actuel : 25% → 15 ventes → <strong>75 000€ CA</strong></li>
+            <li>Taux de closing avec Theaa : 32% → 19 ventes → <strong>96 000€ CA</strong></li>
+            <li>Gain mensuel : <strong>21 000€</strong></li>
+            <li>Coût Theaa pour 3 users : <strong>297€/mois</strong></li>
+            <li><strong>ROI : x70 sur le mois</strong></li>
+        </ul>
+
+        <div class="callout">
+            Ces chiffres sont des estimations basées sur des résultats observés. Les résultats varient selon le niveau initial du closer, la qualité des leads et la nature de l'offre. La garantie 30 jours est là précisément pour que tu puisses mesurer sur tes propres appels.
+        </div>
+
+        <p>Le point clé à retenir : <strong>sur une offre high ticket, une seule vente supplémentaire par mois couvre l'abonnement Theaa pour les 10 à 40 prochains mois</strong>. Le seuil de rentabilité est extrêmement bas.</p>
+
+        <!-- CTA MILIEU -->
+        <div class="article-cta">
+            <h3>Calcule ton ROI potentiel sur la démo</h3>
+            <p>La démo Theaa inclut un simulateur personnalisé basé sur tes propres données : volume d'appels, taux actuel, panier moyen.</p>
+            <a href="https://www.theaa.ai/presentation-merci" class="cta-button-white" target="_blank">Accéder à la démo →</a>
+            <p class="cta-sub">Gratuit · 20 minutes · Résultats immédiatement visibles</p>
+        </div>
+
+        <h2>Comparaison avec un sales coach humain</h2>
+
+        <p>L'alternative la plus directe à Theaa, c'est d'embaucher ou de faire appel à un sales coach humain pour tes closers. Voici ce que ça coûte réellement.</p>
+
+        <table class="roi-table">
+            <tr>
+                <th>Critère</th>
+                <th>Sales coach humain</th>
+                <th>Theaa</th>
+            </tr>
+            <tr>
+                <td>Coût mensuel</td>
+                <td>3 000€ — 8 000€</td>
+                <td>99€ (Early Bird)</td>
+            </tr>
+            <tr>
+                <td>Disponibilité</td>
+                <td>2 à 4h/semaine max</td>
+                <td>100% des appels, 24h/24</td>
+            </tr>
+            <tr>
+                <td>Appels couverts</td>
+                <td>2 à 5 appels/semaine</td>
+                <td>Tous les appels</td>
+            </tr>
+            <tr>
+                <td>Feedback</td>
+                <td>Subjectif, basé sur 10% des appels</td>
+                <td>Data-driven, basé sur 100% des appels</td>
+            </tr>
+            <tr>
+                <td>Intervention en live</td>
+                <td>Non (sauf shadow calling occasionnel)</td>
+                <td>Oui — chaque appel</td>
+            </tr>
+            <tr>
+                <td>Scalabilité</td>
+                <td>Coût multiplié par le nombre de closers</td>
+                <td>99€ par closer additionnel</td>
+            </tr>
+            <tr class="highlight-row">
+                <td><strong>Verdict</strong></td>
+                <td>Utile pour la stratégie et le mindset</td>
+                <td>Indispensable pour le coaching appel par appel</td>
+            </tr>
+        </table>
+
+        <p>Les deux ne sont pas mutuellement exclusifs. Un bon sales coach humain travaille sur la psychologie, la stratégie, le développement de carrière du closer. Theaa couvre ce que le coach humain ne peut physiquement pas couvrir : chaque appel, chaque objection, en temps réel.</p>
+
+        <h2>À 99€/mois tu obtiens quoi exactement</h2>
+
+        <p>Voici ce que représente l'abonnement Theaa en Early Bird :</p>
+
+        <ul>
+            <li><strong>Coach IA temps réel</strong> sur 100% de tes appels — pas sur 2 par semaine</li>
+            <li><strong>Scoring automatique</strong> sur 20 après chaque appel, phase par phase</li>
+            <li><strong>Avatar Client Vivant</strong> qui extrait les insights marketing de chaque conversation</li>
+            <li><strong>Alertes compliance</strong> en temps réel — protection contre les chargebacks et les promesses à risque</li>
+            <li><strong>Onboarding IA</strong> avec prospect fictif — nouveau closer opérationnel en 3 jours</li>
+            <li><strong>Reporting centralisé</strong> pour le manager avec vue d'ensemble de l'équipe</li>
+        </ul>
+
+        <p>Mais ce qui vaut vraiment le prix — et c'est ce qui différencie Theaa de tout le reste sur le marché — c'est la base de connaissances qui l'alimente. Tu n'achètes pas un outil. Tu accèdes à la méthodologie qui a permis à l'agence Money Trees de générer plus de 9 millions d'euros en closing high ticket, scalée dans une IA.</p>
+
+        <p>William Wouaquet, co-fondateur de Theaa, a passé plus de 4 ans à construire et affiner cette méthode en gérant les pôles sales de Yomi Denzel, Nassim Sahili et Adam Swift — les structures d'infopreneur les plus importantes du marché francophone. Lors du Bootcamp AAA, son agence a terminé #1 sur 80 closers et plus. Cette expertise est maintenant accessible à 99€ par mois, disponible à la milliseconde près sur chaque appel de ton équipe.</p>
+
+        <h2>Les objections au prix — et les réponses</h2>
+
+        <h3>"99€ c'est tout de même un budget"</h3>
+        <p>Rapporté à un appel : si ton closer fait 20 appels par mois, Theaa te coûte 5€ par appel. Si elle t'aide à closer 1 ou 2 appels de plus sur une offre à 2000€, tu es rentable dès la première semaine.</p>
+
+        <h3>"Je veux d'abord essayer gratuitement"</h3>
+        <p>Il n'y a pas de trial gratuit — mais il y a une garantie remboursement 30 jours sans condition. C'est strictement équivalent à un essai gratuit, à une différence près : tu travailles sur tes vrais appels avec tes vrais closers, pas sur des démos simulées.</p>
+
+        <h3>"Et si ça ne fonctionne pas pour mon type d'offre ?"</h3>
+        <p>Theaa est optimisé pour le high ticket infopreneur (formations, coaching, accompagnement, programmes en ligne). Si ton offre est dans ce spectre et au-dessus de 1 000€, le contexte est aligné. La garantie 30 jours est là pour que tu puisses vérifier par toi-même sur tes appels réels.</p>
+
+        <p>Pour voir la configuration complète et comprendre à quoi ressemble le setup en pratique : <a href="theaa-configuration-5-minutes.html" style="color: var(--primary); font-weight: 700;">Theaa : configuration en 5 minutes, pas besoin de tech</a>.</p>
+
+        <p>Et pour un avis complet sur l'ensemble des fonctionnalités : <a href="theaa-avis-prix-fonctionnalites.html" style="color: var(--primary); font-weight: 700;">Theaa AI : avis complet, prix et fonctionnalités (test 2026)</a>.</p>
+
+        <!-- CTA FINAL -->
+        <div class="article-cta">
+            <h3>Sécurise ta place Early Bird à 99€/mois</h3>
+            <p>100 places disponibles au tarif Early Bird. Garantie 30 jours. Si tu ne vois pas de résultats, tu es remboursé — sans question.</p>
+            <a href="https://www.theaa.ai/presentation-merci" class="cta-button-white" target="_blank">Voir la démo et réserver ma place →</a>
+            <p class="cta-sub">99€/mois vs 199€ après · 100 places · Garantie 30 jours</p>
+        </div>
+
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq-section">
+        <h2>Questions fréquentes sur le prix de Theaa</h2>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Y a-t-il un engagement minimum ou un contrat annuel ?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                Non. L'abonnement Theaa est mensuel et résiliable à tout moment. Tu peux stopper quand tu veux, sans frais de résiliation et sans préavis. La garantie 30 jours s'applique sur les 30 premiers jours — si tu ne vois pas de résultats mesurables, tu es remboursé intégralement.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Le prix Early Bird est-il garanti dans le temps si je souscris maintenant ?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                Oui. Si tu souscris en phase Early Bird à 99€/mois, tu gardes ce tarif tant que tu restes abonné en continu. Le passage à 199€ ne s'applique qu'aux nouvelles souscriptions après la fin de la phase Early Bird ou en cas de résiliation et réabonnement.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Est-ce que le prix couvre toutes les fonctionnalités ou y a-t-il des modules en option ?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                Le prix couvre l'ensemble de la plateforme Theaa : coaching temps réel, scoring post-appel, Avatar Client Vivant, alertes compliance, onboarding IA et reporting manager. Il n'y a pas de modules cachés ou de fonctionnalités réservées à un plan supérieur.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Combien de temps avant que l'investissement soit rentabilisé ?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                Sur une offre high ticket à partir de 1 500€, une seule vente supplémentaire dans le mois couvre l'abonnement Theaa pour les 15 prochains mois au tarif Early Bird. En pratique, les premiers effets sur le taux de closing apparaissent dans les 2 à 4 premières semaines — c'est pour ça que la garantie est fixée à 30 jours : c'est suffisant pour voir les résultats.
+            </div>
+        </div>
+    </div>
+
+    <!-- RELATED ARTICLES -->
+    <div class="related-section">
+        <h2>Articles liés</h2>
+        <div class="related-grid">
+            <a href="theaa-avis-prix-fonctionnalites.html" class="related-card">
+                <div class="related-card-tag">Theaa</div>
+                <div class="related-card-title">Theaa AI : avis complet, prix et fonctionnalités (test 2026)</div>
+            </a>
+            <a href="theaa-vs-modjo-vs-gong.html" class="related-card">
+                <div class="related-card-tag">Comparatif</div>
+                <div class="related-card-title">Theaa vs Modjo vs Gong : quel outil choisir en 2026</div>
+            </a>
+            <a href="theaa-configuration-5-minutes.html" class="related-card">
+                <div class="related-card-tag">Theaa</div>
+                <div class="related-card-title">Theaa : configuration en 5 minutes, pas besoin de tech</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <a href="https://www.theaa.ai/legal" target="_blank">Mentions légales</a>
+        <span>•</span>
+        <a href="https://www.theaa.ai/legal" target="_blank">Privacy Policy</a>
+        <span>•</span>
+        <a href="index.html">Retour au blog</a>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const currentTheme = localStorage.getItem('theme') || 'light-mode';
+        body.classList.add(currentTheme);
+        themeToggle.textContent = currentTheme === 'dark-mode' ? '☀️' : '🌙';
+        themeToggle.addEventListener('click', () => {
+            if (body.classList.contains('light-mode')) {
+                body.classList.replace('light-mode', 'dark-mode');
+                localStorage.setItem('theme', 'dark-mode');
+                themeToggle.textContent = '☀️';
+            } else {
+                body.classList.replace('dark-mode', 'light-mode');
+                localStorage.setItem('theme', 'light-mode');
+                themeToggle.textContent = '🌙';
+            }
+        });
+        document.getElementById('mobileMenuToggle').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+    </script>
+
+</body>
+</html>

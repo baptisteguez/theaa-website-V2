@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Theaa — Conseils Closing, IA & Performance Commerciale</title>
+    <meta name="description" content="Conseils, stratégies et études de cas pour booster le taux de closing de tes équipes commerciales grâce à l'intelligence artificielle.">
+    <meta name="robots" content="index, follow">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #fdab6f;
+            --primary-dark: #e89a5e;
+            --primary-light: #fec891;
+            --bg-light: #ffffff;
+            --bg-light-secondary: #f8f9fa;
+            --text-light: #2c3e50;
+            --text-light-secondary: #6c757d;
+            --bg-dark: #1a1a1a;
+            --bg-dark-secondary: #2d2d2d;
+            --text-dark: #ffffff;
+            --text-dark-secondary: #b0b0b0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.light-mode { background-color: var(--bg-light); color: var(--text-light); }
+        body.dark-mode { background-color: var(--bg-dark); color: var(--text-dark); }
+
+        /* Nav */
+        nav {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            padding: 0.5rem 5%;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.light-mode nav {
+            background-color: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        body.dark-mode nav {
+            background-color: rgba(26,26,26,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .logo-icon { width: 80px; height: 80px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; }
+        .nav-links a { text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+        body.light-mode .nav-links a { color: var(--text-light); }
+        body.dark-mode .nav-links a { color: var(--text-dark); }
+        .nav-links a:hover { color: var(--primary); }
+        .theme-toggle { background: none; border: none; cursor: pointer; font-size: 1.5rem; padding: 0.5rem; border-radius: 50%; transition: background-color 0.3s ease; }
+        body.light-mode .theme-toggle { color: var(--text-light); }
+        body.dark-mode .theme-toggle { color: var(--text-dark); }
+        .cta-button {
+            background-color: var(--primary); color: white; padding: 0.75rem 1.5rem;
+            border-radius: 50px; text-decoration: none; font-weight: 600;
+            transition: all 0.3s ease; border: 2px solid var(--primary); display: inline-block;
+        }
+        .cta-button:hover { background-color: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(253,171,111,0.3); }
+
+        /* Mobile nav */
+        .mobile-menu-toggle { display: none; background: none; border: none; font-size: 1.8rem; cursor: pointer; }
+        body.light-mode .mobile-menu-toggle { color: var(--text-light); }
+        body.dark-mode .mobile-menu-toggle { color: var(--text-dark); }
+        @media (max-width: 768px) {
+            .mobile-menu-toggle { display: block; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; padding: 1rem 5%; gap: 1rem; }
+            body.light-mode .nav-links { background-color: rgba(255,255,255,0.98); }
+            body.dark-mode .nav-links { background-color: rgba(26,26,26,0.98); }
+            .nav-links.open { display: flex; }
+        }
+
+        /* Blog Hero */
+        .blog-hero {
+            padding: 140px 5% 80px;
+            text-align: center;
+        }
+        body.light-mode .blog-hero { background: linear-gradient(135deg, #fef5ee 0%, #fde4d0 100%); }
+        body.dark-mode .blog-hero { background: linear-gradient(135deg, #1a1a1a 0%, #2d2520 100%); }
+        .blog-hero h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 1rem; }
+        .blog-hero p { font-size: 1.2rem; opacity: 0.8; max-width: 600px; margin: 0 auto; }
+        .highlight { color: var(--primary); }
+
+        /* Blog Grid */
+        .blog-grid-section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Article Card */
+        .article-card {
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+        }
+        body.light-mode .article-card { background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        body.dark-mode .article-card { background: var(--bg-dark-secondary); box-shadow: 0 4px 20px rgba(255,255,255,0.05); }
+        .article-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(253,171,111,0.2); }
+
+        .article-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        .article-card-body { padding: 1.8rem; flex: 1; display: flex; flex-direction: column; }
+        .article-tag {
+            display: inline-block;
+            background: rgba(253,171,111,0.15);
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .article-card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+        }
+        body.light-mode .article-card-title { color: var(--text-light); }
+        body.dark-mode .article-card-title { color: var(--text-dark); }
+        .article-card-excerpt {
+            font-size: 0.95rem;
+            opacity: 0.7;
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+        .article-card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            opacity: 0.6;
+            border-top: 1px solid rgba(128,128,128,0.2);
+            padding-top: 1rem;
+            margin-top: auto;
+        }
+        .read-more {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 2rem 5%;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            border-top: 1px solid rgba(128,128,128,0.2);
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .footer a { color: inherit; text-decoration: none; }
+        .footer a:hover { color: var(--primary); }
+    </style>
+</head>
+<body class="light-mode">
+
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="../theaa-logo2.png" alt="Theaa" style="width:100%;height:100%;object-fit:contain;">
+                </div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html#fonctionnalites">Fonctionnalités</a></li>
+                <li><a href="../index.html#simulateur">Simulateur</a></li>
+                <li><a href="../index.html#temoignages">Témoignages</a></li>
+                <li><a href="index.html" style="color: var(--primary); font-weight: 700;">Blog</a></li>
+                <li><button class="theme-toggle" id="themeToggle">🌙</button></li>
+                <li><a href="https://www.theaa.ai/presentation-merci" class="cta-button" target="_blank">Voir la démo</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+        </div>
+    </nav>
+
+    <section class="blog-hero">
+        <h1>Le Blog <span class="highlight">Theaa</span></h1>
+        <p>Stratégies, conseils et études de cas pour transformer tes équipes commerciales en machines de guerre</p>
+    </section>
+
+    <div class="blog-grid-section">
+
+        <div style="margin-bottom: 1rem;">
+            <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem;">Marketing & Avatar Client</h2>
+            <p style="font-size: 0.9rem; opacity: 0.6;">Aligner le marketing sur la réalité terrain des appels</p>
+        </div>
+        <div class="blog-grid">
+
+            <a href="avatar-client-vivant-icp-evolutif.html" class="article-card">
+                <div class="article-card-image">🧠</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Marketing & Avatar Client</span>
+                    <div class="article-card-title">Avatar client vivant : pourquoi ton ICP de 2024 ne convertit déjà plus</div>
+                    <div class="article-card-excerpt">L'avatar annuel est mort. Tes prospects parlent un langage que ton marketing n'utilise plus. Comment créer un ICP qui se met à jour automatiquement depuis tes appels.</div>
+                    <div class="article-card-meta">
+                        <span>13 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="alignement-marketing-sales-closing.html" class="article-card">
+                <div class="article-card-image">🔗</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Marketing & Avatar Client</span>
+                    <div class="article-card-title">Pôle marketing vs pôle sales : pourquoi ils ne se parlent jamais (et comment réconcilier)</div>
+                    <div class="article-card-excerpt">Les 5 dysfonctions classiques, le coût mesurable du divorce marketing/sales, et les 3 méthodes pour créer une boucle de feedback continue.</div>
+                    <div class="article-card-meta">
+                        <span>15 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+        <div style="margin-top: 4rem; margin-bottom: 1rem;">
+            <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem;">Performance Closing</h2>
+            <p style="font-size: 0.9rem; opacity: 0.6;">Comprendre et débloquer la performance de tes équipes</p>
+        </div>
+        <div class="blog-grid">
+
+            <a href="theaa-avis-prix-fonctionnalites.html" class="article-card">
+                <div class="article-card-image">⭐</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Theaa</span>
+                    <div class="article-card-title">Theaa AI : avis complet, prix et fonctionnalités (test 2026)</div>
+                    <div class="article-card-excerpt">Review honnête de Theaa : les 6 fonctionnalités en détail, le pricing Early Bird à 99€, le ROI réel et pourquoi c'est différent des autres outils IA du marché.</div>
+                    <div class="article-card-meta">
+                        <span>9 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="theaa-prix-roi-high-ticket.html" class="article-card">
+                <div class="article-card-image">💰</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Theaa</span>
+                    <div class="article-card-title">Combien coûte Theaa ? Le vrai ROI sur une offre high ticket</div>
+                    <div class="article-card-excerpt">Theaa est à 99€/mois en Early Bird. Mais le vrai calcul c'est : combien ça te coûte de ne PAS l'avoir ? ROI chiffré, comparaison sales coach humain.</div>
+                    <div class="article-card-meta">
+                        <span>7 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="theaa-vs-modjo-vs-gong.html" class="article-card">
+                <div class="article-card-image">⚔️</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Theaa</span>
+                    <div class="article-card-title">Theaa vs Modjo vs Gong : quel outil de coaching commercial choisir en 2026</div>
+                    <div class="article-card-excerpt">Tableau comparatif complet : fonctionnalités, prix, spécialisation. Pourquoi la base de connaissances change tout pour le high ticket francophone.</div>
+                    <div class="article-card-meta">
+                        <span>11 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="theaa-configuration-5-minutes.html" class="article-card">
+                <div class="article-card-image">⚡</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Theaa</span>
+                    <div class="article-card-title">Theaa : configuration en 5 minutes, pas besoin de tech</div>
+                    <div class="article-card-excerpt">L'objection numéro 1 sur Theaa : "c'est sûrement compliqué à mettre en place." Guide pas à pas du setup — et pourquoi la méthodo William est déjà pré-configurée.</div>
+                    <div class="article-card-meta">
+                        <span>7 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="theaa-garantie-30-jours.html" class="article-card">
+                <div class="article-card-image">🛡️</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Theaa</span>
+                    <div class="article-card-title">Garantie 30 jours Theaa : comment ça marche concrètement</div>
+                    <div class="article-card-excerpt">Ce que la garantie couvre exactement, ce qu'elle ne couvre pas, comment l'activer — et pourquoi on prend ce risque alors que 95% des SaaS ne le font pas.</div>
+                    <div class="article-card-meta">
+                        <span>7 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="theaa-pour-qui-5-profils-entrepreneurs.html" class="article-card">
+                <div class="article-card-image">🎯</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Theaa</span>
+                    <div class="article-card-title">Theaa pour qui ? 5 profils d'entrepreneurs qui doublent leurs ventes</div>
+                    <div class="article-card-excerpt">Infopreneur, agence, coach, formateur ou SaaS B2B : trouve ton profil et vois exactement ce que Theaa peut changer dans ton business — et pour qui c'est pas adapté.</div>
+                    <div class="article-card-meta">
+                        <span>9 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="case-study-nassim-sahili-21-37-conversion.html" class="article-card">
+                <div class="article-card-image">📊</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Theaa</span>
+                    <div class="article-card-title">Case study : de 21% à 37% de taux de conversion en 60 jours</div>
+                    <div class="article-card-excerpt">Sans changer de closers. Sans changer l'offre. Le diagnostic, les 3 changements clés, la progression semaine par semaine et le ROI chiffré.</div>
+                    <div class="article-card-meta">
+                        <span>10 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+        <div style="margin-top: 4rem; margin-bottom: 1rem;">
+            <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem;">Theaa</h2>
+            <p style="font-size: 0.9rem; opacity: 0.6;">Reviews, prix et comparatifs</p>
+        </div>
+        <div class="blog-grid">
+
+            <a href="theaa-avis-prix-fonctionnalites.html" class="article-card">
+                <div class="article-card-image">⭐</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Theaa</span>
+                    <div class="article-card-title">Theaa AI : avis complet, prix et fonctionnalités (test 2026)</div>
+                    <div class="article-card-excerpt">Review honnête de Theaa : les 6 fonctionnalités en détail, le pricing Early Bird à 99€, le ROI réel et pourquoi c'est différent des autres outils IA du marché.</div>
+                    <div class="article-card-meta">
+                        <span>9 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="theaa-prix-roi-high-ticket.html" class="article-card">
+                <div class="article-card-image">💰</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Theaa</span>
+                    <div class="article-card-title">Combien coûte Theaa ? Le vrai ROI sur une offre high ticket</div>
+                    <div class="article-card-excerpt">Theaa est à 99€/mois en Early Bird. Mais le vrai calcul c'est : combien ça te coûte de ne PAS l'avoir ? ROI chiffré, comparaison sales coach humain.</div>
+                    <div class="article-card-meta">
+                        <span>7 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="theaa-vs-modjo-vs-gong.html" class="article-card">
+                <div class="article-card-image">⚔️</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Theaa</span>
+                    <div class="article-card-title">Theaa vs Modjo vs Gong : quel outil de coaching commercial choisir en 2026</div>
+                    <div class="article-card-excerpt">Tableau comparatif complet : fonctionnalités, prix, spécialisation. Pourquoi la base de connaissances change tout pour le high ticket francophone.</div>
+                    <div class="article-card-meta">
+                        <span>11 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="theaa-configuration-5-minutes.html" class="article-card">
+                <div class="article-card-image">⚡</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Theaa</span>
+                    <div class="article-card-title">Theaa : configuration en 5 minutes, pas besoin de tech</div>
+                    <div class="article-card-excerpt">L'objection numéro 1 sur Theaa : "c'est sûrement compliqué à mettre en place." Guide pas à pas du setup — et pourquoi la méthodo William est déjà pré-configurée.</div>
+                    <div class="article-card-meta">
+                        <span>7 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="theaa-garantie-30-jours.html" class="article-card">
+                <div class="article-card-image">🛡️</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Theaa</span>
+                    <div class="article-card-title">Garantie 30 jours Theaa : comment ça marche concrètement</div>
+                    <div class="article-card-excerpt">Ce que la garantie couvre exactement, ce qu'elle ne couvre pas, comment l'activer — et pourquoi on prend ce risque alors que 95% des SaaS ne le font pas.</div>
+                    <div class="article-card-meta">
+                        <span>7 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="theaa-pour-qui-5-profils-entrepreneurs.html" class="article-card">
+                <div class="article-card-image">🎯</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Theaa</span>
+                    <div class="article-card-title">Theaa pour qui ? 5 profils d'entrepreneurs qui doublent leurs ventes</div>
+                    <div class="article-card-excerpt">Infopreneur, agence, coach, formateur ou SaaS B2B : trouve ton profil et vois exactement ce que Theaa peut changer dans ton business — et pour qui c'est pas adapté.</div>
+                    <div class="article-card-meta">
+                        <span>9 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="case-study-nassim-sahili-21-37-conversion.html" class="article-card">
+                <div class="article-card-image">📊</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Theaa</span>
+                    <div class="article-card-title">Case study : de 21% à 37% de taux de conversion en 60 jours</div>
+                    <div class="article-card-excerpt">Sans changer de closers. Sans changer l'offre. Le diagnostic, les 3 changements clés, la progression semaine par semaine et le ROI chiffré.</div>
+                    <div class="article-card-meta">
+                        <span>10 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+        <div style="margin-top: 4rem; margin-bottom: 1rem;">
+            <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem;">Outils & Méthodes</h2>
+            <p style="font-size: 0.9rem; opacity: 0.6;">Guides pratiques pour scaler tes équipes</p>
+        </div>
+        <div class="blog-grid">
+
+            <a href="ia-coaching-closer-temps-reel.html" class="article-card">
+                <div class="article-card-image">🤖</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Outils & Méthodes</span>
+                    <div class="article-card-title">IA pour coacher ses closers en temps réel : comment ça marche en 2026</div>
+                    <div class="article-card-excerpt">Le mécanisme complet : Detector → Coach → Objection Handler. Ce que l'IA analyse pendant un appel, et la différence entre IA généraliste et IA spécialisée closing.</div>
+                    <div class="article-card-meta">
+                        <span>11 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="onboarder-closer-3-jours-ia.html" class="article-card">
+                <div class="article-card-image">🎯</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Outils & Méthodes</span>
+                    <div class="article-card-title">Onboarder un nouveau closer en 3 jours au lieu de 3 semaines : la méthode IA</div>
+                    <div class="article-card-excerpt">Le prospect fictif IA, la timeline J1→J21 et le case study Bootcamp AAA de Yomi Denzel — 80+ closers opérationnels en quelques jours.</div>
+                    <div class="article-card-meta">
+                        <span>10 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="compliance-closing-promesses-mensongeres.html" class="article-card">
+                <div class="article-card-image">⚠️</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Outils & Méthodes</span>
+                    <div class="article-card-title">Détecter les promesses mensongères de tes closers : l'angle compliance que personne n'anticipe</div>
+                    <div class="article-card-excerpt">Un closer qui survend peut détruire ta réputation et t'exposer légalement. Comment détecter les dérives en temps réel avant que ça coûte cher.</div>
+                    <div class="article-card-meta">
+                        <span>10 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="top-7-objections-closing-high-ticket.html" class="article-card">
+                <div class="article-card-image">💬</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Outils & Méthodes</span>
+                    <div class="article-card-title">Top 7 objections en closing high ticket et leurs meilleures réponses (2026)</div>
+                    <div class="article-card-excerpt">"C'est trop cher", "j'y réfléchis", "j'ai déjà essayé"... Les 7 objections récurrentes, le mécanisme réel derrière chacune, et les frameworks de réponse exacts.</div>
+                    <div class="article-card-meta">
+                        <span>13 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+        <div style="margin-top: 4rem; margin-bottom: 1rem;">
+            <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem;">Marketing & Avatar Client</h2>
+            <p style="font-size: 0.9rem; opacity: 0.6;">Aligner le marketing sur la réalité terrain des appels</p>
+        </div>
+        <div class="blog-grid">
+
+            <a href="avatar-client-vivant-icp-evolutif.html" class="article-card">
+                <div class="article-card-image">🧠</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Marketing & Avatar Client</span>
+                    <div class="article-card-title">Avatar client vivant : pourquoi ton ICP de 2024 ne convertit déjà plus</div>
+                    <div class="article-card-excerpt">L'avatar annuel est mort. Tes prospects parlent un langage que ton marketing n'utilise plus. Comment créer un ICP qui se met à jour automatiquement depuis tes appels.</div>
+                    <div class="article-card-meta">
+                        <span>13 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="alignement-marketing-sales-closing.html" class="article-card">
+                <div class="article-card-image">🔗</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Marketing & Avatar Client</span>
+                    <div class="article-card-title">Pôle marketing vs pôle sales : pourquoi ils ne se parlent jamais (et comment réconcilier)</div>
+                    <div class="article-card-excerpt">Les 5 dysfonctions classiques, le coût mesurable du divorce marketing/sales, et les 3 méthodes pour créer une boucle de feedback continue.</div>
+                    <div class="article-card-meta">
+                        <span>15 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+        <div style="margin-top: 4rem; margin-bottom: 1rem;">
+            <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem;">Performance Closing</h2>
+            <p style="font-size: 0.9rem; opacity: 0.6;">Comprendre et débloquer la performance de tes équipes</p>
+        </div>
+        <div class="blog-grid">
+
+            <a href="closer-stagne-taux-closing-20-pourcent.html" class="article-card">
+                <div class="article-card-image">📈</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Performance Closing</span>
+                    <div class="article-card-title">Pourquoi 80% des closers stagnent à 20% de taux de closing (et la solution)</div>
+                    <div class="article-card-excerpt">Environnement vs talent, les 4 vraies causes du plafonnement, ce que font différemment les closers à 40%+. Le guide le plus complet sur le sujet.</div>
+                    <div class="article-card-meta">
+                        <span>14 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="comment-doubler-taux-closing-ia.html" class="article-card">
+                <div class="article-card-image">✌️</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Performance Closing</span>
+                    <div class="article-card-title">Comment doubler le taux de closing de tes équipes grâce à l'IA</div>
+                    <div class="article-card-excerpt">De 20% à 40%+ : les mécanismes concrets (coaching temps réel, analyse post-appel, formation accélérée) qui font la différence sur les équipes high ticket.</div>
+                    <div class="article-card-meta">
+                        <span>8 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="5-erreurs-closers.html" class="article-card">
+                <div class="article-card-image">⚠️</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Performance Closing</span>
+                    <div class="article-card-title">Les 5 erreurs qui sabotent le CA de tes closers (et comment les corriger)</div>
+                    <div class="article-card-excerpt">80% des ventes perdues viennent de 5 erreurs répétées en silence. Diagnostique et corrections concrètes pour chacune d'elles.</div>
+                    <div class="article-card-meta">
+                        <span>6 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="former-closers-high-ticket.html" class="article-card">
+                <div class="article-card-image">🚀</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Performance Closing</span>
+                    <div class="article-card-title">High Ticket Closing : comment former des closers performants en un temps record</div>
+                    <div class="article-card-excerpt">Le profil à recruter, les 3 phases de formation accélérée et comment scaler une équipe sans perdre en qualité. Guide complet.</div>
+                    <div class="article-card-meta">
+                        <span>10 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="doubler-taux-closing-30-jours.html" class="article-card">
+                <div class="article-card-image">⏱️</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Performance Closing</span>
+                    <div class="article-card-title">Doubler le taux de closing de son équipe en 30 jours sans changer de closers</div>
+                    <div class="article-card-excerpt">Environnement vs talent : les 4 leviers qui déterminent 80% des performances, le plan semaine par semaine, et pourquoi recruter un meilleur closer ne marche pas.</div>
+                    <div class="article-card-meta">
+                        <span>14 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="manager-equipe-closers-distance-kpi.html" class="article-card">
+                <div class="article-card-image">📐</div>
+                <div class="article-card-body">
+                    <span class="article-tag">Performance Closing</span>
+                    <div class="article-card-title">Manager une équipe de closers à distance : les 5 KPIs que 90% des CEOs ignorent</div>
+                    <div class="article-card-excerpt">Taux de qualification, durée de gestion d'objection, score découverte, ratio R1/R2, compliance score — les vrais indicateurs pour piloter sans être sur chaque appel.</div>
+                    <div class="article-card-meta">
+                        <span>14 min de lecture</span>
+                        <span class="read-more">Lire l'article →</span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <footer class="footer">
+        <a href="https://www.theaa.ai/legal" target="_blank">Mentions légales</a>
+        <span>•</span>
+        <a href="https://www.theaa.ai/legal" target="_blank">Privacy Policy</a>
+        <span>•</span>
+        <a href="../index.html">Retour au site</a>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const currentTheme = localStorage.getItem('theme') || 'light-mode';
+        body.classList.add(currentTheme);
+        themeToggle.textContent = currentTheme === 'dark-mode' ? '☀️' : '🌙';
+        themeToggle.addEventListener('click', () => {
+            if (body.classList.contains('light-mode')) {
+                body.classList.replace('light-mode', 'dark-mode');
+                localStorage.setItem('theme', 'dark-mode');
+                themeToggle.textContent = '☀️';
+            } else {
+                body.classList.replace('dark-mode', 'light-mode');
+                localStorage.setItem('theme', 'light-mode');
+                themeToggle.textContent = '🌙';
+            }
+        });
+        document.getElementById('mobileMenuToggle').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+    </script>
+</body>
+</html>

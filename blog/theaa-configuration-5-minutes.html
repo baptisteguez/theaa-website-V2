@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theaa : configuration en 5 minutes, sans compétences tech</title>
+    <meta name="description" content="Tu penses que déployer un outil IA pour tes closers est compliqué ? Theaa se configure en 5 minutes. Guide pas à pas, sans code, sans intégration complexe.">
+    <meta property="og:title" content="Theaa : configuration en 5 minutes, sans compétences tech">
+    <meta property="og:description" content="Tu penses que déployer un outil IA pour tes closers est compliqué ? Theaa se configure en 5 minutes. Sans code, sans intégration complexe.">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://www.theaa.ai/blog/theaa-configuration-5-minutes">
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+    --primary: #fdab6f; --primary-dark: #e89a5e; --primary-light: #fec891;
+    --bg-light: #ffffff; --bg-light-secondary: #f8f9fa;
+    --text-light: #2c3e50; --text-light-secondary: #6c757d;
+    --bg-dark: #1a1a1a; --bg-dark-secondary: #2d2d2d;
+    --text-dark: #ffffff; --text-dark-secondary: #b0b0b0;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; transition: background-color 0.3s ease, color 0.3s ease; }
+body.light-mode { background-color: var(--bg-light); color: var(--text-light); }
+body.dark-mode { background-color: var(--bg-dark); color: var(--text-dark); }
+
+nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 0.5rem 5%; transition: background-color 0.3s ease; }
+body.light-mode nav { background-color: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.1); }
+body.dark-mode nav { background-color: rgba(26,26,26,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); }
+.nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+.logo { font-size: 1.8rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+.logo-icon { width: 80px; height: 80px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+.nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; }
+.nav-links a { text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+body.light-mode .nav-links a { color: var(--text-light); }
+body.dark-mode .nav-links a { color: var(--text-dark); }
+.nav-links a:hover, .nav-active { color: var(--primary) !important; font-weight: 700 !important; }
+.theme-toggle { background: none; border: none; cursor: pointer; font-size: 1.5rem; padding: 0.5rem; border-radius: 50%; }
+body.light-mode .theme-toggle { color: var(--text-light); }
+body.dark-mode .theme-toggle { color: var(--text-dark); }
+.cta-button { background-color: var(--primary); color: white; padding: 0.75rem 1.5rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; border: 2px solid var(--primary); display: inline-block; }
+.cta-button:hover { background-color: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(253,171,111,0.3); }
+.mobile-menu-toggle { display: none; background: none; border: none; font-size: 1.8rem; cursor: pointer; }
+body.light-mode .mobile-menu-toggle { color: var(--text-light); }
+body.dark-mode .mobile-menu-toggle { color: var(--text-dark); }
+
+.breadcrumb { padding: 100px 5% 0; max-width: 800px; margin: 0 auto; font-size: 0.9rem; opacity: 0.6; }
+.breadcrumb a { color: inherit; text-decoration: none; }
+.breadcrumb a:hover { color: var(--primary); }
+
+.article-hero { padding: 140px 5% 60px; text-align: center; }
+body.light-mode .article-hero { background: linear-gradient(135deg, #fef5ee 0%, #fde4d0 100%); }
+body.dark-mode .article-hero { background: linear-gradient(135deg, #1a1a1a 0%, #2d2520 100%); }
+.article-tag { display: inline-block; background: rgba(253,171,111,0.15); color: var(--primary); font-size: 0.85rem; font-weight: 700; padding: 0.4rem 1rem; border-radius: 20px; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.article-hero h1 { font-size: 2.6rem; font-weight: 800; max-width: 800px; margin: 0 auto 1.5rem; line-height: 1.3; }
+.article-meta { font-size: 0.95rem; opacity: 0.6; }
+.highlight { color: var(--primary); }
+
+.article-body { max-width: 800px; margin: 0 auto; padding: 60px 5%; }
+.article-body h2 { font-size: 1.9rem; font-weight: 700; margin: 3rem 0 1rem; color: var(--primary); }
+.article-body h3 { font-size: 1.4rem; font-weight: 700; margin: 2rem 0 0.8rem; }
+.article-body p { font-size: 1.05rem; margin-bottom: 1.2rem; opacity: 0.9; line-height: 1.8; }
+.article-body ul, .article-body ol { margin: 1rem 0 1.5rem 1.5rem; }
+.article-body li { font-size: 1.05rem; margin-bottom: 0.6rem; opacity: 0.9; line-height: 1.7; }
+.article-body strong { font-weight: 700; }
+
+.callout { border-left: 4px solid var(--primary); padding: 1.2rem 1.5rem; border-radius: 0 12px 12px 0; margin: 2rem 0; font-style: italic; }
+body.light-mode .callout { background: rgba(253,171,111,0.1); }
+body.dark-mode .callout { background: rgba(253,171,111,0.08); }
+
+.stat-box { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+.stat-item { padding: 1.5rem; border-radius: 16px; text-align: center; }
+body.light-mode .stat-item { background: var(--bg-light-secondary); box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+body.dark-mode .stat-item { background: var(--bg-dark-secondary); }
+.stat-number { font-size: 2.2rem; font-weight: 800; color: var(--primary); }
+.stat-label { font-size: 0.9rem; opacity: 0.7; margin-top: 0.3rem; }
+
+.tldr-box { border-radius: 20px; padding: 2rem 2.5rem; margin: 2rem 0 3rem; }
+body.light-mode .tldr-box { background: var(--bg-light-secondary); border: 2px solid rgba(253,171,111,0.3); }
+body.dark-mode .tldr-box { background: var(--bg-dark-secondary); border: 2px solid rgba(253,171,111,0.2); }
+.tldr-box h3 { font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.tldr-box ul { margin: 0 0 1.5rem 1.2rem; }
+.tldr-box li { font-size: 1rem; margin-bottom: 0.4rem; opacity: 0.9; }
+
+.article-cta { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); padding: 3rem; border-radius: 24px; text-align: center; margin: 4rem 0; color: white; }
+.article-cta h3 { font-size: 1.8rem; margin-bottom: 1rem; }
+.article-cta p { opacity: 0.9; margin-bottom: 1.5rem; font-size: 1.05rem; }
+.cta-button-white { background: white; color: var(--primary); padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 700; transition: all 0.3s ease; display: inline-block; font-size: 1.05rem; }
+.cta-button-white:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+.cta-sub { font-size: 0.85rem; opacity: 0.8; margin-top: 1rem; margin-bottom: 0; }
+
+.faq-section { max-width: 800px; margin: 0 auto; padding: 0 5% 60px; }
+.faq-section h2 { font-size: 1.9rem; font-weight: 700; margin-bottom: 2rem; color: var(--primary); }
+.faq-item { border-radius: 16px; margin-bottom: 1rem; overflow: hidden; }
+body.light-mode .faq-item { background: var(--bg-light-secondary); }
+body.dark-mode .faq-item { background: var(--bg-dark-secondary); }
+.faq-question { padding: 1.2rem 1.5rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.05rem; }
+.faq-answer { padding: 0 1.5rem 1.2rem; font-size: 1rem; opacity: 0.85; line-height: 1.7; }
+.faq-icon { color: var(--primary); font-size: 1.3rem; flex-shrink: 0; }
+
+.related-section { max-width: 800px; margin: 0 auto; padding: 0 5% 80px; }
+.related-section h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; opacity: 0.7; border-top: 1px solid rgba(128,128,128,0.2); padding-top: 2rem; }
+.related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+.related-card { border-radius: 16px; padding: 1.5rem; text-decoration: none; transition: transform 0.3s ease; display: block; }
+body.light-mode .related-card { background: var(--bg-light-secondary); box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+body.dark-mode .related-card { background: var(--bg-dark-secondary); }
+.related-card:hover { transform: translateY(-4px); }
+.related-card-tag { font-size: 0.75rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+.related-card-title { font-size: 0.95rem; font-weight: 600; line-height: 1.4; }
+body.light-mode .related-card-title { color: var(--text-light); }
+body.dark-mode .related-card-title { color: var(--text-dark); }
+
+.setup-steps { margin: 2rem 0; }
+.setup-step { display: flex; gap: 1.5rem; margin-bottom: 2rem; align-items: flex-start; }
+.step-number { flex-shrink: 0; width: 48px; height: 48px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.2rem; }
+.step-content h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem; }
+.step-content p { font-size: 1rem; opacity: 0.85; margin: 0; }
+
+.timeline-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0; }
+.timeline-col { border-radius: 16px; padding: 1.5rem; }
+body.light-mode .timeline-col { background: var(--bg-light-secondary); }
+body.dark-mode .timeline-col { background: var(--bg-dark-secondary); }
+.timeline-col h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid rgba(128,128,128,0.2); }
+.timeline-col.theaa-col h3 { border-color: var(--primary); color: var(--primary); }
+.timeline-col ul { margin: 0; padding: 0; list-style: none; }
+.timeline-col li { font-size: 0.95rem; padding: 0.4rem 0; opacity: 0.85; border-bottom: 1px solid rgba(128,128,128,0.1); }
+.timeline-col li:last-child { border: none; }
+
+.footer { padding: 2rem 5%; text-align: center; font-size: 0.9rem; opacity: 0.7; border-top: 1px solid rgba(128,128,128,0.2); display: flex; justify-content: center; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.footer a { color: inherit; text-decoration: none; }
+.footer a:hover { color: var(--primary); }
+
+@media (max-width: 768px) {
+    .mobile-menu-toggle { display: block; }
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; padding: 1rem 5%; gap: 1rem; }
+    body.light-mode .nav-links { background-color: rgba(255,255,255,0.98); }
+    body.dark-mode .nav-links { background-color: rgba(26,26,26,0.98); }
+    .nav-links.open { display: flex; }
+    .article-hero h1 { font-size: 1.9rem; }
+    .article-body h2 { font-size: 1.5rem; }
+    .stat-box { grid-template-columns: 1fr; }
+    .timeline-compare { grid-template-columns: 1fr; }
+}
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-container">
+        <a href="../index.html" class="logo">
+            <div class="logo-icon">
+                <img src="../theaa-logo2.png" alt="Theaa" style="width:100%;height:100%;object-fit:contain;">
+            </div>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="../index.html#fonctionnalites">Fonctionnalités</a></li>
+            <li><a href="../index.html#simulateur">Simulateur</a></li>
+            <li><a href="../index.html#temoignages">Témoignages</a></li>
+            <li><a href="index.html" class="nav-active">Blog</a></li>
+            <li><button class="theme-toggle" id="themeToggle">🌙</button></li>
+            <li><a href="https://www.theaa.ai/presentation-merci" class="cta-button" target="_blank">Voir la démo</a></li>
+        </ul>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+    </div>
+</nav>
+
+<div class="breadcrumb">
+    <a href="../index.html">Accueil</a> › <a href="index.html">Blog</a> › Configuration Theaa en 5 minutes
+</div>
+
+<section class="article-hero">
+    <div class="article-tag">Theaa</div>
+    <h1>Theaa : configuration en <span class="highlight">5 minutes</span>, pas besoin de tech</h1>
+    <p class="article-meta">7 min de lecture &nbsp;·&nbsp; Mis à jour avril 2026</p>
+</section>
+
+<article class="article-body">
+
+    <p>L'objection numéro 1 qu'on entend sur Theaa : "C'est sûrement compliqué à mettre en place." Des intégrations CRM, des APIs, une semaine avec l'équipe IT, une formation des managers, un onboarding des closers... C'est ce que les gens imaginent quand on dit "outil IA pour le closing".</p>
+
+    <p>La réalité : <strong>5 minutes</strong>. C'est le temps qu'il faut pour que Theaa soit opérationnel et que ton premier closer soit prêt à faire son premier appel coaché. Pas 5 minutes "dans les meilleures conditions". 5 minutes en moyenne, pour n'importe quel infopreneur ou CEO qui sait utiliser une interface web.</p>
+
+    <p>Cet article te montre exactement comment ça se passe, étape par étape — et pourquoi c'est structurellement différent des outils comme Gong ou Modjo qui ont effectivement des setups complexes.</p>
+
+    <div class="tldr-box">
+        <h3>TL;DR — Ce que tu dois retenir</h3>
+        <ul>
+            <li><strong>5 étapes</strong> : compte → outil d'appel → script/offre → closers → premier appel coaché.</li>
+            <li><strong>Aucune compétence tech requise</strong> : pas de code, pas d'API, pas d'équipe IT.</li>
+            <li><strong>La méthodo William Wouaquet est pré-chargée</strong> : tu n'as pas à construire les scripts d'objections depuis zéro.</li>
+            <li><strong>J1 : premiers scorings. J3 : premières améliorations mesurables. J7 : données pour optimiser.</strong></li>
+            <li>Setup Theaa : 5 min. Setup Gong/Modjo classique : 1 à 2 semaines minimum.</li>
+        </ul>
+        <a href="https://www.theaa.ai/presentation-merci" class="cta-button" target="_blank" style="margin-top:1rem;">Démarrer maintenant →</a>
+    </div>
+
+    <h2>Pourquoi les outils IA ont la réputation d'être complexes</h2>
+
+    <p>Cette réputation est méritée — pour certains outils. Gong, Modjo, ou d'autres plateformes de conversation intelligence sont conçus pour des équipes commerciales B2B avec des CRM complexes, des intégrations multi-outils, et des équipes IT dédiées. Leur valeur est précisément dans cette profondeur d'intégration : ils se connectent à Salesforce, Hubspot, à ta messagerie, à ton agenda, à tes outils de visio. Pour extraire toute cette valeur, il faut du temps, des ressources techniques, et un onboarding IT.</p>
+
+    <p>Un déploiement Gong standard prend entre 2 et 4 semaines. Pas parce que l'équipe Gong travaille mal — parce que l'outil a été conçu pour un contexte organisationnel complexe où chaque intégration représente de la valeur ajoutée.</p>
+
+    <p>Theaa a fait un choix différent. Plutôt que de s'intégrer à 40 outils et de devenir le centre de gravité de tout le stack commercial, Theaa se concentre sur une seule chose : <strong>coacher tes closers pendant et après chaque appel</strong>. Cette focalisation permet un setup radicalement simple.</p>
+
+    <h2>Le flow de setup Theaa en 5 minutes</h2>
+
+    <div class="setup-steps">
+        <div class="setup-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h3>Créer le compte</h3>
+                <p>Email, mot de passe, nom de ton entreprise. 45 secondes. Pas de carte bancaire requise pour démarrer la démo.</p>
+            </div>
+        </div>
+        <div class="setup-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h3>Connecter l'outil d'appel</h3>
+                <p>Theaa fonctionne avec les principaux outils d'appel utilisés par les équipes closing. La connexion se fait via un lien d'authentification — pas de code, pas d'API à configurer manuellement. 60 secondes maximum.</p>
+            </div>
+        </div>
+        <div class="setup-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h3>Importer le script ou l'offre</h3>
+                <p>Colle ton script de vente existant, ou décris ton offre en quelques lignes. Theaa utilise ça pour personnaliser les suggestions de réponses aux objections en fonction de ce que tu vends réellement. Si tu n'as pas encore de script structuré, la méthodologie William Wouaquet pré-chargée est une base solide pour démarrer immédiatement.</p>
+            </div>
+        </div>
+        <div class="setup-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <h3>Inviter tes closers</h3>
+                <p>Un email suffit. Le closer reçoit une invitation, crée son accès, et est prêt. Pas de formation technique requise de leur côté — l'interface est aussi simple qu'une messagerie.</p>
+            </div>
+        </div>
+        <div class="setup-step">
+            <div class="step-number">5</div>
+            <div class="step-content">
+                <h3>Premier appel coaché</h3>
+                <p>Dès le premier appel, Theaa analyse en temps réel, guide via la check-list de phases, et souffle des suggestions face aux objections. À la fin de l'appel, le scoring automatique est disponible dans les minutes qui suivent.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="callout">
+        Le point 3 est souvent celui qui surprend le plus : tu n'as pas à construire une base de connaissances depuis zéro. Theaa arrive avec une méthodologie déjà intégrée. Tu l'adaptes à ton offre, tu ne la construis pas.
+    </div>
+
+    <div class="article-cta">
+        <h3>Lance le setup maintenant</h3>
+        <p>En 5 minutes, tes closers ont un coach IA en temps réel. Pas besoin d'IT, pas d'intégration complexe, pas de développeur.</p>
+        <a href="https://www.theaa.ai/presentation-merci" class="cta-button-white" target="_blank">Voir la démo et démarrer →</a>
+        <p class="cta-sub">99€/mois · Garantie 30 jours · 100 places Early Bird</p>
+    </div>
+
+    <h2>La méthodo William Wouaquet pré-configurée par défaut</h2>
+
+    <p>C'est l'élément qui change tout à l'expérience de setup — et qui mérite d'être expliqué clairement.</p>
+
+    <p>Quand tu configures un outil généraliste, tu dois construire ta base de connaissances : quelles sont les phases de ton appel, quelles objections tu rencontres, quelles réponses fonctionnent, comment scorer chaque moment. C'est un travail de plusieurs heures, souvent plusieurs jours, et il requiert que tu aies déjà une méthodologie solide pour la formaliser.</p>
+
+    <p>Theaa arrive avec tout ça déjà intégré. La base de connaissances qui alimente les suggestions de l'IA, les réponses aux objections, la structure des phases d'appel — tout ça est issu de la méthodologie qu'a développée William Wouaquet sur 4 ans à manager les pôles sales de certains des plus gros infopreneurs francophones. Des équipes qui ont généré collectivement des dizaines de millions d'euros. Une approche qui a été classée première sur le Bootcamp AAA de Yomi Denzel, avec plus de 80 closers formés et déployés via l'agence Money Trees.</p>
+
+    <p>Ce n'est pas une méthodologie générique sortie d'un manuel américain. C'est le résultat de centaines d'appels analysés, de dizaines de closers coachés, et d'une expertise construite spécifiquement sur le marché high ticket francophone.</p>
+
+    <p>Tu n'as pas à réinventer ton process closing. Tu arrives avec ton offre, tu la décris, et Theaa adapte cette méthodologie prouvée à ton contexte spécifique. C'est la différence entre construire une maison depuis les fondations et emménager dans une maison déjà meublée que tu redécorez selon tes goûts.</p>
+
+    <h2>Comparaison setup Theaa vs Gong / Modjo classique</h2>
+
+    <div class="timeline-compare">
+        <div class="timeline-col theaa-col">
+            <h3>Theaa — 5 minutes</h3>
+            <ul>
+                <li>Minute 1 : Création du compte</li>
+                <li>Minute 2 : Connexion outil d'appel</li>
+                <li>Minute 3 : Import de l'offre / script</li>
+                <li>Minute 4 : Invitation des closers</li>
+                <li>Minute 5 : Premier appel prêt</li>
+                <li>J1 soir : premiers scorings disponibles</li>
+            </ul>
+        </div>
+        <div class="timeline-col">
+            <h3>Gong / Modjo — 1 à 2 semaines</h3>
+            <ul>
+                <li>J1-J2 : Contrat, provisionnement</li>
+                <li>J3-J5 : Intégration CRM avec l'équipe IT</li>
+                <li>J6-J8 : Configuration des intégrations (email, agenda, visio)</li>
+                <li>J9-J10 : Formation des managers à la plateforme</li>
+                <li>J11-J14 : Onboarding des commerciaux</li>
+                <li>J15 : Premiers vrais appels trackés</li>
+            </ul>
+        </div>
+    </div>
+
+    <p>Cette différence n'est pas due à une meilleure ingénierie de Theaa — elle vient du fait que Gong et Modjo ont des ambitions d'intégration beaucoup plus larges, ce qui crée une complexité structurelle. Pour une équipe high ticket de 2 à 15 closers, cette complexité est souvent inutile et toujours coûteuse en temps.</p>
+
+    <h2>Ce qui se passe après le setup</h2>
+
+    <p>Le setup en 5 minutes n'est pas une promesse marketing qui cache une courbe d'apprentissage longue. Voici ce qui se passe réellement dans les 7 premiers jours :</p>
+
+    <p><strong>Jour 1.</strong> Tes closers font leurs premiers appels avec Theaa actif. La check-list de phases s'affiche en temps réel. Les suggestions apparaissent face aux objections. À la fin de chaque appel, un scoring sur 20 est disponible avec les axes d'amélioration phase par phase. Premier regard objectif sur les performances individuelles.</p>
+
+    <p><strong>Jour 3.</strong> Avec 2 à 3 appels scorés par closer, les patterns commencent à apparaître. Tel closer rate systématiquement la phase de qualification à la 8e minute. Tel autre ne crée pas assez d'urgence avant la proposition. Ces insights sont actionnables immédiatement — pas dans 3 semaines après analyse humaine.</p>
+
+    <p><strong>Jour 7.</strong> Tu as suffisamment de données pour une première session d'optimisation. Quelles objections reviennent le plus ? Sur quelle phase le score moyen est-il le plus faible ? Quel closer a le plus progressé ? Ces questions ont maintenant des réponses chiffrées, pas des impressions.</p>
+
+    <p>Pour aller plus loin sur ce que ces données permettent de faire au bout de quelques semaines, l'article sur <a href="theaa-avis-prix-fonctionnalites.html" style="color:var(--primary);">l'avis complet Theaa</a> et celui sur le <a href="theaa-prix-roi-high-ticket.html" style="color:var(--primary);">ROI réel sur du high ticket</a> donnent des chiffres concrets. Et si tu as un nouveau closer à intégrer, l'article sur <a href="onboarder-closer-3-jours-ia.html" style="color:var(--primary);">l'onboarding en 3 jours</a> montre ce que change Theaa sur la courbe d'apprentissage initiale.</p>
+
+</article>
+
+<section class="faq-section">
+    <h2>Questions fréquentes sur le setup</h2>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            Faut-il vraiment aucune compétence technique pour configurer Theaa ?
+            <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+            Aucune. Si tu sais créer un compte sur un site web et copier-coller du texte, tu peux configurer Theaa. Il n'y a pas d'API à configurer, pas de code à écrire, pas de webhook à paramétrer. La connexion à l'outil d'appel se fait via une interface visuelle en quelques clics. Si tu bloques sur une étape, le support peut te guider en moins de 10 minutes.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            Que se passe-t-il si je n'ai pas encore de script de vente structuré ?
+            <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+            Pas de problème. Tu peux décrire ton offre en quelques phrases — ce que tu vends, à qui, quel est le prix, quels sont les principaux bénéfices. Theaa s'appuie sur la structure de la méthodologie William Wouaquet déjà intégrée, et l'adapte à ton contexte. Tu auras quand même des suggestions pertinentes dès le premier appel. Un script plus détaillé améliore la précision des suggestions, mais n'est pas un prérequis.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            Mes closers doivent-ils être formés avant de commencer à utiliser Theaa ?
+            <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+            Non. L'interface closer est conçue pour être intuitive dès la première utilisation. La check-list des phases apparaît pendant l'appel, les suggestions s'affichent quand une objection est détectée. Un closer qui n'a jamais vu l'outil peut l'utiliser efficacement dès son premier appel. Il y a bien sûr une montée en puissance dans les premiers jours — comprendre comment lire les suggestions, comment interpréter les scorings — mais ça n'empêche pas de démarrer immédiatement.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            La garantie 30 jours couvre-t-elle vraiment tous les cas ?
+            <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+            Oui. Si dans les 30 premiers jours tu estimes que Theaa ne correspond pas à ce qui a été présenté, tu peux demander un remboursement. Pas de clause cachée sur le "bon usage" ou de conditions restrictives. La garantie existe parce que la confiance dans le produit est suffisante pour la proposer sans condition. Les détails exacts de la garantie sont précisés dans les conditions d'utilisation accessibles depuis la démo.
+        </div>
+    </div>
+</section>
+
+<div class="article-cta" style="max-width:800px;margin:0 auto 4rem;padding:3rem 5%;">
+    <h3>5 minutes pour changer la trajectoire de tes closers</h3>
+    <p>Voir Theaa en action dans la démo — le setup complet, les fonctionnalités, et ce que ça donne sur un vrai appel.</p>
+    <a href="https://www.theaa.ai/presentation-merci" class="cta-button-white" target="_blank">Accéder à la démo →</a>
+    <p class="cta-sub">Early Bird 99€/mois · 100 places · Garantie 30 jours · Aucun engagement</p>
+</div>
+
+<section class="related-section">
+    <h2>À lire aussi</h2>
+    <div class="related-grid">
+        <a href="theaa-avis-prix-fonctionnalites.html" class="related-card">
+            <div class="related-card-tag">Theaa</div>
+            <div class="related-card-title">Theaa AI : avis complet, prix et fonctionnalités (test 2026)</div>
+        </a>
+        <a href="theaa-prix-roi-high-ticket.html" class="related-card">
+            <div class="related-card-tag">ROI</div>
+            <div class="related-card-title">Combien coûte Theaa ? Le vrai ROI sur une offre high ticket</div>
+        </a>
+        <a href="onboarder-closer-3-jours-ia.html" class="related-card">
+            <div class="related-card-tag">Onboarding</div>
+            <div class="related-card-title">Onboarder un nouveau closer en 3 jours au lieu de 3 semaines</div>
+        </a>
+    </div>
+</section>
+
+<footer class="footer">
+    <a href="https://www.theaa.ai/legal" target="_blank">Mentions légales</a>
+    <span>•</span>
+    <a href="https://www.theaa.ai/legal" target="_blank">Privacy Policy</a>
+    <span>•</span>
+    <a href="index.html">Retour au blog</a>
+</footer>
+
+<script>
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+    const currentTheme = localStorage.getItem('theme') || 'light-mode';
+    body.classList.add(currentTheme);
+    themeToggle.textContent = currentTheme === 'dark-mode' ? '☀️' : '🌙';
+    themeToggle.addEventListener('click', () => {
+        if (body.classList.contains('light-mode')) {
+            body.classList.replace('light-mode', 'dark-mode');
+            localStorage.setItem('theme', 'dark-mode');
+            themeToggle.textContent = '☀️';
+        } else {
+            body.classList.replace('dark-mode', 'light-mode');
+            localStorage.setItem('theme', 'light-mode');
+            themeToggle.textContent = '🌙';
+        }
+    });
+    document.getElementById('mobileMenuToggle').addEventListener('click', () => {
+        document.getElementById('navLinks').classList.toggle('open');
+    });
+</script>
+
+</body>
+</html>
