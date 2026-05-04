@@ -3205,9 +3205,7 @@
                 <li><a href="#fonctionnalites">Fonctionnalités</a></li>
                 <li><a href="#simulateur">Simulateur</a></li>
                 <li><a href="#temoignages">Témoignages</a></li>
-                <li><a href="#tarifs">Tarifs</a></li>
                 <li><a href="blog/index.html">Blog</a></li>
-                <li><button class="theme-toggle" id="themeToggle">🌙</button></li>
                 <li><a href="https://www.theaa.ai/presentation-merci" class="cta-button" target="_blank">Voir la démo</a></li>
             </ul>
             <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
@@ -3662,31 +3660,8 @@
     </footer>
 
     <script>
-        // Theme Toggle
-        const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
-
-        const currentTheme = localStorage.getItem('theme') || 'light-mode';
-        body.classList.add(currentTheme);
-        updateThemeIcon(currentTheme);
-
-        themeToggle.addEventListener('click', () => {
-            if (body.classList.contains('light-mode')) {
-                body.classList.remove('light-mode');
-                body.classList.add('dark-mode');
-                localStorage.setItem('theme', 'dark-mode');
-                updateThemeIcon('dark-mode');
-            } else {
-                body.classList.remove('dark-mode');
-                body.classList.add('light-mode');
-                localStorage.setItem('theme', 'light-mode');
-                updateThemeIcon('light-mode');
-            }
-        });
-
-        function updateThemeIcon(theme) {
-            themeToggle.textContent = theme === 'dark-mode' ? '☀️' : '🌙';
-        }
+        body.classList.add('light-mode');
 
         // Smart Navigation - Hide on scroll down, show on scroll up
         let lastScrollTop = 0;
