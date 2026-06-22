@@ -2390,13 +2390,13 @@
             }
 
             .case-study-stats {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr !important;
                 gap: 0.6rem;
                 margin-top: 2rem;
             }
 
             .case-study-stat {
-                display: flex;
+                display: flex !important;
                 align-items: center;
                 gap: 1rem;
                 padding: 1rem 1.2rem;
@@ -2404,14 +2404,14 @@
             }
 
             .case-study-stat-number {
-                font-size: 2rem;
+                font-size: 2rem !important;
                 min-width: 90px;
                 flex-shrink: 0;
                 margin-bottom: 0;
             }
 
             .case-study-stat-label {
-                font-size: 0.9rem;
+                font-size: 0.9rem !important;
             }
 
             /* Simulator Mobile Adjustments */
@@ -3732,6 +3732,8 @@ La technologie est impressionnante. »</p>
           var btnPrev = document.getElementById('theaa-prev');
           var btnNext = document.getElementById('theaa-next');
           var current = 0;
+          var btnScrolling = false;
+          var scrollTimer = null;
 
           for (var i = 0; i < total; i++) {
             var d = document.createElement('div');
@@ -3746,9 +3748,7 @@ La technologie est impressionnante. »</p>
             return cards[0].getBoundingClientRect().width + 12;
           }
 
-          function goTo(n) {
-            current = Math.max(0, Math.min(n, total - 1));
-            outer.scrollLeft = current * getCardWidth();
+          function updateUI() {
             document.querySelectorAll('.theaa-testi-dot').forEach(function(dot, i) {
               dot.classList.toggle('active', i === current);
             });
@@ -3756,19 +3756,26 @@ La technologie est impressionnante. »</p>
             btnNext.disabled = current === total - 1;
           }
 
+          function goTo(n) {
+            current = Math.max(0, Math.min(n, total - 1));
+            btnScrolling = true;
+            outer.scrollTo({ left: current * getCardWidth(), behavior: 'smooth' });
+            updateUI();
+            // Release flag after animation completes (~400ms)
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(function() { btnScrolling = false; }, 450);
+          }
+
           btnPrev.addEventListener('click', function() { goTo(current - 1); });
           btnNext.addEventListener('click', function() { goTo(current + 1); });
 
-          // Sync dots when user swipes natively
+          // Sync dots only on native swipe (not during button scroll)
           outer.addEventListener('scroll', function() {
+            if (btnScrolling) return;
             var idx = Math.round(outer.scrollLeft / getCardWidth());
             if (idx !== current) {
               current = idx;
-              document.querySelectorAll('.theaa-testi-dot').forEach(function(dot, i) {
-                dot.classList.toggle('active', i === current);
-              });
-              btnPrev.disabled = current === 0;
-              btnNext.disabled = current === total - 1;
+              updateUI();
             }
           }, { passive: true });
 
