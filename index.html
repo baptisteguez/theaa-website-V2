@@ -1779,6 +1779,27 @@
             margin-bottom: 1rem;
         }
 
+        .avatar-circle {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: 3px solid white;
+            margin-left: -14px;
+            object-fit: cover;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .avatar-circle:first-child {
+            margin-left: 0;
+        }
+
+        .avatar-circle:hover {
+            transform: scale(1.12) translateY(-4px);
+            z-index: 10;
+            position: relative;
+        }
+
         .social-proof-subtitle {
             font-size: 0.9rem;
             opacity: 0.7;
@@ -2737,23 +2758,6 @@
             to { transform: scaleY(1); transform-origin: bottom; }
         }
 
-        /* Avatar Graphic (Evolving Profile) */
-        .avatar-circle {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            box-shadow: 0 10px 30px rgba(253, 171, 111, 0.3);
-            position: relative;
-        }
-
-        body.dark-mode .avatar-circle {
-            background: var(--bg-dark-secondary);
-        }
 
         .avatar-data-point {
             position: absolute;
