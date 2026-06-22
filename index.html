@@ -1756,6 +1756,35 @@
             background-color: var(--bg-dark);
         }
 
+        /* Social Proof Block */
+        .social-proof {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            border-radius: 20px;
+        }
+
+        body.light-mode .social-proof {
+            background-color: var(--bg-light-secondary);
+        }
+
+        body.dark-mode .social-proof {
+            background-color: var(--bg-dark-secondary);
+        }
+
+        .avatars-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .social-proof-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+        }
+
         /* New Testimonials Component */
         .theaa-testi-wrap { font-family: 'Sora', sans-serif; width: 100%; max-width: 100%; position: relative; box-sizing: border-box; }
         .theaa-testi-outer { overflow: hidden; width: 100%; box-sizing: border-box; }
@@ -3272,9 +3301,20 @@
 
     <!-- Testimonials Section -->
     <section class="testimonials" id="temoignages">
-        <h2 class="section-title">Ce qu'ils disent de Theaa</h2>
+        <h2 class="section-title">Utilisé au quotidien par les closers de</h2>
 
-        <div class="theaa-testi-wrap" style="margin-top: 2.5rem;">
+        <div class="social-proof">
+            <div class="avatars-row">
+                <img src="avatar1.jpg" alt="Closer" class="avatar-circle">
+                <img src="avatar2.jpg" alt="Closer" class="avatar-circle">
+                <img src="avatar3.jpg" alt="Closer" class="avatar-circle">
+            </div>
+            <p class="social-proof-subtitle">Les équipes commerciales des plus grandes entreprises utilisent Theaa quotidiennement</p>
+        </div>
+
+        <h2 class="section-title" style="margin-bottom: 0;">Ce qu'ils disent de Theaa</h2>
+
+        <div class="theaa-testi-wrap" style="margin-top: 2rem;">
           <div class="theaa-testi-outer">
             <div class="theaa-testi-track" id="theaa-track">
 
@@ -3366,11 +3406,11 @@ La technologie est impressionnante. »</p>
           </div>
 
           <div class="theaa-testi-nav">
-            <button type="button" class="theaa-testi-btn" id="theaa-prev" onclick="theaaPrev()">
+            <button type="button" class="theaa-testi-btn" id="theaa-prev">
               <svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>
             </button>
             <div class="theaa-testi-dots" id="theaa-dots"></div>
-            <button type="button" class="theaa-testi-btn" id="theaa-next" onclick="theaaNext()">
+            <button type="button" class="theaa-testi-btn" id="theaa-next">
               <svg viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
             </button>
           </div>
@@ -3651,12 +3691,16 @@ La technologie est impressionnante. »</p>
           var total = cards.length;
           var track = document.getElementById('theaa-track');
           var dotsWrap = document.getElementById('theaa-dots');
+          var btnPrev = document.getElementById('theaa-prev');
+          var btnNext = document.getElementById('theaa-next');
 
           for (var i = 0; i < total; i++) {
             var d = document.createElement('div');
             d.className = 'theaa-testi-dot' + (i === 0 ? ' active' : '');
             d.setAttribute('data-i', i);
-            d.onclick = function() { goTo(parseInt(this.getAttribute('data-i'))); };
+            (function(idx) {
+              d.addEventListener('click', function() { goTo(idx); });
+            })(i);
             dotsWrap.appendChild(d);
           }
 
@@ -3665,16 +3709,17 @@ La technologie est impressionnante. »</p>
           function goTo(n) {
             current = n;
             track.style.transform = 'translateX(-' + (current * getCardWidth()) + 'px)';
-            document.querySelectorAll('.theaa-testi-dot').forEach(function(d, i) {
-              d.classList.toggle('active', i === current);
+            document.querySelectorAll('.theaa-testi-dot').forEach(function(dot, i) {
+              dot.classList.toggle('active', i === current);
             });
-            document.getElementById('theaa-prev').disabled = current === 0;
-            document.getElementById('theaa-next').disabled = current === total - 1;
+            btnPrev.disabled = current === 0;
+            btnNext.disabled = current === total - 1;
           }
 
+          btnPrev.addEventListener('click', function() { if (current > 0) goTo(current - 1); });
+          btnNext.addEventListener('click', function() { if (current < total - 1) goTo(current + 1); });
+
           window.addEventListener('resize', function() { goTo(current); });
-          window.theaaPrev = function() { if (current > 0) goTo(current - 1); };
-          window.theaaNext = function() { if (current < total - 1) goTo(current + 1); };
 
           var startX = 0;
           track.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
@@ -3687,36 +3732,6 @@ La technologie est impressionnante. »</p>
           goTo(0);
         })();
 
-        // Pricing Toggle (Annual/Monthly)
-        const pricingToggle = document.getElementById('pricingToggle');
-        const monthlyLabel = document.getElementById('monthlyLabel');
-        const annualLabel = document.getElementById('annualLabel');
-        const monthlyPrices = document.querySelectorAll('.monthly-price');
-        const annualPrices = document.querySelectorAll('.annual-price');
-        const annualTotals = document.querySelectorAll('.annual-total');
-
-        pricingToggle.addEventListener('click', () => {
-            pricingToggle.classList.toggle('active');
-
-            if (pricingToggle.classList.contains('active')) {
-                // Annual mode
-                monthlyLabel.classList.remove('active');
-                annualLabel.classList.add('active');
-                monthlyPrices.forEach(el => el.style.display = 'none');
-                annualPrices.forEach(el => el.style.display = 'inline');
-                annualTotals.forEach(el => el.style.display = 'block');
-            } else {
-                // Monthly mode
-                monthlyLabel.classList.add('active');
-                annualLabel.classList.remove('active');
-                monthlyPrices.forEach(el => el.style.display = 'inline');
-                annualPrices.forEach(el => el.style.display = 'none');
-                annualTotals.forEach(el => el.style.display = 'none');
-            }
-        });
-
-        // Set monthly as default active
-        monthlyLabel.classList.add('active');
     </script>
 </body>
 </html>
