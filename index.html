@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Theaa - Assistant IA pour Équipes Commerciales</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -1755,217 +1756,47 @@
             background-color: var(--bg-dark);
         }
 
-        .testimonials-subtitle {
-            text-align: center;
-            font-size: 1rem;
-            margin-bottom: 2rem;
-            opacity: 0.7;
-        }
+        /* New Testimonials Component */
+        .theaa-testi-wrap { font-family: 'Sora', sans-serif; width: 100%; max-width: 100%; position: relative; box-sizing: border-box; }
+        .theaa-testi-outer { overflow: hidden; width: 100%; box-sizing: border-box; }
+        .theaa-testi-track { display: flex; gap: 12px; transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); will-change: transform; }
 
-        .social-proof {
-            text-align: center;
-            margin-bottom: 3rem;
-            padding: 2rem;
-            border-radius: 20px;
-        }
-
-        body.light-mode .social-proof {
-            background-color: var(--bg-light-secondary);
-        }
-
-        body.dark-mode .social-proof {
-            background-color: var(--bg-dark-secondary);
-        }
-
-        .avatars-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .avatar-circle {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            border: 3px solid white;
-            margin: 0.25rem -12px;
-            overflow: hidden;
-            position: relative;
-            transition: transform 0.3s ease;
-            object-fit: cover;
-            animation: avatarFloat 3s ease-in-out infinite;
-        }
-
-        .avatar-circle:first-child {
-            margin-left: 0;
-        }
-
-        .avatar-circle:nth-child(2) {
-            animation-delay: 0.5s;
-        }
-
-        .avatar-circle:nth-child(3) {
-            animation-delay: 1s;
-        }
-
-        .avatar-circle:hover {
-            transform: scale(1.15) translateY(-5px);
-            z-index: 10;
-        }
-
-        @keyframes avatarFloat {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .avatar-gradient {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        }
-
-        .social-proof-text {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-top: 1rem;
-        }
-
-        .social-proof-subtitle {
-            font-size: 0.9rem;
-            opacity: 0.7;
-            margin-top: 0.5rem;
-        }
-
-        /* Testimonials Cards - Horizontal Scrollable */
-        .testimonials-wrapper {
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .testimonials-scroll-container {
-            overflow-x: auto;
-            overflow-y: hidden;
-            scroll-behavior: smooth;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            padding: 2rem 0;
-        }
-
-        .testimonials-scroll-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        .testimonials-track {
-            display: flex;
-            gap: 2rem;
-            min-width: min-content;
-        }
-
-        .testimonial-card {
+        .theaa-testi-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid rgba(0,0,0,0.07);
+            padding: 18px 20px;
             min-width: 400px;
             max-width: 400px;
-            padding: 2rem;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
             flex-shrink: 0;
-        }
-
-        body.light-mode .testimonial-card {
-            background-color: var(--bg-light-secondary);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        }
-
-        body.dark-mode .testimonial-card {
-            background-color: var(--bg-dark-secondary);
-            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.05);
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(253, 171, 111, 0.2);
-        }
-
-        .testimonial-text {
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-            font-style: italic;
-            line-height: 1.7;
-            flex-grow: 1;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .author-initials {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: white;
-            font-size: 1.1rem;
-            flex-shrink: 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-sizing: border-box;
             overflow: hidden;
         }
 
-        .author-initials img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        @media (max-width: 599px) {
+            .theaa-testi-card { min-width: calc(100vw - 32px); max-width: calc(100vw - 32px); padding: 16px; }
         }
 
-        .author-info h4 {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
+        .theaa-testi-top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: nowrap; text-align: left !important; }
+        .theaa-testi-avatar { width: 36px; height: 36px; min-width: 36px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+        .theaa-testi-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .theaa-testi-name { font-size: 13px; font-weight: 700; color: #0f0d0b; margin: 0 0 2px 0; word-break: break-word; }
+        .theaa-testi-role { font-size: 11px; color: #9a8878; font-weight: 400; margin: 0; }
+        .theaa-testi-stars { margin-left: auto; font-size: 11px; flex-shrink: 0; white-space: nowrap; }
+        .theaa-testi-text { font-size: 13px; color: #3d2f22; line-height: 1.65; font-weight: 400; margin: 0; font-style: italic; white-space: pre-line; word-break: break-word; overflow-wrap: break-word; text-align: left !important; }
 
-        .author-info p {
-            opacity: 0.7;
-            font-size: 0.85rem;
-        }
-
-        .testimonials-nav {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .testimonials-nav-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: 2px solid var(--primary);
-            background-color: transparent;
-            color: var(--primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .testimonials-nav-btn:hover {
-            background-color: var(--primary);
-            color: white;
-            transform: scale(1.1);
-        }
+        .theaa-testi-nav { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 18px; }
+        .theaa-testi-btn { width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.12); background: #ffffff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.07); flex-shrink: 0; }
+        .theaa-testi-btn:hover { border-color: #faa05e; box-shadow: 0 2px 8px rgba(250,160,94,0.2); }
+        .theaa-testi-btn:hover svg { stroke: #faa05e; }
+        .theaa-testi-btn svg { width: 16px; height: 16px; stroke: #3d2f22; stroke-width: 2; fill: none; transition: stroke 0.2s; }
+        .theaa-testi-btn:disabled { opacity: 0.3; cursor: default; }
+        .theaa-testi-btn:disabled:hover { border-color: rgba(0,0,0,0.12); box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+        .theaa-testi-btn:disabled:hover svg { stroke: #3d2f22; }
+        .theaa-testi-dots { display: flex; gap: 6px; }
+        .theaa-testi-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,0.15); transition: all 0.3s; cursor: pointer; }
+        .theaa-testi-dot.active { width: 20px; border-radius: 3px; background: #faa05e; }
 
         /* Pricing Section */
         .pricing {
@@ -3441,65 +3272,108 @@
 
     <!-- Testimonials Section -->
     <section class="testimonials" id="temoignages">
-        <h2 class="section-title">Utilisé au quotidien par les closers de</h2>
+        <h2 class="section-title">Ce qu'ils disent de Theaa</h2>
 
-        <div class="social-proof">
-            <div class="avatars-row">
-                <img src="avatar1.jpg" alt="Closer" class="avatar-circle">
-                <img src="avatar2.jpg" alt="Closer" class="avatar-circle">
-                <img src="avatar3.jpg" alt="Closer" class="avatar-circle">
-            </div>
-            <p class="social-proof-subtitle">Les équipes commerciales des plus grandes entreprises utilisent Theaa quotidiennement</p>
-        </div>
+        <div class="theaa-testi-wrap" style="margin-top: 2.5rem;">
+          <div class="theaa-testi-outer">
+            <div class="theaa-testi-track" id="theaa-track">
 
-        <div class="testimonials-wrapper">
-            <div class="testimonials-scroll-container" id="testimonialsScrollContainer">
-                <div class="testimonials-track">
-                    <div class="testimonial-card">
-                        <p class="testimonial-text">"L'assistance en temps réel est juste incroyable. Je ne perds plus mon temps à répéter les mêmes chose en coaching avec mes équipes sales, ils suivent Theaa et le taux de conversion à augmenté de +43% ! Theaa donne exactement ce qu'il faut dire au bon moment."</p>
-                        <div class="testimonial-author">
-                            <div class="author-initials">
-                                <img src="enzo.jpg" alt="Enzo D'amico">
-                            </div>
-                            <div class="author-info">
-                                <h4>Enzo D'amico</h4>
-                                <p>Sales Manager</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <p class="testimonial-text">"J'étais sceptique au début, mais les résultats parlent d'eux-mêmes. Theaa m'a aidé à structurer mes appels et à gérer des objections difficiles. +52% de deals signés le premier mois !"</p>
-                        <div class="testimonial-author">
-                            <div class="author-initials">
-                                <img src="Nicolas.png" alt="Nicolas Gouzon">
-                            </div>
-                            <div class="author-info">
-                                <h4>Nicolas Gouzon</h4>
-                                <p>Closer High Ticket</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <p class="testimonial-text">"Theaa m'a fait gagner un temps fou. Le décorticage automatique des appels est d'une précision chirurgicale — en quelques minutes j'ai une analyse complète que j'aurais mis des heures à faire manuellement. Et cerise sur le gâteau : j'en tire des insights marketing ultra précis pour mes ads, directement depuis la voix de mes prospects."</p>
-                        <div class="testimonial-author">
-                            <div class="author-initials">
-                                <img src="avatar3.jpg" alt="William Wouaquet">
-                            </div>
-                            <div class="author-info">
-                                <h4>William Wouaquet</h4>
-                                <p>Fondateur Money Trees</p>
-                            </div>
-                        </div>
-                    </div>
+              <div class="theaa-testi-card">
+                <div class="theaa-testi-top">
+                  <div class="theaa-testi-avatar">
+                    <img src="Homme 1.jpg" alt="Lucas M.">
+                  </div>
+                  <div style="min-width:0;flex:1;">
+                    <p class="theaa-testi-name">Lucas M.</p>
+                    <p class="theaa-testi-role">Coach business</p>
+                  </div>
+                  <span class="theaa-testi-stars">⭐⭐⭐⭐⭐</span>
                 </div>
-            </div>
+                <p class="theaa-testi-text">« Hier, j'avais un appel de vente pour mon offre à 3 500€.
+Le prospect a lâché un "je vais réfléchir" comme d'hab...
+J'ai cliqué sur Theaa, j'ai suivi la réponse mot pour mot.
+Et grâce à ça, j'ai réussi à le closer dans la foulée ! Merci pour ce logiciel incroyable !!! 🔥 »</p>
+              </div>
 
-            <div class="testimonials-nav">
-                <button class="testimonials-nav-btn" id="testimonialsPrev">←</button>
-                <button class="testimonials-nav-btn" id="testimonialsNext">→</button>
+              <div class="theaa-testi-card">
+                <div class="theaa-testi-top">
+                  <div class="theaa-testi-avatar">
+                    <img src="Femme 2.avif" alt="Camille R.">
+                  </div>
+                  <div style="min-width:0;flex:1;">
+                    <p class="theaa-testi-name">Camille R.</p>
+                    <p class="theaa-testi-role">Freelance stratégie digitale</p>
+                  </div>
+                  <span class="theaa-testi-stars">⭐⭐⭐⭐⭐</span>
+                </div>
+                <p class="theaa-testi-text">« Ce qui m'aide le plus c'est l'analyse post-call !
+Je perdais mes prospects au moment de l'annonce du prix sans m'en rendre compte...
+Depuis que Theaa m'a dit de corriger ça, j'ai closé 3 appels sur 4 cette semaine !!
+Je suis vraiment trop contente ! »</p>
+              </div>
+
+              <div class="theaa-testi-card">
+                <div class="theaa-testi-top">
+                  <div class="theaa-testi-avatar">
+                    <img src="Homme 2.avif" alt="Antoine D.">
+                  </div>
+                  <div style="min-width:0;flex:1;">
+                    <p class="theaa-testi-name">Antoine D.</p>
+                    <p class="theaa-testi-role">Consultant</p>
+                  </div>
+                  <span class="theaa-testi-stars">⭐⭐⭐⭐⭐</span>
+                </div>
+                <p class="theaa-testi-text">« Je détestais les appels de vente. Littéralement...
+Je repoussais, je trouvais des excuses.
+Depuis la formation de William et Theaa sur tous mes appels, je suis beaucoup plus confiant et j'ai appris à kiffer la vente !
+Merci à Baptiste & William pour tout ça ! »</p>
+              </div>
+
+              <div class="theaa-testi-card">
+                <div class="theaa-testi-top">
+                  <div class="theaa-testi-avatar">
+                    <img src="Femme 1.jpg" alt="Sarah K.">
+                  </div>
+                  <div style="min-width:0;flex:1;">
+                    <p class="theaa-testi-name">Sarah K.</p>
+                    <p class="theaa-testi-role">Coach nutrition</p>
+                  </div>
+                  <span class="theaa-testi-stars">⭐⭐⭐⭐⭐</span>
+                </div>
+                <p class="theaa-testi-text">« En 30 jours j'ai fait 4 200€ de CA en plus !!
+Je pars de loin 😅, je suis pas du tout une vendeuse de base.
+Mais avec Theaa j'arrive enfin à vendre mon expertise à sa juste valeur sans me sentir coupable.
+C'est un gros game changer pour moi ! »</p>
+              </div>
+
+              <div class="theaa-testi-card">
+                <div class="theaa-testi-top">
+                  <div class="theaa-testi-avatar">
+                    <img src="Homme 3.jpg" alt="Matthieu B.">
+                  </div>
+                  <div style="min-width:0;flex:1;">
+                    <p class="theaa-testi-name">Matthieu B.</p>
+                    <p class="theaa-testi-role">Formateur en ligne</p>
+                  </div>
+                  <span class="theaa-testi-stars">⭐⭐⭐⭐⭐</span>
+                </div>
+                <p class="theaa-testi-text">« J'avais l'habitude de faire mes appels avec mon carnet et mon script, franchement c'était ultra rigide, limite robotique.
+Maintenant avec Theaa c'est différent — ça s'adapte à ce que le prospect vient de dire en temps réel.
+La technologie est impressionnante. »</p>
+              </div>
+
             </div>
+          </div>
+
+          <div class="theaa-testi-nav">
+            <button type="button" class="theaa-testi-btn" id="theaa-prev" onclick="theaaPrev()">
+              <svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>
+            </button>
+            <div class="theaa-testi-dots" id="theaa-dots"></div>
+            <button type="button" class="theaa-testi-btn" id="theaa-next" onclick="theaaNext()">
+              <svg viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+            </button>
+          </div>
         </div>
     </section>
 
@@ -3770,20 +3644,48 @@
         // Start the animation after initial delay
         setTimeout(typeClientMessage, 1000);
 
-        // Testimonials horizontal scroll
-        const testimonialsContainer = document.getElementById('testimonialsScrollContainer');
-        const testimonialsPrev = document.getElementById('testimonialsPrev');
-        const testimonialsNext = document.getElementById('testimonialsNext');
+        // Testimonials slider
+        (function() {
+          var current = 0;
+          var cards = document.querySelectorAll('#theaa-track .theaa-testi-card');
+          var total = cards.length;
+          var track = document.getElementById('theaa-track');
+          var dotsWrap = document.getElementById('theaa-dots');
 
-        const scrollAmount = 420; // card width + gap
+          for (var i = 0; i < total; i++) {
+            var d = document.createElement('div');
+            d.className = 'theaa-testi-dot' + (i === 0 ? ' active' : '');
+            d.setAttribute('data-i', i);
+            d.onclick = function() { goTo(parseInt(this.getAttribute('data-i'))); };
+            dotsWrap.appendChild(d);
+          }
 
-        testimonialsNext.addEventListener('click', () => {
-            testimonialsContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        });
+          function getCardWidth() { return cards[0].offsetWidth + 12; }
 
-        testimonialsPrev.addEventListener('click', () => {
-            testimonialsContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-        });
+          function goTo(n) {
+            current = n;
+            track.style.transform = 'translateX(-' + (current * getCardWidth()) + 'px)';
+            document.querySelectorAll('.theaa-testi-dot').forEach(function(d, i) {
+              d.classList.toggle('active', i === current);
+            });
+            document.getElementById('theaa-prev').disabled = current === 0;
+            document.getElementById('theaa-next').disabled = current === total - 1;
+          }
+
+          window.addEventListener('resize', function() { goTo(current); });
+          window.theaaPrev = function() { if (current > 0) goTo(current - 1); };
+          window.theaaNext = function() { if (current < total - 1) goTo(current + 1); };
+
+          var startX = 0;
+          track.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
+          track.addEventListener('touchend', function(e) {
+            var diff = startX - e.changedTouches[0].clientX;
+            if (diff > 40 && current < total - 1) goTo(current + 1);
+            if (diff < -40 && current > 0) goTo(current - 1);
+          }, { passive: true });
+
+          goTo(0);
+        })();
 
         // Pricing Toggle (Annual/Monthly)
         const pricingToggle = document.getElementById('pricingToggle');
