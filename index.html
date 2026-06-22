@@ -1787,8 +1787,9 @@
 
         /* New Testimonials Component */
         .theaa-testi-wrap { font-family: 'Sora', sans-serif; width: 100%; max-width: 100%; position: relative; box-sizing: border-box; }
-        .theaa-testi-outer { overflow: hidden; width: 100%; box-sizing: border-box; }
-        .theaa-testi-track { display: flex; gap: 12px; transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); will-change: transform; }
+        .theaa-testi-outer { overflow-x: scroll; overflow-y: hidden; width: 100%; box-sizing: border-box; scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; }
+        .theaa-testi-outer::-webkit-scrollbar { display: none; }
+        .theaa-testi-track { display: flex; gap: 12px; }
 
         .theaa-testi-card {
             background: #ffffff;
@@ -2368,23 +2369,28 @@
             }
 
             .case-study-stats {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 0.8rem;
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
                 margin-top: 2rem;
             }
 
             .case-study-stat {
-                padding: 1.2rem 0.6rem;
-                border-radius: 14px;
-                text-align: center;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                padding: 1rem 1.2rem;
+                text-align: left;
             }
 
             .case-study-stat-number {
-                font-size: 1.6rem;
+                font-size: 2rem;
+                min-width: 90px;
+                flex-shrink: 0;
+                margin-bottom: 0;
             }
 
             .case-study-stat-label {
-                font-size: 0.78rem;
+                font-size: 0.9rem;
             }
 
             /* Simulator Mobile Adjustments */
@@ -2536,23 +2542,21 @@
             }
 
             .case-study-stats {
-                grid-template-columns: repeat(3, 1fr);
                 gap: 0.5rem;
                 margin-top: 1.5rem;
             }
 
             .case-study-stat {
-                padding: 0.9rem 0.4rem;
-                border-radius: 10px;
+                padding: 0.8rem 1rem;
             }
 
             .case-study-stat-number {
-                font-size: 1.2rem !important;
-                margin-bottom: 0.3rem;
+                font-size: 1.6rem !important;
+                min-width: 80px;
             }
 
             .case-study-stat-label {
-                font-size: 0.68rem !important;
+                font-size: 0.82rem !important;
             }
 
             .affiliate-section {
@@ -3717,29 +3721,30 @@ La technologie est impressionnante. »</p>
 
         // Testimonials slider
         (function() {
-          var current = 0;
+          var outer = document.querySelector('.theaa-testi-outer');
           var cards = document.querySelectorAll('#theaa-track .theaa-testi-card');
           var total = cards.length;
-          var track = document.getElementById('theaa-track');
           var dotsWrap = document.getElementById('theaa-dots');
           var btnPrev = document.getElementById('theaa-prev');
           var btnNext = document.getElementById('theaa-next');
+          var current = 0;
 
           for (var i = 0; i < total; i++) {
             var d = document.createElement('div');
             d.className = 'theaa-testi-dot' + (i === 0 ? ' active' : '');
-            d.setAttribute('data-i', i);
             (function(idx) {
               d.addEventListener('click', function() { goTo(idx); });
             })(i);
             dotsWrap.appendChild(d);
           }
 
-          function getCardWidth() { return cards[0].offsetWidth + 12; }
+          function getCardWidth() {
+            return cards[0].getBoundingClientRect().width + 12;
+          }
 
           function goTo(n) {
-            current = n;
-            track.style.transform = 'translateX(-' + (current * getCardWidth()) + 'px)';
+            current = Math.max(0, Math.min(n, total - 1));
+            outer.scrollLeft = current * getCardWidth();
             document.querySelectorAll('.theaa-testi-dot').forEach(function(dot, i) {
               dot.classList.toggle('active', i === current);
             });
@@ -3747,17 +3752,20 @@ La technologie est impressionnante. »</p>
             btnNext.disabled = current === total - 1;
           }
 
-          btnPrev.addEventListener('click', function() { if (current > 0) goTo(current - 1); });
-          btnNext.addEventListener('click', function() { if (current < total - 1) goTo(current + 1); });
+          btnPrev.addEventListener('click', function() { goTo(current - 1); });
+          btnNext.addEventListener('click', function() { goTo(current + 1); });
 
-          window.addEventListener('resize', function() { goTo(current); });
-
-          var startX = 0;
-          track.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
-          track.addEventListener('touchend', function(e) {
-            var diff = startX - e.changedTouches[0].clientX;
-            if (diff > 40 && current < total - 1) goTo(current + 1);
-            if (diff < -40 && current > 0) goTo(current - 1);
+          // Sync dots when user swipes natively
+          outer.addEventListener('scroll', function() {
+            var idx = Math.round(outer.scrollLeft / getCardWidth());
+            if (idx !== current) {
+              current = idx;
+              document.querySelectorAll('.theaa-testi-dot').forEach(function(dot, i) {
+                dot.classList.toggle('active', i === current);
+              });
+              btnPrev.disabled = current === 0;
+              btnNext.disabled = current === total - 1;
+            }
           }, { passive: true });
 
           goTo(0);
