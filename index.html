@@ -3207,7 +3207,7 @@
                 Pour les Business High Ticket :
             </div>
             <h1 style="margin-top: 0.5rem; line-height: 1.2;">
-                Ne laisse plus le closing saboter ton business en 2026.
+                Ne laisse plus le vente saboter ton business en 2026.
             </h1>
             <p>Découvre l'outil qui a généré <strong>+400 000€</strong> pour l'un de nos clients en 30 jours.</p>
             <div class="hero-buttons">
@@ -3333,7 +3333,7 @@
 
     <!-- CTA Section -->
     <section class="cta-section">
-        <h2 class="section-title">Ne laisse plus le closing saboter ton business en 2026.</h2>
+        <h2 class="section-title">Ne laisse plus le vente saboter ton business en 2026.</h2>
         <p>Theaa transforme tous tes appels de vente, en réelle opportunité</p>
         <a href="https://www.go.theaa.ai/presentation" class="cta-button" target="_blank" style="margin-top: 2rem; display: inline-block;">Découvre ton potentiel de vente grâce à l'IA</a>
     </section>
@@ -3459,7 +3459,7 @@ La technologie est impressionnante. »</p>
     <!-- Case Study Section -->
     <section class="case-study" id="etude-de-cas">
         <div class="case-study-container">
-            <h2 class="section-title">Étude de cas : Comment Theaa a transformé une équipe de closing</h2>
+            <h2 class="section-title">Étude de cas : Comment Theaa a transformé une équipe de vente</h2>
             <p class="section-subtitle">Challenge : 80+ closers recrutés, 23 jours de formation économisés, résultat : TOP 1</p>
 
             <div class="case-study-video">
@@ -3565,17 +3565,17 @@ La technologie est impressionnante. »</p>
         });
 
         // Simulator with dynamic slider fill
-        const closingRateSlider = document.getElementById('closingRate');
+        const venteRateSlider = document.getElementById('venteRate');
         const showUpRateSlider = document.getElementById('showUpRate');
         const callsPerDaySlider = document.getElementById('callsPerDay');
         const offerPriceSlider = document.getElementById('offerPrice');
 
-        const closingRateValue = document.getElementById('closingRateValue');
+        const venteRateValue = document.getElementById('venteRateValue');
         const showUpRateValue = document.getElementById('showUpRateValue');
         const callsPerDayValue = document.getElementById('callsPerDayValue');
         const offerPriceValue = document.getElementById('offerPriceValue');
 
-        const closingRateFill = document.getElementById('closingRateFill');
+        const venteRateFill = document.getElementById('venteRateFill');
         const showUpRateFill = document.getElementById('showUpRateFill');
         const callsPerDayFill = document.getElementById('callsPerDayFill');
         const offerPriceFill = document.getElementById('offerPriceFill');
@@ -3590,17 +3590,17 @@ La technologie est impressionnante. »</p>
         }
 
         function calculateEarnings() {
-            const closingRate = parseInt(closingRateSlider.value);
+            const venteRate = parseInt(venteRateSlider.value);
             const showUpRate = parseInt(showUpRateSlider.value);
             const callsPerDay = parseInt(callsPerDaySlider.value);
             const offerPrice = parseInt(offerPriceSlider.value);
 
-            closingRateValue.textContent = closingRate;
+            venteRateValue.textContent = venteRate;
             showUpRateValue.textContent = showUpRate;
             callsPerDayValue.textContent = callsPerDay;
             offerPriceValue.textContent = offerPrice.toLocaleString('fr-FR');
 
-            updateSliderFill(closingRateSlider, closingRateFill);
+            updateSliderFill(venteRateSlider, venteRateFill);
             updateSliderFill(showUpRateSlider, showUpRateFill);
             updateSliderFill(callsPerDaySlider, callsPerDayFill);
             updateSliderFill(offerPriceSlider, offerPriceFill);
@@ -3608,7 +3608,7 @@ La technologie est impressionnante. »</p>
             // Calculate earnings with show-up rate (30 jours par mois, weekends inclus)
             // Commission = 100% for businesses (calculating total revenue, not commission)
             const actualCalls = (callsPerDay * 30 * showUpRate) / 100;
-            const monthlyDeals = (actualCalls * closingRate) / 100;
+            const monthlyDeals = (actualCalls * venteRate) / 100;
             const currentEarnings = Math.round(monthlyDeals * offerPrice);
             const newEarnings = Math.round(currentEarnings * 1.47);
             const extraEarnings = newEarnings - currentEarnings;
@@ -3618,7 +3618,7 @@ La technologie est impressionnante. »</p>
             extraEarningsEl.textContent = extraEarnings.toLocaleString('fr-FR');
         }
 
-        closingRateSlider.addEventListener('input', calculateEarnings);
+        venteRateSlider.addEventListener('input', calculateEarnings);
         showUpRateSlider.addEventListener('input', calculateEarnings);
         callsPerDaySlider.addEventListener('input', calculateEarnings);
         offerPriceSlider.addEventListener('input', calculateEarnings);
